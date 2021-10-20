@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "19235738676",
+    "firebase_url": "https://doki-apps-default-rtdb.firebaseio.com",
+    "project_id": "doki-apps",
+    "storage_bucket": "doki-apps.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:19235738676:android:45ccdf862b3338b4916661",
+        "android_client_info": {
+          "package_name": "com.doki.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "19235738676-91bdfecu5ggjtcjidk0actfmnqagc4uu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQFxdux5j2LCHF46mp02aeenQiajgrbGI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "19235738676-91bdfecu5ggjtcjidk0actfmnqagc4uu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
