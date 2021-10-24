@@ -303,13 +303,6 @@ export default function Registration(props) {
         showsVerticalScrollIndicator={false}
       >
         {uploadImage()}
-        <View style={styles.logo}>
-          <Image
-            style={{ height: 80, width: 140 }}
-            source={require("../../assets/images/logo.png")}
-            resizeMode="contain"
-          />
-        </View>
         <KeyboardAwareScrollView
           behavior={Platform.OS == "ios" ? "padding" : "padding"}
           style={styles.form}
@@ -396,7 +389,7 @@ export default function Registration(props) {
                     style={styles.registerButton}
                     onPress={() => activeSectionBtnHandler(1)}
                   >
-                    <Text style={styles.buttonTitle}>Next</Text>
+                    <Text style={styles.buttonTitle}>Continue</Text>
                   </TouchableOpacity>
                 </View>
                 {/* REGISTERATION LINK */}
@@ -470,7 +463,7 @@ export default function Registration(props) {
                     value={mobileWithoutCountry}
                     keyboardType={"number-pad"}
                     autoFocus={true}
-                    style={[styles.inputTextStyle,{borderWidth:1}]}
+                    style={[styles.inputTextStyle, { borderWidth: 1 }]}
                     onChangeText={(text) => {
                       setMobileWithoutCountry(text);
                       let formattedNum = text.replace(/ /g, "");
@@ -970,7 +963,7 @@ const styles = StyleSheet.create({
   },
   containerStyle: {
     flexDirection: "column",
-    marginTop: 20,
+    marginTop: 50,
   },
   form: {
     flex: 1,
@@ -984,7 +977,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   textInputContainerStyle: {
-   
+    height: 50,
     backgroundColor: "#eee",
     marginTop: 12,
     marginLeft: 35,

@@ -6,7 +6,7 @@ import { colors } from "../common/theme";
 const LoginWithEmail = ({ action }) => {
   return (
     <TouchableOpacity style={styles.tabContainer} onPress={action}>
-      <Zocial name="email" size={24} color="white" style={styles.tabIcon} />
+      {/* <Zocial name="email" size={24} color="#9B0000" style={styles.tabIcon} /> */}
       <Text style={styles.tabText}>Login with email</Text>
     </TouchableOpacity>
   );
@@ -16,31 +16,34 @@ export default LoginWithEmail;
 
 const styles = StyleSheet.create({
   tabContainer: {
-    backgroundColor: "#9B0000",
-    marginLeft: 35,
-    marginRight: 35,
-    // borderWidth: 1,
-    // borderColor: colors.GREY.border,
+    height: 50,
+    backgroundColor: "#fff",
+    marginHorizontal: 33,
+    marginBottom: 25,
     width: "80%",
     alignSelf: "center",
     borderRadius: 5,
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "center",
     alignItems: "center",
+    borderWidth: 1,
+    borderColor: colors.BLUE.secondary,
   },
   tabIcon: {
     margin: 12,
-    marginLeft: 18,
-    marginRight: 18,
+    // marginLeft: 20,
+    // marginRight: 20,
   },
   tabText: {
-    paddingLeft: 20,
-    borderLeftWidth: StyleSheet.hairlineWidth,
-    borderLeftColor: colors.WHITE,
+    paddingLeft: 0,
+    // borderLeftWidth: 1,
+    // borderLeftColor: colors.WHITE,
     paddingTop: 5,
     paddingBottom: 5,
-    color: colors.WHITE,
+    color: colors.BLUE.secondary,
     fontSize: 16,
     fontWeight: "bold",
+    textAlign: "left",
+    // backgroundColor: 'red'
   },
 });

@@ -4,7 +4,7 @@ import { colors } from "../common/theme";
 
 export const FormTitle = ({ title, subtitle }) => {
   return (
-    <View>
+    <View style={styles.container}>
       <Text style={styles.formTitle}>{title}</Text>
       <Text style={styles.formSubTitle}>{subtitle}</Text>
     </View>
@@ -12,10 +12,13 @@ export const FormTitle = ({ title, subtitle }) => {
 };
 
 const styles = StyleSheet.create({
+  container: {
+    marginBottom: 20,
+  },
   // Bis- Form subtitle style
   formTitle: {
     fontWeight: "bold",
-    fontSize: 30,
+    fontSize: 35,
     marginRight: "auto",
     marginLeft: "auto",
     marginBottom: 10,
