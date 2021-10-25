@@ -622,6 +622,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: colors.BLUE.secondary,
     fontFamily: "Roboto",
+    fontWeight: "normal",
   },
   pickerStyle: {
     color: colors.GREY.background,

@@ -771,7 +771,8 @@ const styles = StyleSheet.create({
   linkText: {
     fontSize: 16,
     color: colors.BLUE.secondary,
-    fontFamily: "Roboto-Bold",
+    fontFamily: "Roboto",
+    fontWeight: "normal",
   },
   regularText: {
     fontWeight: "normal",
