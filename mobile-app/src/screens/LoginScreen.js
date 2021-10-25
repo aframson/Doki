@@ -573,7 +573,7 @@ const styles = StyleSheet.create({
 
   // Bis- combined box1 and inputContainer style into inputContainer
   inputContainer: {
-    backgroundColor: "#eee",
+    backgroundColor: "#f1f1f1",
     marginTop: 12,
     marginLeft: 35,
     marginRight: 35,
