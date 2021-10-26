@@ -59,20 +59,14 @@ export default function Registration(props) {
 
   //   Bis-states for active sections
   const [activeSection, setActiveSection] = useState(0);
-  const [subtitle, setSubtitle] = useState("Let's get to know you");
+  const [subtitle, setSubtitle] = useState();
 
   // Bis- function to change subtitle text based on activeScreen
   const activeSectionBtnHandler = (val) => {
     if (val === 0) {
-      setSubtitle("Let's get to know you");
-    } else if (val === 1) {
       setSubtitle("Fill out your contact details");
-    } else if (val === 2) {
-      setSubtitle("Select account type");
-    } else if (val === 3) {
-      setSubtitle("Fill out your Vehicle details");
-    } else if (val === 4) {
-      setSubtitle("");
+    } else if (val === 1) {
+      setSubtitle("Let's get to know you");
     }
     setActiveSection(val);
   };
@@ -303,13 +297,6 @@ export default function Registration(props) {
         showsVerticalScrollIndicator={false}
       >
         {uploadImage()}
-        <View style={styles.logo}>
-          <Image
-            style={{ height: 80, width: 140 }}
-            source={require("../../assets/images/logo.png")}
-            resizeMode="contain"
-          />
-        </View>
         <KeyboardAwareScrollView
           behavior={Platform.OS == "ios" ? "padding" : "padding"}
           style={styles.form}
@@ -319,117 +306,12 @@ export default function Registration(props) {
             {/* BASIC INFO SECTION */}
             {activeSection === 0 ? (
               <>
-                <View style={styles.textInputContainerStyle}>
-                  <FontAwesome
-                    style={styles.textInputIcon}
-                    name="user"
-                    size={24}
-                    color={colors.GREY.btnPrimary}
-                  />
-                  <TextInput
-                    editable={true}
-                    placeholder={language.first_name_placeholder}
-                    value={state.firstName}
-                    keyboardType={"email-address"}
-                    style={styles.inputTextStyle}
-                    onChangeText={(text) => {
-                      setState({ ...state, firstName: text });
-                    }}
-                  />
-                </View>
-
-                <View style={styles.textInputContainerStyle}>
-                  <FontAwesome
-                    style={styles.textInputIcon}
-                    name="user"
-                    size={24}
-                    color={colors.GREY.btnPrimary}
-                  />
-                  <TextInput
-                    editable={true}
-                    placeholder={language.last_name_placeholder}
-                    value={state.lastName}
-                    keyboardType={"email-address"}
-                    style={styles.inputTextStyle}
-                    onChangeText={(text) => {
-                      setState({ ...state, lastName: text });
-                    }}
-                  />
-                </View>
-                <View style={styles.textInputContainerStyle}>
-                  <Zocial
-                    name="email"
-                    size={24}
-                    color={colors.GREY.btnPrimary}
-                    style={styles.textInputIcon}
-                  />
-                  <TextInput
-                    placeholder={language.email_placeholder}
-                    value={state.email}
-                    keyboardType={"email-address"}
-                    style={styles.inputTextStyle}
-                    onChangeText={(text) => {
-                      setState({ ...state, email: text });
-                    }}
-                  />
-                </View>
-                <View style={styles.textInputContainerStyle}>
-                  <Fontisto
-                    name="locked"
-                    size={24}
-                    color={colors.GREY.btnPrimary}
-                    style={styles.textInputIcon}
-                  />
-                  <TextInput
-                    placeholder={language.password_placeholder}
-                    value={state.password}
-                    style={styles.inputTextStyle}
-                    onChangeText={(text) =>
-                      setState({ ...state, password: text })
-                    }
-                    secureTextEntry={true}
-                  />
-                </View>
-                {/* Button container */}
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity
-                    style={styles.registerButton}
-                    onPress={() => activeSectionBtnHandler(1)}
-                  >
-                    <Text style={styles.buttonTitle}>Next</Text>
-                  </TouchableOpacity>
-                </View>
-                {/* REGISTERATION LINK */}
-                <View
-                  style={[
-                    styles.linkBar,
-                    {
-                      marginTop: 20,
-                      alignSelf: "center",
-                      marginRight: 10,
-                      alignItems: "center",
-                    },
-                  ]}
-                >
-                  <Text style={styles.regularText}>
-                    Already have an account?
-                  </Text>
-                  <TouchableOpacity
-                    style={{ paddingLeft: 5 }}
-                    onPress={props.navigation}
-                  >
-                    <Text style={styles.linkText}>Login</Text>
-                  </TouchableOpacity>
-                </View>
-              </>
-            ) : activeSection === 1 ? (
-              <>
                 {/* CONTACT DETAILS SECTION */}
                 <View style={styles.textInputContainerStyle}>
                   <FontAwesome
                     name="flag"
                     color={colors.GREY.btnPrimary}
-                    size={23}
+                    size={20}
                     style={[styles.textInputIcon, { marginRight: 5 }]}
                   />
                   <View style={styles.inputTextStyle}>
@@ -461,7 +343,7 @@ export default function Registration(props) {
                 <View style={styles.textInputContainerStyle}>
                   <Entypo
                     name="mobile"
-                    size={24}
+                    size={20}
                     color={colors.GREY.btnPrimary}
                     style={styles.textInputIcon}
                   />
@@ -470,7 +352,7 @@ export default function Registration(props) {
                     value={mobileWithoutCountry}
                     keyboardType={"number-pad"}
                     autoFocus={true}
-                    style={[styles.inputTextStyle,{borderWidth:1}]}
+                    style={[styles.inputTextStyle]}
                     onChangeText={(text) => {
                       setMobileWithoutCountry(text);
                       let formattedNum = text.replace(/ /g, "");
@@ -483,7 +365,7 @@ export default function Registration(props) {
                 <View style={styles.textInputContainerStyle}>
                   <Entypo
                     name="link"
-                    size={24}
+                    size={20}
                     color={colors.GREY.btnPrimary}
                     style={styles.textInputIcon}
                   />
@@ -498,6 +380,114 @@ export default function Registration(props) {
                     }}
                   />
                 </View>
+                {/* Button container */}
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity
+                    style={styles.registerButton}
+                    onPress={() => activeSectionBtnHandler(1)}
+                  >
+                    <Text style={styles.buttonTitle}>Continue</Text>
+                  </TouchableOpacity>
+                </View>
+                {/* REGISTERATION LINK */}
+                <View
+                  style={[
+                    styles.linkBar,
+                    {
+                      marginTop: 60,
+                      alignSelf: "center",
+                      marginRight: 10,
+                      alignItems: "center",
+                    },
+                  ]}
+                >
+                  <Text style={styles.regularText}>
+                    Already have an account?
+                  </Text>
+                  <TouchableOpacity
+                    style={{ paddingLeft: 5 }}
+                    onPress={props.navigation}
+                  >
+                    <Text style={[styles.linkText, { color: "#9B0000" }]}>
+                      Login
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            ) : activeSection === 1 ? (
+              <>
+                <View style={styles.textInputContainerStyle}>
+                  <FontAwesome
+                    style={styles.textInputIcon}
+                    name="user"
+                    size={20}
+                    color={colors.GREY.btnPrimary}
+                  />
+                  <TextInput
+                    editable={true}
+                    placeholder={language.first_name_placeholder}
+                    value={state.firstName}
+                    keyboardType={"email-address"}
+                    style={styles.inputTextStyle}
+                    onChangeText={(text) => {
+                      setState({ ...state, firstName: text });
+                    }}
+                  />
+                </View>
+
+                <View style={styles.textInputContainerStyle}>
+                  <FontAwesome
+                    style={styles.textInputIcon}
+                    name="user"
+                    size={20}
+                    color={colors.GREY.btnPrimary}
+                  />
+                  <TextInput
+                    editable={true}
+                    placeholder={language.last_name_placeholder}
+                    value={state.lastName}
+                    keyboardType={"email-address"}
+                    style={styles.inputTextStyle}
+                    onChangeText={(text) => {
+                      setState({ ...state, lastName: text });
+                    }}
+                  />
+                </View>
+                <View style={styles.textInputContainerStyle}>
+                  <Zocial
+                    name="email"
+                    size={20}
+                    color={colors.GREY.btnPrimary}
+                    style={styles.textInputIcon}
+                  />
+                  <TextInput
+                    placeholder={language.email_placeholder}
+                    value={state.email}
+                    keyboardType={"email-address"}
+                    style={styles.inputTextStyle}
+                    onChangeText={(text) => {
+                      setState({ ...state, email: text });
+                    }}
+                  />
+                </View>
+                <View style={styles.textInputContainerStyle}>
+                  <Fontisto
+                    name="locked"
+                    size={20}
+                    color={colors.GREY.btnPrimary}
+                    style={styles.textInputIcon}
+                  />
+                  <TextInput
+                    placeholder={language.password_placeholder}
+                    value={state.password}
+                    style={styles.inputTextStyle}
+                    onChangeText={(text) =>
+                      setState({ ...state, password: text })
+                    }
+                    secureTextEntry={true}
+                  />
+                </View>
+
                 {/* Button container */}
                 <View
                   style={[
@@ -520,341 +510,11 @@ export default function Registration(props) {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.registerButton}
-                    onPress={() => activeSectionBtnHandler(2)}
+                    onPress={() => onPressRegister()}
                   >
-                    <Text style={styles.buttonTitle}>Next</Text>
+                    <Text style={styles.buttonTitle}>Submit</Text>
                   </TouchableOpacity>
                 </View>
-              </>
-            ) : activeSection === 2 ? (
-              <>
-                {/* SECTION 3 - ACCOUNT TYPE */}
-                <View>
-                  <Text
-                    style={{
-                      marginHorizontal: 35,
-                      marginTop: 30,
-                      fontSize: 25,
-                      textAlign: "center",
-                      color: colors.BLUE.secondary,
-                    }}
-                  >
-                    {language.register_as_driver}
-                  </Text>
-                  {/* <RadioForm
-                    radio_props={radio_props}
-                    initial={role}
-                    formHorizontal={true}
-                    labelHorizontal={true}
-                    buttonColor={colors.BLUE.secondary}
-                    labelColor={colors.BLUE.secondary}
-                    style={{ marginLeft: 10 }}
-                    labelStyle={{ marginRight: 20 }}
-                    selectedButtonColor={colors.BLUE.secondary}
-                    selectedLabelColor={colors.BLUE.secondary}
-                    onPress={(value) => {
-                      setRole(value);
-                      setUserType(value);
-                    }}
-                  /> */}
-                </View>
-                {/* Button Container */}
-                <View
-                  style={[
-                    styles.buttonContainer,
-                    styles.buttonContainerFixedBottom,
-                  ]}
-                >
-                  <TouchableOpacity
-                    style={[
-                      styles.formBackBtn,
-                      { height: 80, justifyContent: "center" },
-                    ]}
-                    onPress={() => setUserType(1)}
-                  >
-                    <Text
-                      style={[
-                        styles.buttonTitle,
-                        { color: colors.BLUE.secondary, fontSize: 25 },
-                      ]}
-                    >
-                      Yes
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={[
-                      styles.registerButton,
-                      { height: 80, justifyContent: "center" },
-                    ]}
-                    onPress={() => setUserType(0)}
-                  >
-                    <Text style={[styles.buttonTitle, { fontSize: 25 }]}>
-                      No
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </>
-            ) : activeSection === 3 ? (
-              <>
-                {/* SECTION 4 - VEHICLE INFO */}
-                <View
-                  style={[
-                    styles.textInputContainerStyle,
-                    { marginTop: 10, marginBottom: 10 },
-                  ]}
-                >
-                  <FontAwesome
-                    name="car"
-                    color={colors.GREY.btnPrimary}
-                    size={20}
-                    style={[
-                      styles.textInputIcon,
-                      { marginTop: 10, marginBottom: 10 },
-                    ]}
-                  />
-                  {props.cars ? (
-                    <View
-                      style={[
-                        styles.inputTextStyle,
-                        {
-                          height: 50,
-                          paddingTop: 6,
-                        },
-                      ]}
-                    >
-                      <RNPickerSelect
-                        placeholder={{}}
-                        value={state.carType}
-                        useNativeAndroidPickerStyle={true}
-                        style={{
-                          inputIOS: styles.pickerStyle,
-                          inputAndroid: styles.pickerStyle,
-                        }}
-                        onValueChange={(value) =>
-                          setState({ ...state, carType: value })
-                        }
-                        items={props.cars}
-                      />
-                    </View>
-                  ) : null}
-                </View>
-                <View style={styles.textInputContainerStyle}>
-                  <FontAwesome
-                    name="car"
-                    color={colors.GREY.btnPrimary}
-                    size={20}
-                    style={styles.textInputIcon}
-                  />
-                  <TextInput
-                    editable={true}
-                    returnKeyType={"next"}
-                    placeholder={language.vehicle_model_name}
-                    value={state.vehicleMake}
-                    style={styles.inputTextStyle}
-                    onChangeText={(text) => {
-                      setState({ ...state, vehicleMake: text });
-                    }}
-                  />
-                </View>
-                <View style={styles.textInputContainerStyle}>
-                  <FontAwesome
-                    name="car"
-                    color={colors.GREY.btnPrimary}
-                    size={20}
-                    style={styles.textInputIcon}
-                  />
-                  <TextInput
-                    editable={true}
-                    placeholder={language.vehicle_model_no}
-                    value={state.vehicleModel}
-                    style={styles.inputTextStyle}
-                    onChangeText={(text) => {
-                      setState({ ...state, vehicleModel: text });
-                    }}
-                  />
-                </View>
-                <View style={styles.textInputContainerStyle}>
-                  <FontAwesome
-                    name="car"
-                    color={colors.GREY.btnPrimary}
-                    size={20}
-                    style={styles.textInputIcon}
-                  />
-                  <TextInput
-                    editable={true}
-                    placeholder={language.vehicle_reg_no}
-                    value={state.vehicleNumber}
-                    style={styles.inputTextStyle}
-                    onChangeText={(text) => {
-                      setState({ ...state, vehicleNumber: text });
-                    }}
-                  />
-                </View>
-                <View style={styles.textInputContainerStyle}>
-                  <FontAwesome
-                    name="car"
-                    color={colors.GREY.btnPrimary}
-                    size={20}
-                    style={styles.textInputIcon}
-                  />
-                  <TextInput
-                    editable={true}
-                    placeholder={language.other_info}
-                    value={state.other_info}
-                    style={styles.inputTextStyle}
-                    onChangeText={(text) => {
-                      setState({ ...state, other_info: text });
-                    }}
-                  />
-                </View>
-                {state.usertype == "driver" && settings.bank_fields ? (
-                  <View style={styles.textInputContainerStyle}>
-                    <Icon
-                      name="numeric"
-                      type={"material-community"}
-                      color={colors.BLUE.secondary}
-                      size={20}
-                      containerStyle={styles.iconContainer}
-                    />
-                    <TextInput
-                      editable={true}
-                      placeholder={language.bankName}
-                      value={state.bankName}
-                      style={styles.inputTextStyle}
-                      onChangeText={(text) => {
-                        setState({ ...state, bankName: text });
-                      }}
-                    />
-                  </View>
-                ) : null}
-                {state.usertype == "driver" && settings.bank_fields ? (
-                  <View style={styles.textInputContainerStyle}>
-                    <Icon
-                      name="numeric"
-                      type={"material-community"}
-                      color={colors.BLUE.secondary}
-                      size={20}
-                      style={styles.iconContainer}
-                    />
-                    <TextInput
-                      editable={true}
-                      placeholder={language.bankCode}
-                      value={state.bankCode}
-                      style={styles.inputTextStyle}
-                      onChangeText={(text) => {
-                        setState({ ...state, bankCode: text });
-                      }}
-                    />
-                  </View>
-                ) : null}
-                {state.usertype == "driver" && settings.bank_fields ? (
-                  <View style={styles.textInputContainerStyle}>
-                    <Icon
-                      name="numeric"
-                      type={"material-community"}
-                      color={colors.BLUE.secondary}
-                      size={20}
-                      containerStyle={styles.iconContainer}
-                    />
-                    <TextInput
-                      editable={true}
-                      placeholder={language.bankAccount}
-                      value={state.bankAccount}
-                      style={styles.inputTextStyle}
-                      onChangeText={(text) => {
-                        setState({ ...state, bankAccount: text });
-                      }}
-                    />
-                  </View>
-                ) : null}
-                {/* Buttom container */}
-                <View style={styles.buttonContainer}>
-                  <TouchableOpacity
-                    style={styles.formBackBtn}
-                    onPress={() => activeSectionBtnHandler(2)}
-                  >
-                    <Text
-                      style={[
-                        styles.buttonTitle,
-                        { color: colors.BLUE.secondary },
-                      ]}
-                    >
-                      Back
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.registerButton}
-                    onPress={() => activeSectionBtnHandler(4)}
-                  >
-                    <Text style={styles.buttonTitle}>Next</Text>
-                  </TouchableOpacity>
-                </View>
-              </>
-            ) : activeSection === 4 ? (
-              <>
-                {capturedImage != null ? (
-                  <View style={styles.imagePosition}>
-                    <TouchableOpacity
-                      style={styles.photoClick}
-                      onPress={cancelPhoto}
-                    >
-                      <Image
-                        source={require("../../assets/images/cross.png")}
-                        resizeMode="contain"
-                        style={styles.imageStyle}
-                      />
-                    </TouchableOpacity>
-                    <Image
-                      source={{ uri: capturedImage }}
-                      style={styles.photoResult}
-                      resizeMode={"cover"}
-                    />
-                  </View>
-                ) : (
-                  <View style={styles.capturePhoto}>
-                    <View style={{ marginTop: -50, marginBottom: 50 }}>
-                      {state.imageValid ? (
-                        <Text style={styles.capturePhotoTitle}>
-                          {language.upload_driving_license}
-                        </Text>
-                      ) : (
-                        <Text style={styles.errorPhotoTitle}>
-                          {language.upload_driving_license}
-                        </Text>
-                      )}
-                    </View>
-                    <View style={styles.capturePicClick}>
-                      <View style={styles.flexView1}>
-                        <View style={styles.imageFixStyle}>
-                          <Image
-                            source={require("../../assets/images/bill.png")}
-                            resizeMode={"contain"}
-                            style={styles.imageStyle2}
-                          />
-                          <View style={{ backgroundColor: colors.WHITE }}>
-                            <TouchableOpacity
-                              onPress={showActionSheet}
-                              style={styles.buttonAddImage}
-                            >
-                              <Entypo
-                                name="circle-with-plus"
-                                size={50}
-                                color={colors.BLUE.secondary}
-                              />
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-                      </View>
-                      <View style={styles.myView}>
-                        <View style={styles.myView3}>
-                          <Text style={styles.textStyle}>
-                            {language.image_size_warning}
-                          </Text>
-                        </View>
-                      </View>
-                    </View>
-                  </View>
-                )}
               </>
             ) : null}
           </View>
@@ -871,7 +531,7 @@ const styles = StyleSheet.create({
   // Bis
   textInputIcon: {
     margin: 12,
-    marginLeft: 18,
+    marginLeft: 15,
     marginRight: 10,
   },
   headerContainerStyle: {
@@ -970,7 +630,7 @@ const styles = StyleSheet.create({
   },
   containerStyle: {
     flexDirection: "column",
-    marginTop: 20,
+    marginTop: 50,
   },
   form: {
     flex: 1,
@@ -984,8 +644,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   textInputContainerStyle: {
-   
-    backgroundColor: "#eee",
+    height: 50,
+    backgroundColor: "#f1f1f1",
     marginTop: 12,
     marginLeft: 35,
     marginRight: 35,
@@ -1111,7 +771,8 @@ const styles = StyleSheet.create({
   linkText: {
     fontSize: 16,
     color: colors.BLUE.secondary,
-    fontFamily: "Roboto-Bold",
+    fontFamily: "Roboto",
+    fontWeight: "normal",
   },
   regularText: {
     fontWeight: "normal",

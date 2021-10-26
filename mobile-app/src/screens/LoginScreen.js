@@ -220,11 +220,11 @@ export default function EmailLoginScreen(props) {
   // Bis- form tab action/reducer
   const loginTypeTabActionEmail = () => {
     // toggle customStyleIndex
-    setState({ ...state, customStyleIndex: 0 });
+    setState({ ...state, customStyleIndex: 1 });
   };
   const loginTypeTabActionPhone = () => {
     // toggle customStyleIndex
-    setState({ ...state, customStyleIndex: 1 });
+    setState({ ...state, customStyleIndex: 0 });
   };
 
   return (
@@ -232,30 +232,14 @@ export default function EmailLoginScreen(props) {
       <StatusBar barStyle="dark-content" backgroundColor={colors.WHITE} />
       {/* -- */}
       <View style={styles.formContainer}>
-        <Image
+        {/* <Image
           style={styles.formLogo}
           source={require("../../assets/images/logo.png")}
-        />
+        /> */}
         {/* Bis- form Title component */}
         <FormTitle title="Login" subtitle="Log into your account to continue" />
 
-        {/* Bis- tab component */}
-        {state.customStyleIndex == 0 ? (
-          <LoginWithPhone action={() => loginTypeTabActionPhone()} />
-        ) : (
-          <LoginWithEmail action={() => loginTypeTabActionEmail()} />
-        )}
-
-        {/* End of tab component */}
-
-        {/*Bis- orComponent */}
-        <View>
-          <View style={styles.orComponentHr}></View>
-          <Text style={styles.orComponentTxt}>OR</Text>
-        </View>
-        {/* end of orComponent */}
-
-        {state.customStyleIndex == 0 ? (
+        {state.customStyleIndex == 1 ? (
           <View style={styles.inputContainer}>
             {/* Bis- adding icons to text Input */}
             <Zocial
@@ -273,7 +257,7 @@ export default function EmailLoginScreen(props) {
             />
           </View>
         ) : null}
-        {state.customStyleIndex == 0 ? (
+        {state.customStyleIndex == 1 ? (
           <View style={styles.inputContainer}>
             <Fontisto
               name="locked"
@@ -291,7 +275,7 @@ export default function EmailLoginScreen(props) {
             />
           </View>
         ) : null}
-        {state.customStyleIndex == 0 ? (
+        {state.customStyleIndex == 1 ? (
           <View style={styles.linkBar}>
             <TouchableOpacity
               style={styles.barLinks}
@@ -303,7 +287,7 @@ export default function EmailLoginScreen(props) {
             </TouchableOpacity>
           </View>
         ) : null}
-        {state.customStyleIndex == 0 ? (
+        {state.customStyleIndex == 1 ? (
           <MaterialButtonDark
             onPress={onAction}
             style={styles.materialButtonDark}
@@ -314,7 +298,7 @@ export default function EmailLoginScreen(props) {
           </MaterialButtonDark>
         ) : null}
 
-        {state.customStyleIndex != 0 ? (
+        {state.customStyleIndex != 1 ? (
           <View style={styles.inputContainer}>
             <View style={{ width: "100%", borderRadius: 5 }}>
               <RNPickerSelect
@@ -343,7 +327,7 @@ export default function EmailLoginScreen(props) {
         ) : null}
         {/* form component */}
         <View>
-          {state.customStyleIndex != 0 ? (
+          {state.customStyleIndex != 1 ? (
             <View style={styles.inputContainer}>
               <Entypo
                 name="mobile"
@@ -366,19 +350,20 @@ export default function EmailLoginScreen(props) {
               />
             </View>
           ) : null}
-          {state.customStyleIndex != 0 ? (
+          {state.customStyleIndex != 1 ? (
             state.verificationId ? null : (
               <MaterialButtonDark
                 onPress={onPressLogin}
-                style={[styles.materialButtonDark, styles.bgRed]}
+                style={[styles.materialButtonDark]}
               >
                 <Text style={{ fontSize: 15, fontWeight: "bold" }}>
-                  {language.request_otp}
+                  {/* {language.request_otp} */}
+                  Log in
                 </Text>
               </MaterialButtonDark>
             )
           ) : null}
-          {state.customStyleIndex != 0 && !!state.verificationId ? (
+          {state.customStyleIndex != 1 && !!state.verificationId ? (
             <View style={styles.inputContainer}>
               <TextInput
                 style={styles.textInput}
@@ -395,7 +380,7 @@ export default function EmailLoginScreen(props) {
           ) : null}
         </View>
 
-        {state.customStyleIndex != 0 && !!state.verificationId ? (
+        {state.customStyleIndex != 1 && !!state.verificationId ? (
           <MaterialButtonDark
             onPress={onSignIn}
             style={[styles.materialButtonDark, styles.bgRed]}
@@ -417,6 +402,21 @@ export default function EmailLoginScreen(props) {
           </View>
         ) : null}
 
+        {/*Bis- orComponent */}
+        <View style={{ marginVertical: 20 }}>
+          <Text style={styles.orComponentTxt}>OR</Text>
+        </View>
+        {/* end of orComponent */}
+
+        {/* Bis- tab component */}
+        {state.customStyleIndex == 1 ? (
+          <LoginWithPhone action={() => loginTypeTabActionPhone()} />
+        ) : (
+          <LoginWithEmail action={() => loginTypeTabActionEmail()} />
+        )}
+
+        {/* End of tab component */}
+
         {/* REGISTERATION LINK */}
         <View
           style={[
@@ -434,14 +434,7 @@ export default function EmailLoginScreen(props) {
             style={{ paddingLeft: 5 }}
             onPress={() => props.navigation.navigate("Reg")}
           >
-            <Text
-              style={[
-                styles.linkText,
-                state.customStyleIndex != 0 ? { color: "#9B0000" } : null,
-              ]}
-            >
-              Sign Up
-            </Text>
+            <Text style={[styles.linkText, { color: "#9B0000" }]}>Sign Up</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -486,7 +479,7 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     marginLeft: "auto",
     marginRight: "auto",
-    marginTop: -20,
+    // marginTop: -20,
     padding: 10,
     fontSize: 14,
     fontWeight: "bold",
@@ -498,15 +491,6 @@ const styles = StyleSheet.create({
     margin: 12,
     marginLeft: 18,
     marginRight: 10,
-  },
-
-  // Bis- Form orComponentHr style
-  orComponentHr: {
-    borderBottomColor: colors.GREY.border,
-    borderBottomWidth: 1.5,
-    marginLeft: 35,
-    marginRight: 35,
-    marginTop: 25,
   },
 
   // Bis- Box shadow
@@ -589,7 +573,7 @@ const styles = StyleSheet.create({
 
   // Bis- combined box1 and inputContainer style into inputContainer
   inputContainer: {
-    backgroundColor: "#eee",
+    backgroundColor: "#f1f1f1",
     marginTop: 12,
     marginLeft: 35,
     marginRight: 35,
@@ -615,7 +599,7 @@ const styles = StyleSheet.create({
     height: 40,
   },
   materialButtonDark: {
-    height: 45,
+    height: 50,
     marginTop: 22,
     marginLeft: 35,
     marginRight: 35,
@@ -637,7 +621,8 @@ const styles = StyleSheet.create({
   linkText: {
     fontSize: 16,
     color: colors.BLUE.secondary,
-    fontFamily: "Roboto-Bold",
+    fontFamily: "Roboto",
+    fontWeight: "normal",
   },
   pickerStyle: {
     color: colors.GREY.background,
