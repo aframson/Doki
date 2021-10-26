@@ -35,7 +35,7 @@ export default function PaymentWebView(props) {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
         body: 'order_id=' + props.payData.order_id
           + '&amount=' + props.payData.amount
-          + '&currency=' + props.payData.currency
+          + '&currency=GHS'  
           + '&product_name=' + props.payData.product_name
           + '&quantity=' + props.payData.quantity
           + '&cust_id=' + props.payData.cust_id

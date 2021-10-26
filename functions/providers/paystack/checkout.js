@@ -17,7 +17,6 @@ module.exports.render_checkout = function (request, response) {
         amount
     ));
 };
-
 module.exports.process_checkout = function (request, response) {
     paystack.transaction.verify(request.query.reference, (error, body) => {
         if(error){

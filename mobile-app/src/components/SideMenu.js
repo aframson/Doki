@@ -35,13 +35,13 @@ export default function SideMenu(props){
     const settings = useSelector(state => state.settingsdata.settings);
 
     const sideMenuList = [
-        {name: language.book_your_ride_menu, navigationName: 'Map', icon: 'home', type: 'antdesign'},
+        {name: language.book_your_ride_menu, navigationName: 'Map', icon: 'home', type: 'feather'},
         {name: language.booking_request, navigationName: 'DriverTrips', icon: 'home', type: 'font-awesome'},
         {name: language.my_rides_menu, navigationName: 'RideList', icon: 'history', type: 'octicons'},
-        {name: language.incomeText, navigationName: 'MyEarning', icon: 'md-wallet', type: 'ionicon'},
-        {name: language.my_wallet_menu, icon: 'wallet', navigationName: 'wallet', type: 'antdesign'},
+        {name: language.incomeText, navigationName: 'MyEarning', icon: 'ios-wallet-outline', type: 'ionicon'},
+        {name: language.my_wallet_menu, icon: 'wallet', navigationName: 'ios-wallet-outline', type:'ionicon'},
         {name: language.profile_setting_menu, navigationName: 'Profile', icon: 'user', type: 'antdesign'},
-        {name: language.refer_earn, navigationName: 'Refer', icon: 'cash', type: 'ionicon'},
+        {name: language.refer_earn, navigationName: 'Refer', icon: 'sharealt', type: 'antdesign'},
         {name: language.emergency, navigationName: 'Emergency', icon: 'ios-sad', type: 'ionicon'},
         {name: language.convertmenu, navigationName: 'Convert', icon: 'person', type: 'ionicon'},
         {name: language.about_us_menu, navigationName: 'About', icon: 'info', type: 'entypo'},
@@ -126,6 +126,7 @@ export default function SideMenu(props){
                         else if (auth.info.profile.usertype == 'driver'  && item.navigationName == 'Convert') {
                             return null;
                         }
+                       
                         else if ((auth.info.profile.usertype == 'rider' || auth.info.profile.usertype == 'driver') && item.navigationName == 'Refer') {
                             return (
                                 <TouchableOpacity 
@@ -193,8 +194,32 @@ export default function SideMenu(props){
                                     </View>
                                     <Text style={styles.menuName}>{item.name}</Text>
                                 </TouchableOpacity>
-                                )                           
-                        }else{
+                                )  
+                                
+                                
+                        }
+                        else if (auth.info.profile.usertype == 'rider'  && item.navigationName == 'Convert') {
+                            return (
+                                <TouchableOpacity
+                                onPress={
+                                    (item.name == language.logout) ? () => logOff() :
+                                        navigateToScreen(item.navigationName)
+                                }
+                                style={
+                                    [{ marginTop: (index == sideMenuList.length - 1) ? width / 7 : 0 ,
+                                        backgroundColor: colors.BLUE.secondary,
+                                        margin:10,
+                                        padding:15,
+                                        borderRadius:5,
+                                    }]
+                                }>
+                             
+                                <Text style={[styles.menuName,{fontSize:25,color:'white'}]}>Become a driver</Text>
+                                <Text style={styles.menuName,{color:'white',marginLeft:9}}>Earn money on your schedules</Text>
+                            </TouchableOpacity>
+                            );
+                        }
+                        else{
                             return(
                             <TouchableOpacity
                                 onPress={

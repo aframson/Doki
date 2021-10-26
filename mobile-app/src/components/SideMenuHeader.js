@@ -31,7 +31,7 @@ const SideMenuHeader = ({headerStyle,userPhoto,userName,userEmail}) =>{
 
 const styles = {
     viewStyle:{
-        backgroundColor:colors.BLUE.secondary,
+        // backgroundColor:colors.BLUE.secondary,
         justifyContent:'center',
         alignItems:'center',
         height:180,
@@ -68,7 +68,7 @@ const styles = {
     },
     ProfileNameStyle:{
         fontWeight: 'bold', 
-        color: colors.WHITE, 
+        // color: colors.WHITE, 
         fontSize: 15
     },
     iconViewStyle:{
@@ -79,7 +79,7 @@ const styles = {
         marginTop: 4
     },
     emailStyle:{
-        color: colors.WHITE, 
+        // color: colors.WHITE, 
         fontSize: 13,
         marginLeft: 4,
         textAlign:'center'

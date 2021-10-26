@@ -50,10 +50,10 @@ export default function App() {
         require('./assets/images/intro.jpg'),
       ]),
       Font.loadAsync({
-        'Roboto-Bold': require('./assets/fonts/Roboto-Bold.ttf'),
-        'Roboto-Regular': require('./assets/fonts/Roboto-Regular.ttf'),
-        'Roboto-Medium': require('./assets/fonts/Roboto-Medium.ttf'),
-        'Roboto-Light': require('./assets/fonts/Roboto-Light.ttf'),
+        'Roboto-Bold': require('./assets/fonts/Poppins-Bold.ttf'),
+        'Roboto-Regular': require('./assets/fonts/Poppins-Regular.ttf'),
+        'Roboto-Medium': require('./assets/fonts/Poppins-Medium.ttf'),
+        'Roboto-Light': require('./assets/fonts/Poppins-Light.ttf'),
       }),
     ]);
   };

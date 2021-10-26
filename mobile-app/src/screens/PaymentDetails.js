@@ -150,7 +150,7 @@ export default function PaymentDetails(props) {
         order_id: booking.id,
         name: language.bookingPayment,
         description: language.order_id + booking.id,
-        currency: settings.code,
+        currency: 'GHS',
         quantity: 1
       }
 

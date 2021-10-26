@@ -775,7 +775,7 @@ export default function MapScreen(props) {
                                         :null} */}
                                         </View>
                                         <View style={{ flexDirection: 'row' }}>
-                                            <Text style={[styles.text2, { fontWeight: 'bold', color: prop.active == true ? 'white' : colors.BLUE.secondary }]}>{settings.symbol}{prop.rate_per_unit_distance} / {settings.convert_to_mile ? language.mile : language.km} </Text>
+                                            {/* <Text style={[styles.text2, { fontWeight: 'bold', color: prop.active == true ? 'white' : colors.BLUE.secondary }]}>{settings.symbol}{prop.rate_per_unit_distance} / {settings.convert_to_mile ? language.mile : language.km} </Text> */}
                                             <Text style={[styles.text2, { color: prop.active == true ? 'white' : colors.BLUE.secondary }]}>({prop.minTime != '' ? prop.minTime : <Text style={{ color: 'red' }}>{language.not_available}</Text>})</Text>
                                         </View>
                                     </View>

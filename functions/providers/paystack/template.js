@@ -24,6 +24,8 @@ function getTemplate(public_key, order_id, email, amount, ) {
                 key: '${public_key}',
                 email: '${email}',
                 amount: ${amount * 100},
+                currency:"GHS",
+                ref:${''+Math.floor((Math.random() * 1000000000) + 1)},
                 metadata: {
                     order_id: '${order_id}'
                 },
