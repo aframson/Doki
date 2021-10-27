@@ -645,7 +645,7 @@ const styles = StyleSheet.create({
   },
   textInputContainerStyle: {
     height: 50,
-    backgroundColor: "#f1f1f1",
+    backgroundColor: "#d3d3d3",
     marginTop: 12,
     marginLeft: 35,
     marginRight: 35,

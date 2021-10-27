@@ -520,7 +520,7 @@ const styles = StyleSheet.create({
   textContainer: { textAlign: "center" },
   mainView: {
     flex: 1,
-    backgroundColor: colors.BLACK,
+    backgroundColor: colors.WHITE,
   },
   headerContainerStyle: {
     backgroundColor: colors.TRANSPARENT,
@@ -542,8 +542,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginVertical: 20,
     marginBottom: 30,
-    color: "#fff",
-    fontSize: 18,
+    color: "grey",
+    fontSize: 16,
   },
   iconContainer: {
     paddingBottom: 20,
@@ -576,14 +576,14 @@ const styles = StyleSheet.create({
     height: 50,
     // marginHorizontal: 25,
     borderRadius: 6,
-    backgroundColor: "#353535",
+    backgroundColor: "#f1f1f1",
     // flexDirection: 'row',
     // alignItems: 'center'
     marginBottom: 15,
   },
   pickerStyle: {
     width: "100%",
-    color: colors.WHITE,
+    color: colors.BLACK,
     fontSize: 15,
     height: 40,
     marginLeft: Platform.OS == "ios" ? 20 : 10,
@@ -592,16 +592,16 @@ const styles = StyleSheet.create({
     // borderBottomColor: colors.WHITE,
   },
   label: {
-    color: "#9A9A9A",
+    color: "#777",
     marginBottom: 8,
   },
   inputTextStyle: {
-    color: colors.WHITE,
+    color: colors.BLACK,
     fontSize: 15,
     marginLeft: 0,
     paddingHorizontal: 15,
     height: 50,
-    backgroundColor: "#353535",
+    backgroundColor: "#f1f1f1",
     borderRadius: 6,
     width: "100%",
   },
@@ -648,10 +648,12 @@ const styles = StyleSheet.create({
   capturePhoto: {
     width: "80%",
     alignSelf: "center",
+    borderColor: "#ccc",
     flexDirection: "column",
     justifyContent: "center",
     borderRadius: 6,
-    backgroundColor: "#353535",
+    backgroundColor: "#ffffff",
+    borderWidth: 1,
     marginLeft: 20,
     marginRight: 20,
     paddingTop: 15,
@@ -696,7 +698,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-end",
   },
   capturePicClick: {
-    backgroundColor: "#353535",
+    backgroundColor: "#fff",
     // flexDirection: "row",
     // position: "relative",
     // zIndex: 1,
@@ -742,7 +744,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   textStyle: {
-    color: colors.GREY.Smoke_Grey,
+    color: colors.GREY.btnPrimary,
     fontFamily: "Roboto-Bold",
     fontSize: 13,
     marginBottom: 20,
