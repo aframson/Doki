@@ -556,6 +556,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     marginLeft: 10,
     width: "90%",
+    // fontSize: 14,
   },
   iconContainer: {
     paddingBottom: 20,
@@ -615,7 +616,7 @@ const styles = StyleSheet.create({
   },
   inputTextStyle: {
     color: "black",
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: "Roboto-Regular",
     textAlign: "left",
     marginTop: 0,
@@ -645,7 +646,7 @@ const styles = StyleSheet.create({
   },
   textInputContainerStyle: {
     height: 50,
-    backgroundColor: "#d3d3d3",
+    backgroundColor: "#f1f1f1",
     marginTop: 12,
     marginLeft: 35,
     marginRight: 35,

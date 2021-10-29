@@ -590,7 +590,7 @@ const styles = StyleSheet.create({
 
   textInput: {
     color: "black",
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: "Roboto-Regular",
     textAlign: "left",
     marginTop: 0,
