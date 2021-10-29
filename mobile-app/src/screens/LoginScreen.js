@@ -300,7 +300,7 @@ export default function EmailLoginScreen(props) {
 
         {state.customStyleIndex != 1 ? (
           <View style={styles.inputContainer}>
-            <View style={{ width: "100%", borderRadius: 5 ,padding:15}}>
+            <View style={{ width: "100%", borderRadius: 5, padding: 15 }}>
               <RNPickerSelect
                 placeholder={{
                   label: language.select_country,
@@ -627,7 +627,7 @@ const styles = StyleSheet.create({
   pickerStyle: {
     color: colors.GREY.background,
     fontFamily: "Roboto-Regular",
-    fontSize: 18,
+    fontSize: 14,
     marginLeft: 5,
   },
 

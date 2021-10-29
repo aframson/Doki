@@ -461,7 +461,6 @@ export default function Registration(props) {
                     style={styles.textInputIcon}
                   />
                   <TextInput
-
                     editable={true}
                     placeholder={language.email_placeholder}
                     value={state.email}
@@ -609,7 +608,7 @@ const styles = StyleSheet.create({
   },
   pickerStyle: {
     color: colors.BLACK,
-    fontSize: 18,
+    fontSize: 14,
     width: "100%",
     height: 40,
     // marginLeft: Platform.OS == "ios" ? 20 : 10,
