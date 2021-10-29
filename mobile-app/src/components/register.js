@@ -461,6 +461,8 @@ export default function Registration(props) {
                     style={styles.textInputIcon}
                   />
                   <TextInput
+
+                    editable={true}
                     placeholder={language.email_placeholder}
                     value={state.email}
                     keyboardType={"email-address"}

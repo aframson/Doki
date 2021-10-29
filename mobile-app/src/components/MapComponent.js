@@ -30,7 +30,7 @@ export default function MapComponent(props) {
                     >
                         <Image
                             source={carImageIcon}
-                            style={{ height: 40, width: 40 }}
+                            style={{ height: 50, width: 20 }}
                         />
                     </Marker.Animated>
 
