@@ -461,6 +461,8 @@ export default function Registration(props) {
                     style={styles.textInputIcon}
                   />
                   <TextInput
+
+                    editable={true}
                     placeholder={language.email_placeholder}
                     value={state.email}
                     keyboardType={"email-address"}
@@ -645,7 +647,7 @@ const styles = StyleSheet.create({
   },
   textInputContainerStyle: {
     height: 50,
-    backgroundColor: "#d3d3d3",
+    backgroundColor: "#f1f1f1",
     marginTop: 12,
     marginLeft: 35,
     marginRight: 35,

@@ -5,7 +5,7 @@ import logo138x75black from "./logo138x75black.png";
 import logo138x75white from "./logo138x75white.png";
 import logo165x90white from "./logo165x90white.png"
 import logo1024x1024 from "./logo1024x1024.png";
-import intro from "./intro.jpg";
+import intro from "./intro.png";
 import bg from "./bg.jpg";
 
 export default {

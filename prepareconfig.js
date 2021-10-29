@@ -193,7 +193,7 @@ fs.copyFile("assets/logo96x96.png", "mobile-app/assets/images/logo96x96.png", (e
 
 fs.copyFile("assets/logo165x90white.png", "mobile-app/assets/images/logo165x90white.png", (err) => {err?console.log("File Copy Error:", err):console.log("App Menu Logo copied successfully.")});
 
-fs.copyFile("assets/intro.jpg", "mobile-app/assets/images/intro.jpg", (err) => {err?console.log("File Copy Error:", err):console.log("Intro Image copied successfully.")});
+fs.copyFile("assets/intro.png", "mobile-app/assets/images/intro.png", (err) => {err?console.log("File Copy Error:", err):console.log("Intro Image copied successfully.")});
 
 fs.copyFile("assets/bg.jpg", "mobile-app/assets/images/bg.jpg", (err) => {err?console.log("File Copy Error:", err):console.log("Background Image copied successfully.")});
 
