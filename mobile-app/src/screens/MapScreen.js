@@ -580,7 +580,7 @@ export default function MapScreen(props) {
                     size={35}
                     containerStyle={{ flex: 1, marginLeft: width - 60, position: 'absolute', top: 40 }}
                 />
-                <Text style={{ position: 'absolute', fontSize: Platform.OS === 'ios' ? 40 : 35, fontWeight: 'bold', color: colors.BLUE.secondary, top: 40, left: width / 2.5 }}>Doki</Text>
+                {/* <Text style={{ position: 'absolute', fontSize: Platform.OS === 'ios' ? 40 : 35, fontWeight: 'bold', color: colors.BLUE.secondary, top: 40, left: width / 2.5 }}>Doki</Text> */}
                 <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: margin }}>
                     <View style={styles.coverViewStyle}>
                         <View style={styles.viewStyle1} />
@@ -812,7 +812,7 @@ export default function MapScreen(props) {
                         size={18}
                         containerStyle={{ backgroundColor: 'gray', padding: 5, height: 30, width: 30, borderRadius: 50 }}
                     />
-                    <Text style={{ height: 30, marginTop: Platform.OS === 'ios' ? 5 : 0, marginLeft: 10, fontSize: 20, fontWeight: 'bold', color: 'black' }}>Where to ?</Text>
+                    <Text style={{ height: 30, marginTop: Platform.OS === 'ios' ? 5 : 0, marginLeft: 10, fontSize: 20, fontWeight: 'bold', color: 'black' }}>Drop off ?</Text>
                 </TouchableOpacity>
 
 
