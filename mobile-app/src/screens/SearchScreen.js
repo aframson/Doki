@@ -1,7 +1,9 @@
 import React, { useContext } from 'react';
-import { Platform, StatusBar, Button, Alert } from 'react-native';
+import { Platform, StatusBar, Button, Alert,TouchableOpacity } from 'react-native';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { colors } from '../common/theme';
+import { Icon, } from 'react-native-elements';
+
 import {
     Google_Map_API_Key,
     language,
@@ -81,10 +83,19 @@ export default function SearchScreen(props) {
             returnKeyType={'search'} // Can be left out for default return key https://facebook.github.io/react-native/docs/textinput.html#returnkeytype
             listViewDisplayed='auto'  // true/false/undefined
             fetchDetails={true}
-            renderLeftButton={() => <Button
-                title="Back"
-                onPress={() => { props.navigation.goBack(); }}
-            />
+            renderLeftButton={() =>   
+            <TouchableOpacity
+                // style={{position: 'absolute',margin:20}}
+                onPress={() => props.navigation.goBack()}
+              >
+                <Icon
+                  name='back'
+                  type='antdesign'
+                  color='black'
+                  size={35}
+                  style={{ marginTop: 10}}
+                />
+              </TouchableOpacity>
             }
             textInputProps={{ clearButtonMode: 'while-editing' }}
             onPress={(data) => { // 'details' is provided when fetchDetails = true
@@ -108,22 +119,52 @@ export default function SearchScreen(props) {
 
             styles={{
                 container: {
-                    marginTop: Platform.OS == 'android' ? StatusBar.currentHeight : 44,
-                    backgroundColor: colors.GREY.default
+                  flex: 1,
+                  marginTop:40,
+                //   backgroundColor: 'red'
                 },
                 textInputContainer: {
-                    width: '100%',
+                  flexDirection: 'row',
+                  height:'auto',
+                  backgroundColor: '#eee',
+                  padding:10,
                 },
-                description: {
-                    fontWeight: 'bold'
+                textInput: {
+                  backgroundColor: '#FFFFFF',
+                  height: 44,
+                  borderRadius: 5,
+                  paddingVertical: 5,
+                  paddingHorizontal: 10,
+                  fontSize: 15,
+                  flex: 1,
                 },
-                description: {
-                    color: colors.WHITE
+                poweredContainer: {
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                  borderBottomRightRadius: 5,
+                  borderBottomLeftRadius: 5,
+                  borderColor: '#c8c7cc',
+                  borderTopWidth: 0.5,
                 },
-                predefinedPlacesDescription: {
-                    color: colors.BLUE.light
+                powered: {},
+                listView: {},
+                row: {
+                  backgroundColor: '#FFFFFF',
+                  padding: 13,
+                  height: 44,
+                  flexDirection: 'row',
                 },
-            }}
+                separator: {
+                  height: 0.5,
+                  backgroundColor: '#c8c7cc',
+                },
+                description: {},
+                loader: {
+                  flexDirection: 'row',
+                  justifyContent: 'flex-end',
+                  height: 20,
+                },
+              }}
             renderDescription={(row) => row.description || row.formatted_address || row.name}
             fetchDetails={false}
             minLength={4}
