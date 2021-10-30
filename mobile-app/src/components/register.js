@@ -461,7 +461,6 @@ export default function Registration(props) {
                     style={styles.textInputIcon}
                   />
                   <TextInput
-
                     editable={true}
                     placeholder={language.email_placeholder}
                     value={state.email}
@@ -558,6 +557,7 @@ const styles = StyleSheet.create({
   textInputStyle: {
     marginLeft: 10,
     width: "90%",
+    // fontSize: 14,
   },
   iconContainer: {
     paddingBottom: 20,
@@ -608,7 +608,7 @@ const styles = StyleSheet.create({
   },
   pickerStyle: {
     color: colors.BLACK,
-    fontSize: 18,
+    fontSize: 14,
     width: "100%",
     height: 40,
     // marginLeft: Platform.OS == "ios" ? 20 : 10,
@@ -617,7 +617,7 @@ const styles = StyleSheet.create({
   },
   inputTextStyle: {
     color: "black",
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: "Roboto-Regular",
     textAlign: "left",
     marginTop: 0,

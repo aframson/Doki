@@ -597,7 +597,7 @@ const styles = StyleSheet.create({
   },
   inputTextStyle: {
     color: colors.BLACK,
-    fontSize: 15,
+    fontSize: 14,
     marginLeft: 0,
     paddingHorizontal: 15,
     height: 50,
