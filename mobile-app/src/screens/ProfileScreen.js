@@ -234,7 +234,7 @@ export default function ProfileScreen(props) {
   return (
     <View style={styles.mainView}>
       <Header
-        backgroundColor={colors.GREY.default}
+        backgroundColor={colors.BLUE.secondary}
         rightComponent={{
           icon: "page-edit",
           type: "foundation",
@@ -686,9 +686,9 @@ const styles = StyleSheet.create({
     flex: 1,
     // left: 20,
     // marginRight: 40,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     marginBottom: 8,
-    borderBottomColor: colors.GREY.btnSecondary,
+    borderBottomColor: colors.GREY.primary,
     borderBottomWidth: 1,
   },
   iconViewStyle: {
@@ -738,14 +738,14 @@ const styles = StyleSheet.create({
   textIconStyle2: {
     width: width,
     height: 65,
-    paddingHorizontal: 15,
+    paddingHorizontal: 20,
     // paddingVertical: 20,
     backgroundColor: colors.WHITE,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     borderBottomWidth: 1,
-    borderBottomColor: colors.GREY.secondary,
+    borderBottomColor: colors.GREY.primary,
   },
   mainView: {
     flex: 1,
