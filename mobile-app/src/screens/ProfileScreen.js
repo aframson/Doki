@@ -25,6 +25,7 @@ import { FirebaseContext } from "common/src";
 import StarRating from "react-native-star-rating";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as TaskManager from "expo-task-manager";
+import { Feather } from "@expo/vector-icons";
 
 export default function ProfileScreen(props) {
   const { api } = useContext(FirebaseContext);
@@ -234,6 +235,14 @@ export default function ProfileScreen(props) {
     <View style={styles.mainView}>
       <Header
         backgroundColor={colors.GREY.default}
+        rightComponent={{
+          icon: "page-edit",
+          type: "foundation",
+          color: colors.WHITE,
+          onPress: () => {
+            editProfile();
+          },
+        }}
         leftComponent={{
           icon: "md-menu",
           type: "ionicon",
@@ -267,7 +276,7 @@ export default function ProfileScreen(props) {
             />
           </View>
         ) : null}
-        <View style={styles.scrollViewStyle}>
+        {/* <View style={styles.scrollViewStyle}>
           <Text style={styles.profStyle}>{language.profile_page_subtitle}</Text>
           <Icon
             name="page-edit"
@@ -277,7 +286,7 @@ export default function ProfileScreen(props) {
             style={{ marginRight: 20 }}
             onPress={editProfile}
           />
-        </View>
+        </View> */}
 
         <View style={styles.viewStyle}>
           <View style={styles.imageParentView}>
@@ -297,11 +306,34 @@ export default function ProfileScreen(props) {
                         ? { uri: profileData.profile_image }
                         : require("../../assets/images/profilePic.png")
                     }
-                    style={{ borderRadius: 130 / 2, width: 130, height: 130 }}
+                    style={{ borderRadius: 100 / 2, width: 100, height: 100 }}
                   />
                 </TouchableOpacity>
               )}
             </View>
+            <TouchableOpacity
+              style={{
+                position: "absolute",
+                bottom: -10,
+                right: 20,
+                zIndex: 2,
+                backgroundColor: colors.WHITE,
+                width: 50,
+                height: 50,
+                borderRadius: 20,
+                justifyContent: "center",
+                alignItems: "center",
+                borderColor: colors.GREY.btnSecondary,
+                borderWidth: 2,
+              }}
+              onPress={showActionSheet}
+            >
+              <Feather
+                name="camera"
+                color={colors.GREY.iconSecondary}
+                size={25}
+              />
+            </TouchableOpacity>
           </View>
           <Text style={styles.textPropStyle}>
             {profileData &&
@@ -314,12 +346,12 @@ export default function ProfileScreen(props) {
         <View style={styles.newViewStyle}>
           <View style={styles.myViewStyle}>
             <View style={styles.iconViewStyle}>
-              <Icon
+              {/* <Icon
                 name="envelope-letter"
                 type="simple-line-icon"
                 color={colors.GREY.btnPrimary}
                 size={30}
-              />
+              /> */}
               <Text style={styles.emailStyle}>
                 {language.email_placeholder}
               </Text>
@@ -332,81 +364,103 @@ export default function ProfileScreen(props) {
           </View>
           <View style={styles.myViewStyle}>
             <View style={styles.iconViewStyle}>
-              <Icon
+              {/* <Icon
                 name="phone-call"
                 type="feather"
                 color={colors.GREY.btnPrimary}
-              />
-              <Text style={styles.text1}>{language.mobile_no_placeholder}</Text>
+              /> */}
+              <Text style={styles.emailStyle}>
+                {language.mobile_no_placeholder}
+              </Text>
             </View>
             <View style={styles.flexView2}>
-              <Text style={styles.text2}>
+              <Text style={styles.emailAdressStyle}>
                 {profileData ? profileData.mobile : ""}
               </Text>
             </View>
           </View>
           {profileData && profileData.referralId ? (
-            <View style={styles.myViewStyle}>
-              <View style={styles.iconViewStyle}>
-                <Icon
+            <View
+              style={[
+                styles.myViewStyle,
+                {
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                },
+              ]}
+            >
+              <View style={{ flexDirection: "column" }}>
+                <View style={styles.iconViewStyle}>
+                  {/* <Icon
                   name="award"
                   type="feather"
                   color={colors.GREY.btnPrimary}
-                />
-                <Text style={styles.emailStyle}>{language.referralId}</Text>
-              </View>
-              <View style={{ flex: 1, flexDirection: "row" }}>
-                <Text style={styles.text2}>{profileData.referralId}</Text>
-                <TouchableOpacity
-                  style={{ marginLeft: 20 }}
-                  onPress={() => {
-                    settings.bonus > 0
-                      ? Share.share({
-                          message:
-                            language.share_msg +
-                            settings.code +
-                            " " +
-                            settings.bonus +
-                            ".\n" +
-                            language.code_colon +
-                            auth.info.profile.referralId +
-                            "\n" +
-                            language.app_link +
-                            (Platform.OS == "ios"
-                              ? settings.AppleStoreLink
-                              : settings.PlayStoreLink),
-                        })
-                      : Share.share({
-                          message:
-                            language.share_msg_no_bonus +
-                            "\n" +
-                            language.app_link +
-                            (Platform.OS == "ios"
-                              ? settings.AppleStoreLink
-                              : settings.PlayStoreLink),
-                        });
+                /> */}
+                  <Text style={styles.emailStyle}>{language.referralId}</Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    flexDirection: "row",
+                    justifyContent: "space-between",
                   }}
                 >
-                  <Icon
-                    name={Platform.OS == "android" ? "share-social" : "share"}
-                    type="ionicon"
-                    color={colors.BLUE.secondary}
-                  />
-                </TouchableOpacity>
+                  <Text style={styles.emailAdressStyle}>
+                    {profileData.referralId}
+                  </Text>
+                </View>
               </View>
+              <TouchableOpacity
+                // style={{ marginLeft: 20 }}
+                onPress={() => {
+                  settings.bonus > 0
+                    ? Share.share({
+                        message:
+                          language.share_msg +
+                          settings.code +
+                          " " +
+                          settings.bonus +
+                          ".\n" +
+                          language.code_colon +
+                          auth.info.profile.referralId +
+                          "\n" +
+                          language.app_link +
+                          (Platform.OS == "ios"
+                            ? settings.AppleStoreLink
+                            : settings.PlayStoreLink),
+                      })
+                    : Share.share({
+                        message:
+                          language.share_msg_no_bonus +
+                          "\n" +
+                          language.app_link +
+                          (Platform.OS == "ios"
+                            ? settings.AppleStoreLink
+                            : settings.PlayStoreLink),
+                      });
+                }}
+              >
+                <Icon
+                  name={Platform.OS == "android" ? "share-social" : "share"}
+                  type="ionicon"
+                  color={colors.GREY.iconSecondary}
+                  size={30}
+                />
+              </TouchableOpacity>
             </View>
           ) : null}
-          <View style={styles.myViewStyle}>
+          <View style={[styles.myViewStyle, { marginBottom: 0 }]}>
             <View style={styles.iconViewStyle}>
-              <Icon
+              {/* <Icon
                 name="user"
                 type="simple-line-icon"
                 color={colors.GREY.btnPrimary}
-              />
+              /> */}
               <Text style={styles.emailStyle}>{language.usertype}</Text>
             </View>
             <View style={{ flex: 1 }}>
-              <Text style={styles.text2}>
+              <Text style={styles.emailAdressStyle}>
                 {profileData ? profileData.usertype : ""}
               </Text>
             </View>
@@ -414,30 +468,32 @@ export default function ProfileScreen(props) {
           {profileData && profileData.usertype == "driver" ? (
             <View style={styles.myViewStyle}>
               <View style={styles.iconViewStyle}>
-                <Icon
+                {/* <Icon
                   name="car-outline"
                   type="ionicon"
                   color={colors.GREY.btnPrimary}
-                />
+                /> */}
                 <Text style={styles.emailStyle}>{language.car_type}</Text>
               </View>
               <View style={{ flex: 1 }}>
-                <Text style={styles.text2}>{profileData.carType}</Text>
+                <Text style={styles.emailAdressStyle}>
+                  {profileData.carType}
+                </Text>
               </View>
             </View>
           ) : null}
           {profileData && profileData.usertype == "driver" ? (
             <View style={styles.myViewStyle}>
               <View style={styles.iconViewStyle}>
-                <Icon
+                {/* <Icon
                   name="thumbs-up-outline"
                   type="ionicon"
                   color={colors.GREY.btnPrimary}
-                />
+                /> */}
                 <Text style={styles.emailStyle}>{language.you_rated_text}</Text>
               </View>
               <View style={{ flex: 1, flexDirection: "row" }}>
-                <Text style={styles.text2}>
+                <Text style={styles.emailAdressStyle}>
                   {profileData && profileData.usertype && profileData.ratings
                     ? profileData.ratings.userrating
                     : 0}
@@ -470,26 +526,49 @@ export default function ProfileScreen(props) {
             style={styles.textIconStyle2}
             onPress={deleteAccount}
           >
-            <Text style={styles.emailStyle}>
+            <Text
+              style={[
+                styles.emailStyle,
+                {
+                  color: colors.GREY.btnPrimary,
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  paddingVertical: 15,
+                },
+              ]}
+            >
               {language.delete_account_lebel}
             </Text>
             <Icon
-              name="ios-arrow-forward"
-              type="ionicon"
-              color={colors.GREY.iconPrimary}
-              size={35}
-              containerStyle={{ right: 20 }}
+              name="delete-outline"
+              type="AntDesign"
+              color={colors.GREY.iconSecondary}
+              size={30}
             />
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={logOff} style={styles.textIconStyle2}>
-            <Text style={styles.emailStyle}>{language.logout}</Text>
+          <TouchableOpacity
+            onPress={logOff}
+            style={[styles.textIconStyle2, { borderBottomWidth: 0 }]}
+          >
+            <Text
+              style={[
+                styles.emailStyle,
+                {
+                  color: colors.GREY.btnPrimary,
+                  fontSize: 18,
+                  fontWeight: "bold",
+                  paddingVertical: 15,
+                },
+              ]}
+            >
+              {language.logout}
+            </Text>
             <Icon
-              name="ios-arrow-forward"
+              name="log-out-outline"
               type="ionicon"
-              color={colors.GREY.iconPrimary}
-              size={35}
-              containerStyle={{ right: 20 }}
+              color={colors.GREY.iconSecondary}
+              size={30}
             />
           </TouchableOpacity>
         </View>
@@ -528,6 +607,8 @@ const styles = StyleSheet.create({
   },
   scrollStyle: {
     flex: 1,
+    flexDirection: "column",
+    // alignItems: "center",
     height: height,
     backgroundColor: colors.WHITE,
   },
@@ -568,27 +649,34 @@ const styles = StyleSheet.create({
   },
   imageParentView: {
     borderRadius: 150 / 2,
-    width: 150,
-    height: 150,
-    backgroundColor: colors.GREY.secondary,
+    width: 180,
+    height: 105,
+    // backgroundColor: colors.GREY.secondary,
     justifyContent: "center",
     alignItems: "center",
+    marginTop: 40,
+    marginBottom: 10,
   },
   imageViewStyle: {
-    borderRadius: 140 / 2,
-    width: 140,
-    height: 140,
+    borderRadius: 100 / 2,
+    borderColor: colors.GREY.primary,
+    borderWidth: 2,
+    padding: 10,
+    width: 120,
+    height: 120,
     backgroundColor: colors.WHITE,
     justifyContent: "center",
     alignItems: "center",
   },
   textPropStyle: {
-    fontSize: 21,
+    fontSize: 18,
     fontWeight: "bold",
     color: colors.GREY.iconSecondary,
     fontFamily: "Roboto-Bold",
     top: 8,
     textTransform: "uppercase",
+    marginBottom: 40,
+    marginTop: 15,
   },
   newViewStyle: {
     flex: 1,
@@ -596,8 +684,9 @@ const styles = StyleSheet.create({
   },
   myViewStyle: {
     flex: 1,
-    left: 20,
-    marginRight: 40,
+    // left: 20,
+    // marginRight: 40,
+    paddingHorizontal: 15,
     marginBottom: 8,
     borderBottomColor: colors.GREY.btnSecondary,
     borderBottomWidth: 1,
@@ -608,15 +697,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   emailStyle: {
-    fontSize: 17,
-    left: 10,
-    color: colors.GREY.btnPrimary,
-    fontFamily: "Roboto-Bold",
+    fontSize: 14,
+    // left: 10,
+    color: colors.GREY.secondary,
+    fontFamily: "Roboto",
   },
   emailAdressStyle: {
-    fontSize: 15,
-    color: colors.GREY.secondary,
-    fontFamily: "Roboto-Regular",
+    fontSize: 18,
+    color: colors.GREY.btnPrimary,
+    fontFamily: "Roboto-Bold",
+    marginTop: 5,
   },
   mainIconView: {
     flex: 1,
@@ -647,12 +737,15 @@ const styles = StyleSheet.create({
   },
   textIconStyle2: {
     width: width,
-    height: 50,
-    marginTop: 10,
-    backgroundColor: colors.GREY.primary,
+    height: 65,
+    paddingHorizontal: 15,
+    // paddingVertical: 20,
+    backgroundColor: colors.WHITE,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    borderBottomWidth: 1,
+    borderBottomColor: colors.GREY.secondary,
   },
   mainView: {
     flex: 1,
@@ -666,7 +759,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   flexView3: {
-    marginTop: 10,
+    marginTop: 0,
   },
   loadingcontainer: {
     flex: 1,
