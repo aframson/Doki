@@ -84,12 +84,6 @@ export default function SideMenu(props) {
       type: "ionicon",
     },
     {
-      name: language.convertmenu,
-      navigationName: "Convert",
-      icon: "person",
-      type: "ionicon",
-    },
-    {
       name: language.about_us_menu,
       navigationName: "About",
       icon: "info",
@@ -100,6 +94,12 @@ export default function SideMenu(props) {
       icon: "sign-out",
       navigationName: "Logout",
       type: "font-awesome",
+    },
+    {
+      name: language.convertmenu,
+      navigationName: "Convert",
+      icon: "person",
+      type: "ionicon",
     },
   ];
 
@@ -172,7 +172,7 @@ export default function SideMenu(props) {
           <FlatList
             data={sideMenuList}
             keyExtractor={(item, index) => index.toString()}
-            style={{ marginTop: 20 }}
+            style={{ paddingTop: 10, flex: 1 }}
             bounces={false}
             renderItem={({ item, index }) => {
               if (
@@ -313,6 +313,34 @@ export default function SideMenu(props) {
                     <Text style={styles.menuName}>{item.name}</Text>
                   </TouchableOpacity>
                 );
+              } else if (item.navigationName != "Convert") {
+                return (
+                  <TouchableOpacity
+                    onPress={
+                      item.name == language.logout
+                        ? () => logOff()
+                        : navigateToScreen(item.navigationName)
+                    }
+                    style={[
+                      styles.menuItemView,
+                      // {
+                      //   marginTop:
+                      //     index == sideMenuList.length - 1 ? width / 7 : 0,
+                      // },
+                    ]}
+                  >
+                    <View style={styles.viewIcon}>
+                      <Icon
+                        name={item.icon}
+                        type={item.type}
+                        color={"gray"}
+                        size={25}
+                        containerStyle={styles.iconStyle}
+                      />
+                    </View>
+                    <Text style={styles.menuName}>{item.name}</Text>
+                  </TouchableOpacity>
+                );
               } else if (
                 auth.info.profile.usertype == "rider" &&
                 item.navigationName == "Convert"
@@ -326,10 +354,9 @@ export default function SideMenu(props) {
                     }
                     style={[
                       {
-                        marginTop:
-                          index == sideMenuList.length - 1 ? width / 7 : 0,
+                        marginTop: 30,
                         backgroundColor: colors.BLUE.secondary,
-                        margin: 10,
+                        marginHorizontal: 20,
                         padding: 15,
                         borderRadius: 5,
                       },
@@ -350,34 +377,6 @@ export default function SideMenu(props) {
                     >
                       Earn money on your schedules
                     </Text>
-                  </TouchableOpacity>
-                );
-              } else {
-                return (
-                  <TouchableOpacity
-                    onPress={
-                      item.name == language.logout
-                        ? () => logOff()
-                        : navigateToScreen(item.navigationName)
-                    }
-                    style={[
-                      styles.menuItemView,
-                      {
-                        marginTop:
-                          index == sideMenuList.length - 1 ? width / 7 : 0,
-                      },
-                    ]}
-                  >
-                    <View style={styles.viewIcon}>
-                      <Icon
-                        name={item.icon}
-                        type={item.type}
-                        color={"gray"}
-                        size={25}
-                        containerStyle={styles.iconStyle}
-                      />
-                    </View>
-                    <Text style={styles.menuName}>{item.name}</Text>
                   </TouchableOpacity>
                 );
               }
@@ -409,7 +408,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    marginBottom: 18,
+    marginBottom: 10,
     flex: 1,
     paddingLeft: 10,
     paddingRight: 10,
@@ -429,16 +428,18 @@ const styles = StyleSheet.create({
     // fontWeight: 'bold',
     marginLeft: 8,
     width: "100%",
-    fontSize: 20,
+    fontSize: 16,
   },
   mainViewStyle: {
     backgroundColor: "white",
-    height: "100%",
+    height: Dimensions.get("screen").height,
+    // height: "100%",
     // width: width/1.5,
   },
   compViewStyle: {
     position: "relative",
-    flex: 3,
+    flex: 1,
+    // backgroundColor: "yellow",
   },
   iconStyle: {
     justifyContent: "center",
