@@ -549,7 +549,7 @@ const styles = StyleSheet.create({
     paddingBottom: 20,
   },
   gapView: {
-    height: 40,
+    height: 20,
     width: "100%",
   },
   buttonContainer: {
