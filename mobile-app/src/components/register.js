@@ -405,7 +405,7 @@ export default function Registration(props) {
                     Already have an account?
                   </Text>
                   <TouchableOpacity
-                    style={{ paddingLeft: 5 }}
+                    style={{ paddingLeft: 5,padding:10 }}
                     onPress={props.navigation}
                   >
                     <Text style={[styles.linkText, { color: "#9B0000" }]}>
@@ -613,7 +613,7 @@ const styles = StyleSheet.create({
     height: 40,
     // marginLeft: Platform.OS == "ios" ? 20 : 10,
     // marginTop: Platform.OS == "ios" ? 0 : 10,
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
   },
   inputTextStyle: {
     color: "black",

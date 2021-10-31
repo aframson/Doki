@@ -122,7 +122,7 @@ export default function DriverTrips(props) {
                     return (
                         <View style={styles.listItemView}>
                             <View style={[styles.mapcontainer, activeBookings && activeBookings.length >= 1 ? { height: height - 400 } : null]}>
-                                <MapView style={styles.map}
+                                {/* <MapView style={styles.map}
                                     provider={PROVIDER_GOOGLE}
                                     initialRegion={{
                                         latitude: item.pickup.lat,
@@ -150,7 +150,7 @@ export default function DriverTrips(props) {
                                         strokeColor={colors.BLUE.default}
                                     />
 
-                                </MapView>
+                                </MapView> */}
                             </View>
 
                             <View style={styles.mapDetails}>
