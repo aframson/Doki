@@ -437,7 +437,7 @@ const styles = StyleSheet.create({
     // width: width/1.5,
   },
   compViewStyle: {
-    position: "relative",
+    // position: "relative",
     flex: 1,
     // backgroundColor: "yellow",
   },

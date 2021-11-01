@@ -239,6 +239,12 @@ export default function EmailLoginScreen(props) {
         {/* Bis- form Title component */}
         <FormTitle title="Login" subtitle="Log into your account to continue" />
 
+        {/* firebase recaptchaVerification */}
+        <FirebaseRecaptchaVerifierModal
+          ref={recaptchaVerifier}
+          firebaseConfig={FirebaseConfig}
+        />
+
         {state.customStyleIndex == 1 ? (
           <View style={styles.inputContainer}>
             {/* Bis- adding icons to text Input */}
@@ -252,7 +258,9 @@ export default function EmailLoginScreen(props) {
               ref={emailInput}
               style={styles.textInput}
               placeholder={language.email_placeholder}
-              onChangeText={(value) => setState({ ...state, email: value })}
+              onChangeText={(value) =>
+                setState({ ...state, email: value.trim().toLowerCase() })
+              }
               value={state.email}
             />
           </View>
@@ -300,7 +308,9 @@ export default function EmailLoginScreen(props) {
 
         {state.customStyleIndex != 1 ? (
           <View style={styles.inputContainer}>
-            <View style={{ width: "100%", borderRadius: 5, padding: 15 }}>
+            <View
+              style={{ width: "100%", borderRadius: 5, paddingHorizontal: 0 }}
+            >
               <RNPickerSelect
                 placeholder={{
                   label: language.select_country,
