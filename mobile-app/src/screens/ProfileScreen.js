@@ -705,7 +705,7 @@ const styles = StyleSheet.create({
   emailAdressStyle: {
     fontSize: 18,
     color: colors.GREY.btnPrimary,
-    fontFamily: "Roboto-Bold",
+    fontFamily: "Roboto",
     marginTop: 5,
   },
   mainIconView: {
