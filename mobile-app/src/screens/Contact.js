@@ -1,17 +1,32 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { StyleSheet, View, Text, Dimensions, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Animated, Button } from 'react-native';
+import React, { useEffect, useState, useRef, useContext } from 'react';
+import { StyleSheet, View, Text, Dimensions, TouchableOpacity, TextInput, KeyboardAvoidingView, ScrollView, Animated, Button, Alert } from 'react-native';
 import * as Contacts from 'expo-contacts';
 var { width } = Dimensions.get('window');
 import { Icon, } from 'react-native-elements';
 import BottomSheet from "react-native-gesture-bottom-sheet";
 // import {useNavigation} from '@react-navigation/native';
+import { useSelector, useDispatch } from "react-redux";
+import { store, FirebaseContext } from "common/src";
+import { language } from "config";
+var { height, width } = Dimensions.get("window");
+import { NavigationEvents } from "react-navigation";
+
+
+
+
 
 export default function Contact(props) {
 
-  // const userBack = useRef(new Animated.Value(width+100)).current;
+  const { api } = useContext(FirebaseContext);
+  const {
+    getEstimate,
+  } = api;
+
+  const dispatch = useDispatch();
 
 
-  // const navigation = useNavigation();
+  const tripdata = useSelector((state) => state.tripdata);
+
 
 
   const [state, setState] = useState({
@@ -27,9 +42,38 @@ export default function Contact(props) {
 
 
 
+  //Go to confirm booking page
+  const onPressBook = () => {
+    if (tripdata.pickup && tripdata.drop && tripdata.drop.add) {
+      if (!tripdata.carType) {
+        Alert.alert(language.alert, language.car_type_blank_error);
+      } else {
+
+        dispatch(
+          getEstimate({
+            bookLater: false,
+            bookingDate: null,
+            pickup: {
+              coords: { lat: tripdata.pickup.lat, lng: tripdata.pickup.lng },
+              description: tripdata.pickup.add,
+            },
+            drop: {
+              coords: { lat: tripdata.drop.lat, lng: tripdata.drop.lng },
+              description: tripdata.drop.add,
+            },
+            carDetails: tripdata.carType,
+            platform: Platform.OS,
+          })
+        );
+      }
+    } else {
+      Alert.alert(language.alert, language.drop_location_blank_error);
+    }
+  };
 
 
 
+  // fetch only the first 10 deatls of contacts 
   useEffect(() => {
     (async () => {
       const { status } = await Contacts.requestPermissionsAsync();
@@ -39,8 +83,9 @@ export default function Contact(props) {
             Contacts.Fields.Emails,
             Contacts.PHONE_NUMBERS,
           ],
+          pageSize: 100,
         });
-
+        setContacts(data);
         if (data.length > 0) {
           const contact = data[0];
           setContacts(data);
@@ -48,8 +93,23 @@ export default function Contact(props) {
         }
       }
     })();
-  }, []);
+  }, []);   
 
+
+
+  // function to search contact by name or phone number 
+  const searchContact = (text) => {
+    if (text) {
+      const newData = contacts.filter((item) => {
+        const itemData = item.name.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setContacts(newData);
+    } else {
+      setContacts(contacts);
+    }
+  };
 
 
 
@@ -60,15 +120,12 @@ export default function Contact(props) {
 
 
 
-
-
-
   return (
     <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? "height" : "padding"} style={{ flex: 1 }}>
       <ScrollView style={{ flex: 1 }}>
 
         <TouchableOpacity
-          style={{position: 'absolute',margin:20}}
+          style={{ position: 'absolute', marginTop: 40,marginLeft:20 }}
           onPress={() => props.navigation.navigate('Map')}
         >
           <Icon
@@ -80,7 +137,7 @@ export default function Contact(props) {
           />
         </TouchableOpacity>
 
-        <Text style={{ fontSize: 40, width: width / 1.2, padding: 20, fontWeight: "bold", marginTop: 50 }}>Who's recieving the package</Text>
+        <Text style={{ fontSize: 40, width: width / 1.2, padding: 20, fontWeight: "bold", marginTop: 80 }}>Who's recieving the package</Text>
         <Text style={{ marginLeft: 20, fontSize: 20, width: width / 1.1 }}>The Driver may contact the recient to complete the delivery</Text>
 
         <View style={{ width: 'auto', marginTop: 50 }}>
@@ -91,6 +148,14 @@ export default function Contact(props) {
             hasDraggableIcon
             ref={bottomSheet} height={600}
           >
+            <View style={{width:'100%',borderWidth:1,padding:10}}>
+              <TextInput
+              placeholder="Search Contacts..."
+              placeholderTextColor={'black'}
+              style={{backgroundColor:'#eee',borderRadius:10,padding:20,marginTop:10,fontSize: 25}}
+              onChangeText={(text) => searchContact(text)}
+              />
+            </View>
             <View style={{ flex: 1 }}>
               <ScrollView>
                 {!!contacts && contacts.map((items, key) => (
@@ -109,11 +174,6 @@ export default function Contact(props) {
               </ScrollView>
             </View>
           </BottomSheet>
-
-
-
-
-
 
 
           {/* <Button title="OPEN BOTTOM SHEET" onPress={() => BootnSheet.current.open()} /> */}
@@ -150,20 +210,8 @@ export default function Contact(props) {
         </View>
 
       </ScrollView>
-      {/* <RBSheet
-          ref={BootnSheet}
-          height={600}
-          openDuration={250}
-          customStyles={{
-            container: {
-              justifyContent: "center",
-              alignItems: "center"
-            }
-          }}
-        >
-          
-        </RBSheet> */}
-      <TouchableOpacity onPress={() => props.navigation.navigate('Map', { name: state.name, phone: state.phone })} style={{ width: '87%', height: 50, backgroundColor: 'black', alignSelf: 'center', bottom: 10, alignItems: 'center', justifyContent: 'center', position: 'absolute' }}>
+      
+      <TouchableOpacity onPress={() => onPressBook()} style={{ width: '87%', height: 50, backgroundColor: 'black', alignSelf: 'center', bottom: 10, alignItems: 'center', justifyContent: 'center', position: 'absolute' }}>
         <Text style={{ color: 'white' }}>Continue</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>

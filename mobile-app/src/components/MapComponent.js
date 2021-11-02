@@ -15,7 +15,7 @@ export default function MapComponent(props) {
             provider={PROVIDER_GOOGLE}
             showsUserLocation={true}
             loadingEnabled
-            showsMyLocationButton={false}
+            showsMyLocationButton={true}
             style={[mapStyle, { marginBottom: state.marginBottom }]}
             region={mapRegion}
             onRegionChangeComplete={onRegionChangeComplete}

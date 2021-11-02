@@ -489,7 +489,7 @@ export default function BookedCabScreen(props) {
                 }}
             />
             <Header
-                backgroundColor={colors.GREY.default}
+                backgroundColor={colors.BLUE.secondary}
                 leftComponent={{ icon: 'md-menu', type: 'ionicon', color: colors.WHITE, size: 30, component: TouchableWithoutFeedback, onPress: () => { props.navigation.toggleDrawer(); } }}
                 centerComponent={<Text style={styles.headerTitleStyle}>{language.booked_cab_title}</Text>}
                 containerStyle={styles.headerStyle}
@@ -622,7 +622,7 @@ export default function BookedCabScreen(props) {
                         name="ios-call"
                         type="ionicon"
                         size={30}
-                        color={colors.WHITE}
+                        color={'white'}
                     />
                 </TouchableOpacity>
             </View>
@@ -634,13 +634,13 @@ export default function BookedCabScreen(props) {
 
                 </View>
                 <View style={styles.cabDetailsContainer}>
-                    {curBooking && curBooking.status == "NEW" ?
+                    {/* {curBooking && curBooking.status == "NEW" ?
                         <ImageBackground source={require('../../assets/images/car-moving.gif')} resizeMode='stretch'
                             style={{ flex: 1, width: width, height: undefined, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end' }}>
                             <Text style={{ fontSize: 14, marginBottom: 20 }}>{language.searching}</Text>
                             <Image style={{ width: 36, height: 36, marginBottom: 20, marginRight: 10 }} source={require('../../assets/images/loader.gif')} />
                         </ImageBackground>
-                        : null}
+                        : null} */}
                     {curBooking && curBooking.status != "NEW" ?
                         <View style={styles.cabDetails}>
                             <View style={styles.cabName}>
@@ -729,7 +729,7 @@ export default function BookedCabScreen(props) {
 const styles = StyleSheet.create({
     mainContainer: { flex: 1, backgroundColor: colors.WHITE, },
     headerStyle: {
-        backgroundColor: colors.GREY.default,
+        backgroundColor: colors.BLUE.secondary,
         borderBottomWidth: 0,
     },
     headerInnerStyle: {
@@ -741,7 +741,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Roboto-Bold',
         fontSize: 20
     },
-    topContainer: { flex: 1.5, flexDirection: 'row', borderTopWidth: 0, alignItems: 'center', backgroundColor: colors.GREY.default, paddingEnd: 20 },
+    topContainer: { flex: 1.5, flexDirection: 'row', borderTopWidth: 0, alignItems: 'center', backgroundColor: colors.BLUE.secondary, paddingEnd: 20 },
     topLeftContainer: {
         flex: 1.5,
         alignItems: 'center'
@@ -860,7 +860,7 @@ const styles = StyleSheet.create({
     },
     floatButtonStyle: {
         borderWidth: 1,
-        borderColor: colors.BLACK,
+        borderColor: colors.BLUE.secondary,
         alignItems: "center",
         justifyContent: "center",
         width: 60,
@@ -868,12 +868,12 @@ const styles = StyleSheet.create({
         bottom: 10,
         right: 10,
         height: 60,
-        backgroundColor: colors.BLACK,
+        backgroundColor: colors.BLUE.secondary,
         borderRadius: 30
     },
     CallfloatButtonStyle: {
         borderWidth: 1,
-        borderColor: colors.BLACK,
+        borderColor: colors.BLUE.secondary,
         alignItems: "center",
         justifyContent: "center",
         width: 60,
@@ -881,12 +881,12 @@ const styles = StyleSheet.create({
         bottom: 80,
         right: 10,
         height: 60,
-        backgroundColor: colors.BLACK,
+        backgroundColor: colors.BLUE.secondary,
         borderRadius: 30
     },
     navigateFloatingButton: {
         borderWidth: 1,
-        borderColor: colors.BLACK,
+        borderColor: colors.BLUE.secondary,
         alignItems: "center",
         justifyContent: "center",
         width: 60,
@@ -894,7 +894,7 @@ const styles = StyleSheet.create({
         bottom: 150,
         right: 10,
         height: 60,
-        backgroundColor: colors.BLACK,
+        backgroundColor: colors.BLUE.secondary,
         borderRadius: 30
     }
 });
