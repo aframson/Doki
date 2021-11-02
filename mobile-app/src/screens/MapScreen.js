@@ -908,7 +908,6 @@ export default function MapScreen(props) {
                           <Text style={{ color: 'white',fontSize: Platform.OS == 'ios' ? 18 : 15,  }}>{language.not_available}</Text>
                         </View>
                       )}
-
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -1102,11 +1101,14 @@ export default function MapScreen(props) {
         {tripdata.pickup && tripdata.drop && tripdata.drop.add ? (
           <View
             style={{
+              // flex:1,
               flexDirection: "row",
+              justifyContent: "space-between",
               borderWidth: 1,
-              width,
+              width:'100%',
               borderColor: "#eee",
-              bottom: 20,
+              bottom: 30,
+              padding: 25,
             }}
           >
             <TouchableOpacity
@@ -1118,10 +1120,12 @@ export default function MapScreen(props) {
                 justifyContent: "center",
                 alignItems: "center",
                 backgroundColor:allCarTypes[0].minTime != ""?colors.BLUE.dark:'#eee',
-                width: width / 3.5,
-                margin: 20,
+                width: width / 2.5,
+                // marginRight:5,
                 height: 50,
+                padding: 10,
                 borderRadius: 5,
+                // flex:1,
               }}
             >
               <Text
@@ -1145,13 +1149,15 @@ export default function MapScreen(props) {
               onPress={()=>props.navigation.navigate("Contact")}
               style={{
                 justifyContent: "center",
+                width: width / 2.5,
                 alignItems: "center",
                 backgroundColor: allCarTypes[0].minTime != ""?colors.BLUE.secondary:'#eee',
-                // allCarTypes[0].minTime != ""?colors.BLUE.dark:'gray'
-                width: width / 2,
-                margin: 20,
-                height: 50,
+                // margin: 20,
+                // height: 50,
                 borderRadius: 5,
+                height: 50,
+                padding: 10,
+                // flex:1,
               }}
             >
               <Text

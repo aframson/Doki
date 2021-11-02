@@ -10,7 +10,7 @@ import { store, FirebaseContext } from "common/src";
 import { language } from "config";
 var { height, width } = Dimensions.get("window");
 import { NavigationEvents } from "react-navigation";
-
+import { colors } from "../common/theme";
 
 
 
@@ -44,31 +44,42 @@ export default function Contact(props) {
 
   //Go to confirm booking page
   const onPressBook = () => {
-    if (tripdata.pickup && tripdata.drop && tripdata.drop.add) {
-      if (!tripdata.carType) {
-        Alert.alert(language.alert, language.car_type_blank_error);
-      } else {
 
-        dispatch(
-          getEstimate({
-            bookLater: false,
-            bookingDate: null,
-            pickup: {
-              coords: { lat: tripdata.pickup.lat, lng: tripdata.pickup.lng },
-              description: tripdata.pickup.add,
-            },
-            drop: {
-              coords: { lat: tripdata.drop.lat, lng: tripdata.drop.lng },
-              description: tripdata.drop.add,
-            },
-            carDetails: tripdata.carType,
-            platform: Platform.OS,
-          })
-        );
+    if(state.name == '' || state.phone == ''){
+      Alert.alert("Required","All fields are required");
+      
+    }else{
+
+
+      if (tripdata.pickup && tripdata.drop && tripdata.drop.add) {
+        if (!tripdata.carType) {
+          Alert.alert(language.alert, language.car_type_blank_error);
+        } else {
+  
+          dispatch(
+            getEstimate({
+              bookLater: false,
+              bookingDate: null,
+              pickup: {
+                coords: { lat: tripdata.pickup.lat, lng: tripdata.pickup.lng },
+                description: tripdata.pickup.add,
+              },
+              drop: {
+                coords: { lat: tripdata.drop.lat, lng: tripdata.drop.lng },
+                description: tripdata.drop.add,
+              },
+              carDetails: tripdata.carType,
+              platform: Platform.OS,
+            })
+          );
+        }
+      } else {
+        Alert.alert(language.alert, language.drop_location_blank_error);
       }
-    } else {
-      Alert.alert(language.alert, language.drop_location_blank_error);
+
     }
+
+   
   };
 
 
@@ -112,7 +123,6 @@ export default function Contact(props) {
   };
 
 
-
   const openContact = (items) => {
     setState({ ...state, name: items.name, phone: items.phoneNumbers[0].number })
     bottomSheet.current.close();
@@ -148,7 +158,7 @@ export default function Contact(props) {
             hasDraggableIcon
             ref={bottomSheet} height={600}
           >
-            <View style={{width:'100%',borderWidth:1,padding:10}}>
+            <View style={{width:'100%',padding:10}}>
               <TextInput
               placeholder="Search Contacts..."
               placeholderTextColor={'black'}
@@ -183,10 +193,10 @@ export default function Contact(props) {
               placeholder="Enter Recievers name"
               value={state.name}
               onChangeText={(text) => { setState({ ...state, name: text }) }}
-              style={{ height: 50, borderColor: 'gray', borderWidth: 1, paddingLeft: 20, width: width - 50, alignSelf: 'center', marginTop: 10, fontSize: 20, flex: 0.9 }}
+              style={{ height: 50, borderColor: 'gray', borderWidth: 1, paddingLeft: 20, width: width - 50, alignSelf: 'center', marginTop: 10, fontSize: 20, flex: 0.9,borderRadius:5 }}
             />
             <TouchableOpacity
-              style={{ borderWidth: 1, flex: 0.2, height: 50, marginTop: 10, borderLeftWidth: 0, borderColor: 'gray' }}
+              style={{ borderWidth: 1, flex: 0.2, height: 50, marginTop: 10, borderLeftWidth: 0, borderColor: 'gray',borderRadius:5  }}
               onPress={() => bottomSheet.current.show()}
             >
               <Icon
@@ -205,13 +215,13 @@ export default function Contact(props) {
             value={state.phone}
             onChangeText={(text) => { setState({ ...state, phone: text }) }}
             placeholder="Enter Recievers name"
-            style={{ height: 50, borderColor: 'gray', borderWidth: 1, paddingLeft: 20, width: width - 50, alignSelf: 'center', marginTop: 10, fontSize: 20 }}
+            style={{ height: 50, borderColor: 'gray', borderRadius:5 ,borderWidth: 1, paddingLeft: 20, width: width - 50, alignSelf: 'center', marginTop: 10, fontSize: 20 }}
           />
         </View>
 
       </ScrollView>
       
-      <TouchableOpacity onPress={() => onPressBook()} style={{ width: '87%', height: 50, backgroundColor: 'black', alignSelf: 'center', bottom: 10, alignItems: 'center', justifyContent: 'center', position: 'absolute' }}>
+      <TouchableOpacity onPress={() => onPressBook()} style={{ width: '87%', height: 50, backgroundColor: colors.BLUE.secondary, alignSelf: 'center', bottom: 10, alignItems: 'center', justifyContent: 'center', position: 'absolute',borderRadius:6}}>
         <Text style={{ color: 'white' }}>Continue</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
