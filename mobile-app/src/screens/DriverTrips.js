@@ -122,7 +122,7 @@ export default function DriverTrips(props) {
                     return (
                         <View style={styles.listItemView}>
                             <View style={[styles.mapcontainer, activeBookings && activeBookings.length >= 1 ? { height: height - 400 } : null]}>
-                                <MapView style={styles.map}
+                                {/* <MapView style={styles.map}
                                     provider={PROVIDER_GOOGLE}
                                     initialRegion={{
                                         latitude: item.pickup.lat,
@@ -150,16 +150,16 @@ export default function DriverTrips(props) {
                                         strokeColor={colors.BLUE.default}
                                     />
 
-                                </MapView>
+                                </MapView> */}
                             </View>
 
                             <View style={styles.mapDetails}>
                                 <View style={styles.dateView}>
                                     <Text style={styles.listDate}>{new Date(item.tripdate).toLocaleString(dateStyle)}</Text>
                                 </View>
-                                <View style={styles.rateViewStyle}>
+                                {/* <View style={styles.rateViewStyle}>
                                     <Text style={styles.rateViewTextStyle}>{settings.symbol}{item ? item.estimate > 0 ? parseFloat(item.estimate).toFixed(2) : 0 : null}</Text>
-                                </View>
+                                </View> */}
                                 <View style={styles.estimateView}>
                                     <Text style={styles.listEstimate}>{item.estimateDistance? parseFloat(item.estimateDistance).toFixed(2): 0} {settings.convert_to_mile? language.mile : language.km}</Text>
                                     <Text style={styles.listEstimate}>{item.estimateTime? parseFloat(item.estimateTime/60).toFixed(0): 0} {language.mins}</Text>

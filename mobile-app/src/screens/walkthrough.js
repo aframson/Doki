@@ -23,7 +23,7 @@ const SwipeData = [
 	{
 		i: 1,
 		title: 'Welcome to Doki.',
-		desc: 'Secured . time conscious . availability.',
+		desc: 'Secure . time conscious . availability.',
 		img:require('../../assets/images/3-min.jpg'),
 	},
 	{

@@ -441,7 +441,7 @@ export default function EmailLoginScreen(props) {
         >
           <Text style={styles.regularText}>Don't have an account?</Text>
           <TouchableOpacity
-            style={{ paddingLeft: 5 }}
+            style={{ paddingLeft: 5,padding:10 }}
             onPress={() => props.navigation.navigate("Reg")}
           >
             <Text style={[styles.linkText, { color: "#9B0000" }]}>Sign Up</Text>
