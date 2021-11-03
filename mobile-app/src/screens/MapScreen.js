@@ -1293,7 +1293,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   compViewStyle2: {
-    flex: 2.8,
+    flex: 5.8,
     alignItems: "center",
     // borderWidth:1
     shadowColor: "#000",
