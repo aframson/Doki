@@ -29,7 +29,6 @@ import { store, FirebaseContext } from "common/src";
 import Contact from "./Contact";
 
 export default function MapScreen(props) {
-
   const { api } = useContext(FirebaseContext);
   const {
     fetchAddressfromCoords,
@@ -402,7 +401,6 @@ export default function MapScreen(props) {
         tripdata.pickup.source == "region-change") &&
       tripdata.selected == "pickup"
     ) {
-
     }
   };
 
@@ -535,7 +533,7 @@ export default function MapScreen(props) {
           Alert.alert(
             language.alert,
             language.past_booking_error,
-            [{ text: "OK", onPress: () => { } }],
+            [{ text: "OK", onPress: () => {} }],
             { cancelable: true }
           );
         } else {
@@ -618,14 +616,14 @@ export default function MapScreen(props) {
   return (
     <View style={styles.mainViewStyle}>
       <NavigationEvents
-        onWillFocus={(payload) => { }}
+        onWillFocus={(payload) => {}}
         onDidFocus={(payload) => {
           pageActive.current = true;
         }}
         onWillBlur={(payload) => {
           pageActive.current = false;
         }}
-        onDidBlur={(payload) => { }}
+        onDidBlur={(payload) => {}}
       />
       {/* <Header
                 backgroundColor={colors.GREY.default}
@@ -846,12 +844,12 @@ export default function MapScreen(props) {
             </View>
           )
         ) : null}
-       {/* come */}
+        {/* come */}
         <View
           style={{
             position: "absolute",
             height: 100,
-            width: '100%',
+            width: "100%",
             bottom: -10,
             // right: 11,
             flex: 1,
@@ -869,14 +867,14 @@ export default function MapScreen(props) {
             return (
               <View key={key} style={styles.cabDivStyle}>
                 <TouchableOpacity
-
                   style={[
                     // styles.imageStyle,
                     {
-                      backgroundColor:prop.minTime != "" ?colors.BLUE.secondary:'#F29191',
+                      backgroundColor:
+                        prop.minTime != "" ? colors.BLUE.secondary : "#F29191",
                       flexDirection: "row",
-                      height: '100%',
-                      padding:20,
+                      height: "100%",
+                      padding: 20,
                     },
                   ]}
                 >
@@ -889,23 +887,34 @@ export default function MapScreen(props) {
                     onPress={() => props.navigation.toggleDrawer()}
                   />
                   <View style={{ marginLeft: -10, width: 300 }}>
-
                     <Text
                       style={[
                         // styles.text2,
                         {
-                          color: 'white',
-                          fontSize: Platform.OS == 'ios' ? 24 : 20,
-                          margin: 10
+                          color: "white",
+                          fontSize: Platform.OS == "ios" ? 24 : 20,
+                          margin: 10,
                         },
                       ]}
                     >
-
                       {prop.minTime != "" ? (
-                        'Your rider is ' + prop.minTime + " closer"
+                        "Your rider is " + prop.minTime + " closer"
                       ) : (
-                        <View style={{ padding: 10,height:'auto',borderRadius: 5 }}>
-                          <Text style={{ color: 'white',fontSize: Platform.OS == 'ios' ? 18 : 15,  }}>{language.not_available}</Text>
+                        <View
+                          style={{
+                            padding: 10,
+                            height: "auto",
+                            borderRadius: 5,
+                          }}
+                        >
+                          <Text
+                            style={{
+                              color: "white",
+                              fontSize: Platform.OS == "ios" ? 18 : 15,
+                            }}
+                          >
+                            {language.not_available}
+                          </Text>
                         </View>
                       )}
                     </Text>
@@ -915,7 +924,6 @@ export default function MapScreen(props) {
             );
           })}
         </View>
-
 
         {locationRejected ? (
           <View
@@ -1012,14 +1020,13 @@ export default function MapScreen(props) {
                   style={[
                     styles.imageStyle,
                     {
-                      backgroundColor:colors.BLUE.secondary ,
+                      backgroundColor: colors.BLUE.secondary,
                       flexDirection: "row",
                       height: 60,
                       marginTop: 50,
                     },
                   ]}
                 >
-
                   <View style={styles.textViewStyle}>
                     <View
                       style={{ flexDirection: "row", alignItems: "center" }}
@@ -1037,15 +1044,13 @@ export default function MapScreen(props) {
                         style={[
                           styles.text1,
                           {
-                            color:"white",
+                            color: "white",
                           },
                         ]}
                       >
                         {prop.name.toUpperCase()}
                       </Text>
-
                     </View>
-
                   </View>
                 </TouchableOpacity>
               </View>
@@ -1055,48 +1060,48 @@ export default function MapScreen(props) {
 
         {/* return */}
         {tripdata.pickup && tripdata.drop && tripdata.drop.add ? (
-        <TouchableOpacity
-          onPress={() => DropLocateBox()}
-          style={{
-            height: 55,
-            width: width / 1.15,
-            backgroundColor: "#eee",
-            borderRadius: 10,
-            padding: 12,
-            // top:-50,
-            flexDirection: "row",
-            margin: 20,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <Icon
-            name="search"
-            type="feather"
-            color={colors.WHITE}
-            size={18}
-            containerStyle={{
-              backgroundColor: "gray",
-              padding: 5,
-              height: 30,
-              width: 30,
-              borderRadius: 50,
-            }}
-          />
-          <Text
+          <TouchableOpacity
+            onPress={() => DropLocateBox()}
             style={{
-              height: 30,
-              marginTop: Platform.OS === "ios" ? 5 : 0,
-              marginLeft: 10,
-              fontSize: 20,
-              fontWeight: "bold",
-              color: "black",
+              height: 55,
+              width: width / 1.15,
+              backgroundColor: "#eee",
+              borderRadius: 10,
+              padding: 12,
+              // top:-50,
+              flexDirection: "row",
+              margin: 20,
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            Change Location
-          </Text>
-        </TouchableOpacity>)
-        :null}
+            <Icon
+              name="search"
+              type="feather"
+              color={colors.WHITE}
+              size={18}
+              containerStyle={{
+                backgroundColor: "gray",
+                padding: 5,
+                height: 30,
+                width: 30,
+                borderRadius: 50,
+              }}
+            />
+            <Text
+              style={{
+                height: 30,
+                marginTop: Platform.OS === "ios" ? 5 : 0,
+                marginLeft: 10,
+                fontSize: 20,
+                fontWeight: "bold",
+                color: "black",
+              }}
+            >
+              Change Location
+            </Text>
+          </TouchableOpacity>
+        ) : null}
 
         {tripdata.pickup && tripdata.drop && tripdata.drop.add ? (
           <View
@@ -1105,21 +1110,22 @@ export default function MapScreen(props) {
               flexDirection: "row",
               justifyContent: "space-between",
               borderWidth: 1,
-              width:'100%',
+              width: "100%",
               borderColor: "#eee",
               bottom: 30,
               padding: 25,
             }}
           >
             <TouchableOpacity
-              disabled={allCarTypes[0].minTime != ""?false:true}
+              disabled={allCarTypes[0].minTime != "" ? false : true}
               title={language.book_now_button}
               loading={false}
               onPress={onPressBookLater}
               style={{
                 justifyContent: "center",
                 alignItems: "center",
-                backgroundColor:allCarTypes[0].minTime != ""?colors.BLUE.dark:'#eee',
+                backgroundColor:
+                  allCarTypes[0].minTime != "" ? colors.BLUE.dark : "#eee",
                 width: width / 2.5,
                 // marginRight:5,
                 height: 50,
@@ -1139,19 +1145,17 @@ export default function MapScreen(props) {
               </Text>
             </TouchableOpacity>
 
-
-            
-             
             <TouchableOpacity
-              disabled={allCarTypes[0].minTime != ""?false:true}
+              disabled={allCarTypes[0].minTime != "" ? false : true}
               title={language.book_now_button}
               loading={false}
-              onPress={()=>props.navigation.navigate("Contact")}
+              onPress={() => props.navigation.navigate("Contact")}
               style={{
                 justifyContent: "center",
                 width: width / 2.5,
                 alignItems: "center",
-                backgroundColor: allCarTypes[0].minTime != ""?colors.BLUE.secondary:'#eee',
+                backgroundColor:
+                  allCarTypes[0].minTime != "" ? colors.BLUE.secondary : "#eee",
                 // margin: 20,
                 // height: 50,
                 borderRadius: 5,
@@ -1374,12 +1378,12 @@ const styles = StyleSheet.create({
   },
   textViewStyle: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: "center",
     // flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: "center",
     // borderWidth: 1,
     padding: 5,
-    width: 'auto'
+    width: "auto",
   },
   text1: {
     fontFamily: "Roboto-Bold",

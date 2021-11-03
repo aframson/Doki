@@ -15,7 +15,7 @@ const SideMenuHeader = ({ headerStyle, userPhoto, userName, userEmail }) => {
     <View
       style={[
         styles.viewStyle,
-        headerStyle,
+        // headerStyle,
         { borderBottomColor: colors.GREY.btnSecondary, borderBottomWidth: 1 },
       ]}
     >
@@ -62,16 +62,18 @@ const styles = {
     flexDirection: "row",
     justifyContent: "flex-start",
     alignItems: "center",
-    height: 140,
-    paddingTop: Platform.OS == "ios" ? 20 : StatusBar.currentHeight,
-    paddingHorizontal: 15,
-    paddingLeft: 10,
+    alignItems: "center",
+    // height: 100,
+    // paddingVertical: 10,
+    paddingHorizontal: 10,
+    paddingTop:
+      Platform.OS.toLocaleLowerCase === "ios" ? 15 : StatusBar.currentHeight,
     // shadowColor: colors.BLACK,
     // shadowOffset: { width: 0, height: 2 },
     // shadowOpacity: 0.2,
     // elevation: 2,
-    position: "relative",
     // backgroundColor: "yellow",
+    // backgroundColor: "red",
   },
   textStyle: {
     fontSize: 20,
@@ -80,12 +82,14 @@ const styles = {
   headerTextStyle: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
+    // marginTop: 10,
   },
   iconStyle: {},
   userImageView: {
     width: 84,
     height: 84,
+    borderWidth: 2,
+    borderColor: colors.GREY.btnPrimary,
     borderRadius: 50,
     overflow: "hidden",
     borderWidth: 2,
@@ -101,13 +105,13 @@ const styles = {
   },
   iconViewStyle: {
     width: 150,
-    justifyContent: "center",
+    justifyContent: "flex-start",
     flexDirection: "row",
     alignItems: "center",
     marginTop: 4,
   },
   emailStyle: {
-    // color: colors.WHITE,
+    color: colors.GREY.btnPrimary,
     fontSize: 13,
     // marginLeft: 4,
     // textAlign: "left",
@@ -115,6 +119,10 @@ const styles = {
   imageStyle: {
     width: 60,
     height: 60,
+    padding: 10,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: colors.GREY.secondary,
   },
 };
 //make the component available to other parts of the app

@@ -245,9 +245,8 @@ export default function EmailLoginScreen(props) {
           firebaseConfig={FirebaseConfig}
         />
 
-        {state.customStyleIndex == 1 ? (
+        {/* {state.customStyleIndex == 1 ? (
           <View style={styles.inputContainer}>
-            {/* Bis- adding icons to text Input */}
             <Zocial
               name="email"
               size={24}
@@ -304,12 +303,17 @@ export default function EmailLoginScreen(props) {
               {language.login_button}
             </Text>
           </MaterialButtonDark>
-        ) : null}
+        ) : null} */}
 
         {state.customStyleIndex != 1 ? (
           <View style={styles.inputContainer}>
             <View
-              style={{ width: "100%", borderRadius: 5, paddingHorizontal: 0 }}
+              style={{
+                width: "100%",
+                borderRadius: 5,
+                paddingHorizontal: Platform.OS.toLowerCase() == "ios" ? 15 : 0,
+                paddingVertical: Platform.OS.toLowerCase() == "ios" ? 15 : 0,
+              }}
             >
               <RNPickerSelect
                 placeholder={{
@@ -348,6 +352,7 @@ export default function EmailLoginScreen(props) {
                   { marginRight: 5, marginLeft: 10 },
                 ]}
               />
+
               <TextInput
                 style={styles.textInput}
                 placeholder={language.mobile_no_placeholder}
@@ -376,7 +381,15 @@ export default function EmailLoginScreen(props) {
           {state.customStyleIndex != 1 && !!state.verificationId ? (
             <View style={styles.inputContainer}>
               <TextInput
-                style={styles.textInput}
+                style={[
+                  styles.textInput,
+                  {
+                    paddingHorizontal: 10,
+                    paddingVertical: 10,
+                    height: 55,
+                  },
+                ]}
+                maxLength={6}
                 placeholder={language.otp_here}
                 onChangeText={(value) =>
                   setState({ ...state, verificationCode: value })
@@ -393,7 +406,10 @@ export default function EmailLoginScreen(props) {
         {state.customStyleIndex != 1 && !!state.verificationId ? (
           <MaterialButtonDark
             onPress={onSignIn}
-            style={[styles.materialButtonDark, styles.bgRed]}
+            style={[
+              styles.materialButtonDark,
+              { backgroundColor: colors.BLUE.secondary },
+            ]}
           >
             {language.authorize}
           </MaterialButtonDark>
@@ -413,17 +429,17 @@ export default function EmailLoginScreen(props) {
         ) : null}
 
         {/*Bis- orComponent */}
-        <View style={{ marginVertical: 20 }}>
+        {/* <View style={{ marginVertical: 20 }}>
           <Text style={styles.orComponentTxt}>OR</Text>
-        </View>
+        </View> */}
         {/* end of orComponent */}
 
         {/* Bis- tab component */}
-        {state.customStyleIndex == 1 ? (
+        {/* {state.customStyleIndex == 1 ? (
           <LoginWithPhone action={() => loginTypeTabActionPhone()} />
         ) : (
           <LoginWithEmail action={() => loginTypeTabActionEmail()} />
-        )}
+        )} */}
 
         {/* End of tab component */}
 
@@ -441,7 +457,7 @@ export default function EmailLoginScreen(props) {
         >
           <Text style={styles.regularText}>Don't have an account?</Text>
           <TouchableOpacity
-            style={{ paddingLeft: 5,padding:10 }}
+            style={{ paddingLeft: 5, padding: 10 }}
             onPress={() => props.navigation.navigate("Reg")}
           >
             <Text style={[styles.linkText, { color: "#9B0000" }]}>Sign Up</Text>
