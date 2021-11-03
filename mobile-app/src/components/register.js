@@ -273,6 +273,7 @@ export default function Registration(props) {
             if (validatePassword("alphanumeric")) {
               if (validateMobile()) {
                 onPressRegister(state);
+                props.navigation.navigate("Login");
               } else {
                 Alert.alert(language.alert, language.mobile_no_blank_error);
               }
@@ -405,7 +406,7 @@ export default function Registration(props) {
                     Already have an account?
                   </Text>
                   <TouchableOpacity
-                    style={{ paddingLeft: 5,padding:10 }}
+                    style={{ paddingLeft: 5, padding: 10 }}
                     onPress={props.navigation}
                   >
                     <Text style={[styles.linkText, { color: "#9B0000" }]}>
@@ -467,7 +468,7 @@ export default function Registration(props) {
                     keyboardType={"email-address"}
                     style={styles.inputTextStyle}
                     onChangeText={(text) => {
-                      setState({ ...state, email: text });
+                      setState({ ...state, email: text.trim().toLowerCase() });
                     }}
                   />
                 </View>

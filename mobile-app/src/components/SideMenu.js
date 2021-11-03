@@ -431,9 +431,8 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   mainViewStyle: {
-    flex: 1,
     backgroundColor: "white",
-    // height: Dimensions.get("screen").height,
+    height: Dimensions.get("screen").height,
     // height: "100%",
     // width: width/1.5,
   },
