@@ -36,7 +36,7 @@ export default function FareScreen(props) {
     dispatch(clearEstimate());
     dispatch(clearTripPoints());
     setButtonDisabled(false);
-    props.navigation.goBack();
+    props.navigation.navigate('Map');
   };
 
   useEffect(() => {

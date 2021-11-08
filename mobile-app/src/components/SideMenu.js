@@ -433,6 +433,7 @@ const styles = StyleSheet.create({
   mainViewStyle: {
     backgroundColor: "white",
     height: Dimensions.get("screen").height,
+    paddingTop: Platform.OS == "ios" ? 20 : 0,
     // height: "100%",
     // width: width/1.5,
   },

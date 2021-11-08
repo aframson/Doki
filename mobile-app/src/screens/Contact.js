@@ -9,7 +9,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { store, FirebaseContext } from "common/src";
 import { language } from "config";
 var { height, width } = Dimensions.get("window");
-import { NavigationEvents } from "react-navigation";
 import { colors } from "../common/theme";
 
 
@@ -128,6 +127,10 @@ export default function Contact(props) {
     bottomSheet.current.close();
   }
 
+
+  // function to search contact by name or phone number
+  
+  
 
 
   return (

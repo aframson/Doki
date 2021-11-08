@@ -13,6 +13,7 @@ import {
   Switch,
   Platform,
   Share,
+  Pressable,
 } from "react-native";
 import { Icon, Header } from "react-native-elements";
 import ActionSheet from "react-native-actions-sheet";
@@ -25,7 +26,7 @@ import { FirebaseContext } from "common/src";
 import StarRating from "react-native-star-rating";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as TaskManager from "expo-task-manager";
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 
 export default function ProfileScreen(props) {
   const { api } = useContext(FirebaseContext);
@@ -311,7 +312,7 @@ export default function ProfileScreen(props) {
                 </TouchableOpacity>
               )}
             </View>
-            <TouchableOpacity
+            <Pressable
               style={{
                 position: "absolute",
                 bottom: -10,
@@ -333,7 +334,7 @@ export default function ProfileScreen(props) {
                 color={colors.GREY.iconSecondary}
                 size={25}
               />
-            </TouchableOpacity>
+            </Pressable>
           </View>
           <Text style={styles.textPropStyle}>
             {profileData &&
@@ -687,6 +688,7 @@ const styles = StyleSheet.create({
     // left: 20,
     // marginRight: 40,
     paddingHorizontal: 20,
+    paddingBottom: 8,
     marginBottom: 8,
     borderBottomColor: colors.GREY.primary,
     borderBottomWidth: 1,
