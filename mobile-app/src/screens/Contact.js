@@ -202,9 +202,12 @@ export default function Contact(props) {
                     style={{
                       backgroundColor: "#eee",
                       borderRadius: 10,
-                      padding: 20,
+                      padding: 10,
+                      paddingHorizontal: 15,
                       marginTop: 10,
                       fontSize: 25,
+                      borderWidth: 1,
+                      borderColor: colors.GREY.btnPrimary,
                     }}
                     onChangeText={(text) => searchContact(text)}
                   />
