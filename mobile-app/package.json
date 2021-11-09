@@ -39,6 +39,7 @@
     "expo-updates": "~0.5.4",
     "firebase": "8.2.3",
     "haversine": "1.1.1",
+    "lodash.filter": "^4.6.0",
     "react": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-41.0.0.tar.gz",
     "react-native-actions-sheet": "^0.3.5",

@@ -10,7 +10,7 @@ import { store, FirebaseContext } from "common/src";
 import { language } from "config";
 var { height, width } = Dimensions.get("window");
 import { colors } from "../common/theme";
-
+import filter from 'lodash.filter';
 
 
 
@@ -108,19 +108,63 @@ export default function Contact(props) {
 
 
   // function to search contact by name or phone number 
+  // const searchContact = (text) => {
+  //   if (text) {
+  //     const newData = contacts.filter((item) => {
+  //       const itemData = item.name.toUpperCase();
+  //       const textData = text.toUpperCase();
+  //       return itemData.includes(textData);
+  //     });
+  //     setContacts(newData);
+  //   } else {
+  //     setContacts(contacts);
+  //   }
+  // };
+
+
   const searchContact = (text) => {
-    if (text) {
-      const newData = contacts.filter((item) => {
-        const itemData = item.name.toUpperCase();
-        const textData = text.toUpperCase();
-        return itemData.indexOf(textData) > -1;
+    if (text !== '') {
+      const results = contacts.filter((user) => {
+        return user.name.toLowerCase().startsWith(text.toLowerCase());
+        // Use the toLowerCase() method to make it case-insensitive
       });
-      setContacts(newData);
+      setContacts(results);
     } else {
-      setContacts(contacts);
+      (async () => {
+        const { status } = await Contacts.requestPermissionsAsync();
+        if (status === 'granted') {
+          const { data } = await Contacts.getContactsAsync({
+            fields: [
+              Contacts.Fields.Emails,
+              Contacts.PHONE_NUMBERS,
+            ],
+            pageSize: 100,
+          });
+          setContacts(data);
+          if (data.length > 0) {
+            const contact = data[0];
+            setContacts(data);
+            console.log(data);
+          }
+        }
+      })();
     }
   };
 
+
+
+
+
+  const contains = ({name},query)=>{
+
+    if(name.includes(query)){
+      return true;
+
+  }else{
+    return false;
+  }
+
+}
 
   const openContact = (items) => {
     setState({ ...state, name: items.name, phone: items.phoneNumbers[0].number })
@@ -129,7 +173,7 @@ export default function Contact(props) {
 
 
   // function to search contact by name or phone number
-  
+
   
 
 
