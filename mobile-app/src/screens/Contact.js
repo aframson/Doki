@@ -179,7 +179,7 @@ export default function Contact(props) {
 
   return (
     <KeyboardAvoidingView behavior={Platform.OS == 'ios' ? "height" : "padding"} style={{ flex: 1 }}>
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView style={{}}>
 
         <TouchableOpacity
           style={{ position: 'absolute', marginTop: 40,marginLeft:20 }}
@@ -203,8 +203,9 @@ export default function Contact(props) {
 
           <BottomSheet
             hasDraggableIcon
-            ref={bottomSheet} height={600}
+            ref={bottomSheet} height={height/2}
           >
+             <ScrollView>
             <View style={{width:'100%',padding:10}}>
               <TextInput
               placeholder="Search Contacts..."
@@ -214,7 +215,7 @@ export default function Contact(props) {
               />
             </View>
             <View style={{ flex: 1 }}>
-              <ScrollView>
+             
                 {!!contacts && contacts.map((items, key) => (
                   <TouchableOpacity key={key} onPress={() => openContact(items)}
                     style={{
@@ -228,8 +229,8 @@ export default function Contact(props) {
                     <Text style={{ fontSize: 20, fontWeight: "bold", marginLeft: 20 }}>{items.name}</Text>
                   </TouchableOpacity>
                 ))}
-              </ScrollView>
             </View>
+            </ScrollView>
           </BottomSheet>
 
 
