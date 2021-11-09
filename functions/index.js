@@ -118,7 +118,7 @@ exports.setup = functions.https.onRequest((request, response) => {
             "bonus": 10,
             "CarHornRepeat": false,
             "bank_fields": false,
-            "CompanyName": "Exicube App Solutions",
+            "CompanyName": "Doki App Solutions",
             "CompanyWebsite": "https://exicube.com",
             "CompanyTerms": "https://exicube.com/privacy-policy.html",
             "TwitterHandle": "https://twitter.com/exicube",

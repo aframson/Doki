@@ -5,7 +5,6 @@ import { colors } from '../common/theme';
 import { language, dateStyle } from 'config';
 import { useSelector } from 'react-redux';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
-var { width, height } = Dimensions.get('window');
 
 export default function RideList(props) {
 
