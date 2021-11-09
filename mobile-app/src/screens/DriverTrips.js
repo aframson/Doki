@@ -169,10 +169,10 @@ export default function DriverTrips(props) {
                                         <View style={styles.greenDot}></View>
                                         <Text style={styles.addressViewTextStyle}>{item.pickup.add}</Text>
                                     </View>
-                                    <View style={styles.fixAdressStyle}>
+                                    {/* <View style={styles.fixAdressStyle}>
                                         <View style={styles.redDot}></View>
                                         <Text style={styles.addressViewTextStyle}>{item.drop.add}</Text>
-                                    </View>
+                                    </View> */}
                                 </View>
                                 {activeBookings && activeBookings.length >= 1 ?
                                     <View style={styles.detailsBtnView}>
