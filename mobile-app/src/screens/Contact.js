@@ -4,13 +4,11 @@ import * as Contacts from 'expo-contacts';
 var { width } = Dimensions.get('window');
 import { Icon, } from 'react-native-elements';
 import BottomSheet from "react-native-gesture-bottom-sheet";
-// import {useNavigation} from '@react-navigation/native';
 import { useSelector, useDispatch } from "react-redux";
-import { store, FirebaseContext } from "common/src";
+import { FirebaseContext } from "common/src";
 import { language } from "config";
 var { height, width } = Dimensions.get("window");
 import { colors } from "../common/theme";
-import filter from 'lodash.filter';
 
 
 
@@ -36,7 +34,6 @@ export default function Contact(props) {
   const [contacts, setContacts] = useState(null);
 
 
-  const BootnSheet = useRef();
   const bottomSheet = useRef();
 
 

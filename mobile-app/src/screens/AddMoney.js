@@ -51,7 +51,7 @@ export default function AddMoneyScreen(props) {
       order_id: time.toString(),
       name: language.add_money,
       description: language.wallet_ballance,
-      currency: settings.code,
+      currency: 'GHS',
       quantity: 1,
       paymentType: 'walletCredit'
     }

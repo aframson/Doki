@@ -5,7 +5,6 @@ import * as Facebook from 'expo-facebook';
 import { language } from 'config';
 import * as AppleAuthentication from 'expo-apple-authentication';
 import * as Crypto from 'expo-crypto';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 import { facebookAppId, features } from 'config';
 import { useSelector, useDispatch } from 'react-redux';
 import { FirebaseContext } from 'common/src';

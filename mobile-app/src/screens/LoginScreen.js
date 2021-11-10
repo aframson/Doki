@@ -2,20 +2,16 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import {
   StyleSheet,
   View,
-  ImageBackground,
   Text,
   Dimensions,
-  // KeyboardAvoidingView, ...using KeyboardAwareScrollView instead
   Alert,
   TextInput,
-  Image,
   ActivityIndicator,
   Platform,
   StatusBar,
 } from "react-native";
 import MaterialButtonDark from "../components/MaterialButtonDark";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import SegmentedControlTab from "react-native-segmented-control-tab";
 import { useDispatch, useSelector } from "react-redux";
 import { FirebaseContext } from "common/src";
 import { colors } from "../common/theme";
@@ -31,9 +27,7 @@ import {
 
 //Bis- imports
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import LoginWithEmail from "../components/LoginWithEmailTab";
-import LoginWithPhone from "../components/LoginWithPhoneTab";
-import { Zocial, Fontisto, Entypo } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import { FormTitle } from "../components/FormTitle";
 
 export default function EmailLoginScreen(props) {

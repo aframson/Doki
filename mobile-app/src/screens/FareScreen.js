@@ -6,10 +6,9 @@ import {
   TouchableOpacity,
   Text,
   Platform,
-  TouchableWithoutFeedback,
   Alert,
 } from "react-native";
-import { Icon, Button, Header } from "react-native-elements";
+import { Icon, Button } from "react-native-elements";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import { colors } from "../common/theme";
 var { width, height } = Dimensions.get("window");

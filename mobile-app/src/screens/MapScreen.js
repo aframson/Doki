@@ -13,7 +13,6 @@ import {
 } from "react-native";
 import {
   TouchableOpacity,
-  BaseButton,
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 import { MapComponent } from "../components";
