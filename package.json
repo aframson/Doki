@@ -1,7 +1,7 @@
 {
   "name": "exicubetaxi",
   "version": "1.4.0",
-  "description": "Exicube Taxi App Full Solution",
+  "description": "Delievry app",
   "scripts": {
     "app": "yarn workspace mobile-app start",
     "app:clear": "yarn workspace mobile-app clear",

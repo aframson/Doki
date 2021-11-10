@@ -5,8 +5,6 @@ import {
   Dimensions,
   TouchableOpacity,
   ScrollView,
-  Image,
-  TouchableWithoutFeedback,
   Platform,
   Alert,
   TextInput,
@@ -14,19 +12,16 @@ import {
   StatusBar,
 } from "react-native";
 import Background from "./Background";
-import { Icon } from "react-native-elements";
 import { FontAwesome, Zocial, Fontisto, Entypo } from "@expo/vector-icons";
 import { colors } from "../common/theme";
 var { height } = Dimensions.get("window");
 import { language, countries, default_country_code, features } from "config";
-import RadioForm from "react-native-simple-radio-button";
 import RNPickerSelect from "react-native-picker-select";
 import * as ImagePicker from "expo-image-picker";
 import { useSelector } from "react-redux";
 import ActionSheet from "react-native-actions-sheet";
 import { FormTitle } from "./FormTitle";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { style } from "dom-helpers";
 
 export default function Registration(props) {
   const [state, setState] = useState({

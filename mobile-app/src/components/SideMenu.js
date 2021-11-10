@@ -62,7 +62,7 @@ export default function SideMenu(props) {
     {
       name: language.my_wallet_menu,
       icon: "wallet",
-      navigationName: "ios-wallet-outline",
+      navigationName: "wallet",
       type: "ionicon",
     },
     {

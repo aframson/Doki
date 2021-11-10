@@ -7,7 +7,6 @@ import {
   Platform,
   StatusBar,
 } from "react-native";
-import { Icon } from "react-native-elements";
 import { colors } from "../common/theme";
 //make a compontent
 const SideMenuHeader = ({ headerStyle, userPhoto, userName, userEmail }) => {

@@ -17,7 +17,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 import { MapComponent } from "../components";
-import { Icon, Header, Tooltip } from "react-native-elements";
+import { Icon} from "react-native-elements";
 import { colors } from "../common/theme";
 import * as Location from "expo-location";
 var { height, width } = Dimensions.get("window");
@@ -26,7 +26,6 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 import { useSelector, useDispatch } from "react-redux";
 import { NavigationEvents } from "react-navigation";
 import { store, FirebaseContext } from "common/src";
-import Contact from "./Contact";
 
 export default function MapScreen(props) {
   const { api } = useContext(FirebaseContext);
@@ -405,7 +404,7 @@ export default function MapScreen(props) {
   };
 
   const tapAddress = (selection) => {
-    if (selection === tripdata.selected) {
+    // if (selection === tripdata.selected) {
       let savedAddresses = [];
       let allAddresses = auth.info.profile.savedAddresses;
       for (let key in allAddresses) {
@@ -422,7 +421,7 @@ export default function MapScreen(props) {
           savedAddresses: savedAddresses,
         });
       }
-    } else {
+    // } else {
       dispatch(updatSelPointType(selection));
       if (selection == "drop") {
         setRegion({
@@ -439,7 +438,7 @@ export default function MapScreen(props) {
           longitudeDelta: longitudeDelta,
         });
       }
-    }
+    // }
   };
 
   //Go to confirm booking page

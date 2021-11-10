@@ -105,7 +105,7 @@ export default function DriverTrips(props) {
                     <View style={{ flex: 1, justifyContent: "center", alignItems: "center", height: height }}>
                         <View>
                             <Image
-                                source={require("../../assets/images/no_riders.png")}
+                                source={require("../../assets/images/no_riders.jpeg")}
                                 resizeMode="contain"
                                 style={{ height: 120, width: 200 }}
                             ></Image>
@@ -121,7 +121,7 @@ export default function DriverTrips(props) {
                 renderItem={({ item, index }) => {
                     return (
                         <View style={styles.listItemView}>
-                            <View style={[styles.mapcontainer, activeBookings && activeBookings.length >= 1 ? { height: height - 400 } : null]}>
+                            {/* <View style={[styles.mapcontainer, activeBookings && activeBookings.length >= 1 ? { height: height - 400 } : null]}> */}
                                 {/* <MapView style={styles.map}
                                     provider={PROVIDER_GOOGLE}
                                     initialRegion={{
@@ -151,7 +151,7 @@ export default function DriverTrips(props) {
                                     />
 
                                 </MapView> */}
-                            </View>
+                            {/* </View> */}
 
                             <View style={styles.mapDetails}>
                                 <View style={styles.dateView}>
@@ -160,19 +160,19 @@ export default function DriverTrips(props) {
                                 {/* <View style={styles.rateViewStyle}>
                                     <Text style={styles.rateViewTextStyle}>{settings.symbol}{item ? item.estimate > 0 ? parseFloat(item.estimate).toFixed(2) : 0 : null}</Text>
                                 </View> */}
-                                <View style={styles.estimateView}>
+                                {/* <View style={styles.estimateView}>
                                     <Text style={styles.listEstimate}>{item.estimateDistance? parseFloat(item.estimateDistance).toFixed(2): 0} {settings.convert_to_mile? language.mile : language.km}</Text>
                                     <Text style={styles.listEstimate}>{item.estimateTime? parseFloat(item.estimateTime/60).toFixed(0): 0} {language.mins}</Text>
-                                </View>
+                                </View> */}
                                 <View style={styles.addressViewStyle}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                         <View style={styles.greenDot}></View>
                                         <Text style={styles.addressViewTextStyle}>{item.pickup.add}</Text>
                                     </View>
-                                    <View style={styles.fixAdressStyle}>
+                                    {/* <View style={styles.fixAdressStyle}>
                                         <View style={styles.redDot}></View>
                                         <Text style={styles.addressViewTextStyle}>{item.drop.add}</Text>
-                                    </View>
+                                    </View> */}
                                 </View>
                                 {activeBookings && activeBookings.length >= 1 ?
                                     <View style={styles.detailsBtnView}>

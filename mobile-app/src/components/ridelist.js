@@ -5,7 +5,6 @@ import { colors } from '../common/theme';
 import { language, dateStyle } from 'config';
 import { useSelector } from 'react-redux';
 import SegmentedControlTab from 'react-native-segmented-control-tab';
-var { width, height } = Dimensions.get('window');
 
 export default function RideList(props) {
 
@@ -21,9 +20,9 @@ export default function RideList(props) {
             <TouchableOpacity style={styles.iconClickStyle} onPress={() => onPressButton(item, index)}>
                 <View style={styles.iconViewStyle}>
                     <Icon
-                        name='car-sports'
+                        name='package'
                         type='material-community'
-                        color={colors.DARK}
+                        color={colors.BLUE.secondary}
                         size={35}
                     />
                 </View>
@@ -45,12 +44,12 @@ export default function RideList(props) {
                     </View>
                     <View style={styles.textView2}>
                         <Text style={[styles.fareStyle, styles.dateStyle]}>{item.status == 'NEW' || item.status == 'PAYMENT_PENDING'? language[item.status] : null}</Text>
-                        <Text style={[styles.fareStyle, styles.dateStyle]}>{item.status == 'PAID' || item.status == 'COMPLETE'? item.customer_paid ? settings.symbol + parseFloat(item.customer_paid).toFixed(2) : settings.symbol + parseFloat(item.estimate).toFixed(2) : null}</Text>
+                        <Text style={[styles.fareStyle, styles.dateStyle]}>{item.status == 'PAID' || item.status == 'COMPLETE'? item.customer_paid ? settings.symbol +  Math.round(item.customer_paid): settings.symbol + Math.round(item.estimate) : null}</Text>
                         {
                             item.status == 'CANCELLED' ?
                                 <Image
                                     style={styles.cancelImageStyle}
-                                    source={require('../../assets/images/cancel.png')}
+                                    source={require('../../assets/images/cancel.png')}  
                                 />
                                 :
                                 null
