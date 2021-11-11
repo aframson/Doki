@@ -6,29 +6,41 @@ import {
   Dimensions,
   TouchableOpacity,
   TextInput,
-  KeyboardAvoidingView,
   ScrollView,
-  Animated,
-  Button,
   Alert,
 } from "react-native";
-import * as Contacts from "expo-contacts";
 var { width } = Dimensions.get("window");
 import { Icon } from "react-native-elements";
-import BottomSheet from "react-native-gesture-bottom-sheet";
 import { useSelector, useDispatch } from "react-redux";
 import { FirebaseContext } from "common/src";
 import { language } from "config";
 var { height, width } = Dimensions.get("window");
 import { colors } from "../common/theme";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
-import filter from "lodash.filter";
 
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Contact(props) {
+
+
+  console.log(props.navigation.state.params);
+
+  const cname = props.navigation.state.params && props.navigation.state.params.name;
+  const cphone = props.navigation.state.params && props.navigation.state.params.phone;
+
+  const storeContact = async () => {
+    try {
+      const nn = cphone.split(" ").join("")
+      await AsyncStorage.setItem('@contact_key', nn)
+    } catch (e) {
+      // saving error
+      console.log('error===>',e)
+      
+    }
+  }
+
   const { api } = useContext(FirebaseContext);
   const { getEstimate } = api;
 
@@ -41,13 +53,20 @@ export default function Contact(props) {
     phone: "",
   });
 
-  const [contacts, setContacts] = useState(null);
 
-  const BootnSheet = useRef();
-  const bottomSheet = useRef();
+
+
+  useEffect(() => {
+    if(cname || cphone)
+    {
+      setState({ ...state, name:cname, phone:cphone });
+    }
+}, [cname, cphone]);
 
   //Go to confirm booking page
   const onPressBook = () => {
+    storeContact();
+
     if (state.name == "" || state.phone == "") {
       Alert.alert("Required", "All fields are required");
     } else {
@@ -78,89 +97,17 @@ export default function Contact(props) {
     }
   };
 
-  // fetch only the first 10 deatls of contacts
-  useEffect(() => {
-    (async () => {
-      const { status } = await Contacts.requestPermissionsAsync();
-      if (status === "granted") {
-        const { data } = await Contacts.getContactsAsync({
-          fields: [Contacts.Fields.Emails, Contacts.PHONE_NUMBERS],
-          pageSize: 100,
-        });
-        setContacts(data);
-        if (data.length > 0) {
-          const contact = data[0];
-          setContacts(data);
-          console.log(data);
-        }
-      }
-    })();
-  }, []);
 
-  // function to search contact by name or phone number
-  // const searchContact = (text) => {
-  //   if (text) {
-  //     const newData = contacts.filter((item) => {
-  //       const itemData = item.name.toUpperCase();
-  //       const textData = text.toUpperCase();
-  //       return itemData.includes(textData);
-  //     });
-  //     setContacts(newData);
-  //   } else {
-  //     setContacts(contacts);
-  //   }
-  // };
 
-  const searchContact = (text) => {
-    if (text !== "") {
-      const results = contacts.filter((user) => {
-        return user.name.toLowerCase().startsWith(text.toLowerCase());
-        // Use the toLowerCase() method to make it case-insensitive
-      });
-      setContacts(results);
-    } else {
-      (async () => {
-        const { status } = await Contacts.requestPermissionsAsync();
-        if (status === "granted") {
-          const { data } = await Contacts.getContactsAsync({
-            fields: [Contacts.Fields.Emails, Contacts.PHONE_NUMBERS],
-            pageSize: 100,
-          });
-          setContacts(data);
-          if (data.length > 0) {
-            const contact = data[0];
-            setContacts(data);
-            console.log(data);
-          }
-        }
-      })();
-    }
-  };
 
-  const contains = ({ name }, query) => {
-    if (name.includes(query)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const openContact = (items) => {
-    setState({
-      ...state,
-      name: items.name,
-      phone: items.phoneNumbers[0].number,
-    });
-    bottomSheet.current.close();
-  };
-
-  // function to search contact by name or phone number
+ 
+ 
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <KeyboardAwareScrollView
         // behavior={Platform.OS == "ios" ? "height" : "padding"}
-        style={{ flex: 1, height: height, backgroundColor: "red" }}
+        style={{ flex: 1, height: height, backgroundColor: "white" }}
       >
         <ScrollView
           style={{ flex: 1, backgroundColor: "#fff", height: height }}
@@ -194,54 +141,8 @@ export default function Contact(props) {
           </Text>
 
           <View>
-            <BottomSheet hasDraggableIcon ref={bottomSheet} height={height / 2}>
-              <ScrollView>
-                <View style={{ width: "100%", padding: 10 }}>
-                  <TextInput
-                    placeholder="Search Contacts..."
-                    placeholderTextColor={"black"}
-                    style={{
-                      backgroundColor: "#eee",
-                      borderRadius: 10,
-                      padding: 10,
-                      paddingHorizontal: 15,
-                      marginTop: 10,
-                      fontSize: 25,
-                      borderWidth: 1,
-                      borderColor: colors.GREY.btnPrimary,
-                    }}
-                    onChangeText={(text) => searchContact(text)}
-                  />
-                </View>
-                <View style={{ flex: 1 }}>
-                  {!!contacts &&
-                    contacts.map((items, key) => (
-                      <TouchableOpacity
-                        key={key}
-                        onPress={() => openContact(items)}
-                        style={{
-                          padding: 10,
-                          borderBottomWidth: 1,
-                          width: "100%",
-                          borderBottomColor: "#ccc",
-                        }}
-                      >
-                        <Text
-                          style={{
-                            fontSize: 20,
-                            fontWeight: "bold",
-                            marginLeft: 20,
-                          }}
-                        >
-                          {items.name}
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
-                </View>
-              </ScrollView>
-            </BottomSheet>
+           
 
-            {/* <Button title="OPEN BOTTOM SHEET" onPress={() => BootnSheet.current.open()} /> */}
             <Text style={{ fontSize: 25, marginLeft: 22, marginTop: 10 }}>
               Name{" "}
             </Text>
@@ -282,7 +183,7 @@ export default function Contact(props) {
                   borderColor: "gray",
                   borderRadius: 5,
                 }}
-                onPress={() => bottomSheet.current.show()}
+                onPress={() => props.navigation.navigate("ContactList")}
               >
                 <Icon
                   name="contacts"
@@ -318,6 +219,9 @@ export default function Contact(props) {
               }}
             />
           </View>
+          {cphone == ''?<Text style={{
+            margin:30,color:'red'
+          }}>Please make sure phone number is added</Text>:null}
         </ScrollView>
         <TouchableOpacity
           onPress={() => onPressBook()}
@@ -329,7 +233,7 @@ export default function Contact(props) {
             alignItems: "center",
             justifyContent: "center",
             position: "absolute",
-            bottom: 20,
+            bottom: 50,
             borderRadius: 6,
           }}
         >

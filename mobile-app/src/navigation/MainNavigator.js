@@ -27,9 +27,16 @@ import {
 import SideMenu from '../components/SideMenu';
 import ConvertDriver from '../screens/ConvertDriver';
 import Contact from '../screens/Contact'
+import ContactList from '../screens/contactList';
 
 //app stack for user end
 export const AppStack = {
+    ContactList:{
+        screen:ContactList,
+        navigationOptions: {
+            headerShown: false
+        }
+    },
     Contact:{
         screen:Contact,
         navigationOptions: {

@@ -15,6 +15,7 @@ var { width, height } = Dimensions.get("window");
 import { useSelector, useDispatch } from "react-redux";
 import { language } from "config";
 import { FirebaseContext } from "common/src";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function FareScreen(props) {
   const { api } = useContext(FirebaseContext);
@@ -38,7 +39,28 @@ export default function FareScreen(props) {
     props.navigation.navigate('Map');
   };
 
+  const getContact = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@contact_key')
+      if(value !== null) {
+        console.log('contacts phone number ===>',value);
+      }
+    } catch(e) {
+      // error reading value
+      console.log('error reading value',e)
+    }
+  }     
+
+  
   useEffect(() => {
+    getContact();
+  })
+
+  useEffect(() => {
+
+
+
+
     setTimeout(() => {
       mapRef.current.fitToCoordinates(
         [
