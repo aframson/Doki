@@ -44,7 +44,7 @@
     "booking_title": "My Bookings",
     "booking_id": "Booking ID",
     "booking_date": "Booking Date",
-    "car_type": "Car Type",
+    "car_type": "Delivery Type",
     "pickup_address": "Pickup Address",
     "drop_address": "Drop address",
     "booking_status": "Booking Status",
@@ -212,13 +212,8 @@
     "car_type_blank_error": "Select Delivery type",
     "congratulation": "Congratulations!",
     "map_screen_title": "Home",
-<<<<<<< HEAD
-    "cab_selection_subtitle": "Tap to select car type and book now",
-    "not_available": "No rider available at the moment",
-=======
     "cab_selection_subtitle": "Tap to select delivery type and book now",
     "not_available": "No Delivery request available at the moment",
->>>>>>> b85c15b050b5d9460fb178e500f804079f03722a
     "book_now_button": "Book Now",
     "my_wallet_tile": "My Wallet",
     "wallet_ballance": "Wallet Balance",

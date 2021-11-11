@@ -323,7 +323,7 @@ export default function AddBookings(props) {
                 {
                   cartypes.map((car) =>
                     <MenuItem key={car.name} value={car.name}>
-                      <img src={car.image} className={classes.carphoto} alt="car types" />{car.name}
+                      <img src={car.image} className={classes.carphoto} alt="Delivery types" />{car.name}
                     </MenuItem>
                   )
                 }
