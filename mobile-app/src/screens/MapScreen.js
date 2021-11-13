@@ -17,7 +17,7 @@ import {
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
 import { MapComponent } from "../components";
-import { Icon} from "react-native-elements";
+import { Icon } from "react-native-elements";
 import { colors } from "../common/theme";
 import * as Location from "expo-location";
 var { height, width } = Dimensions.get("window");
@@ -405,39 +405,39 @@ export default function MapScreen(props) {
 
   const tapAddress = (selection) => {
     // if (selection === tripdata.selected) {
-      let savedAddresses = [];
-      let allAddresses = auth.info.profile.savedAddresses;
-      for (let key in allAddresses) {
-        savedAddresses.push(allAddresses[key]);
-      }
-      if (selection == "drop") {
-        props.navigation.navigate("Search", {
-          locationType: "drop",
-          savedAddresses: savedAddresses,
-        });
-      } else {
-        props.navigation.navigate("Search", {
-          locationType: "pickup",
-          savedAddresses: savedAddresses,
-        });
-      }
+    let savedAddresses = [];
+    let allAddresses = auth.info.profile.savedAddresses;
+    for (let key in allAddresses) {
+      savedAddresses.push(allAddresses[key]);
+    }
+    if (selection == "drop") {
+      props.navigation.navigate("Search", {
+        locationType: "drop",
+        savedAddresses: savedAddresses,
+      });
+    } else {
+      props.navigation.navigate("Search", {
+        locationType: "pickup",
+        savedAddresses: savedAddresses,
+      });
+    }
     // } else {
-      dispatch(updatSelPointType(selection));
-      if (selection == "drop") {
-        setRegion({
-          latitude: tripdata.drop.lat,
-          longitude: tripdata.drop.lng,
-          latitudeDelta: latitudeDelta,
-          longitudeDelta: longitudeDelta,
-        });
-      } else {
-        setRegion({
-          latitude: tripdata.pickup.lat,
-          longitude: tripdata.pickup.lng,
-          latitudeDelta: latitudeDelta,
-          longitudeDelta: longitudeDelta,
-        });
-      }
+    dispatch(updatSelPointType(selection));
+    if (selection == "drop") {
+      setRegion({
+        latitude: tripdata.drop.lat,
+        longitude: tripdata.drop.lng,
+        latitudeDelta: latitudeDelta,
+        longitudeDelta: longitudeDelta,
+      });
+    } else {
+      setRegion({
+        latitude: tripdata.pickup.lat,
+        longitude: tripdata.pickup.lng,
+        latitudeDelta: latitudeDelta,
+        longitudeDelta: longitudeDelta,
+      });
+    }
     // }
   };
 
@@ -635,13 +635,22 @@ export default function MapScreen(props) {
       <Animated.View
         style={{
           // flex:locatebox,
-          flex: 6.5,
+          flex: 4.2,
           flexDirection: "row",
           borderTopWidth: 0,
+          borderRadius: 15,
           alignItems: "center",
           backgroundColor: "white",
           paddingEnd: 20,
           marginTop: locatebox,
+          elevation: 2,
+          // shadowColor: "#f1f1f1",
+          shadowOpacity: 0.3,
+          shadowRadius: 3,
+          shadowOffset: {
+            height: 0,
+            width: 0,
+          },
           // transform: [{ translateX: 250 }]
         }}
       >
@@ -650,12 +659,13 @@ export default function MapScreen(props) {
           name="close"
           type="antdesign"
           color={"black"}
-          size={35}
+          size={25}
           containerStyle={{
             flex: 1,
             marginLeft: width - 60,
             position: "absolute",
-            top: 40,
+            top: 50,
+            right: 20,
           }}
         />
         {/* <Text style={{ position: 'absolute', fontSize: Platform.OS === 'ios' ? 40 : 35, fontWeight: 'bold', color: colors.BLUE.secondary, top: 40, left: width / 2.5 }}>Doki</Text> */}
@@ -665,7 +675,7 @@ export default function MapScreen(props) {
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
-            marginTop: margin,
+            marginTop: 80,
           }}
         >
           <View style={styles.coverViewStyle}>
@@ -679,17 +689,20 @@ export default function MapScreen(props) {
               style={styles.contentStyle}
             >
               <View style={styles.textIconStyle}>
-                <Text
-                  numberOfLines={1}
-                  style={[
-                    styles.textStyle,
-                    tripdata.selected == "pickup"
-                      ? { fontSize: 15 }
-                      : { fontSize: 14 },
-                  ]}
-                >
-                  {language.map_screen_where_input_text}
-                </Text>
+                {tripdata.pickup && tripdata.pickup.add ? null : (
+                  <Text
+                    numberOfLines={1}
+                    style={[
+                      styles.textStyle,
+                      tripdata.selected == "pickup"
+                        ? { fontSize: 15 }
+                        : { fontSize: 14 },
+                    ]}
+                  >
+                    {language.map_screen_where_input_text}
+                  </Text>
+                )}
+
                 <Text
                   numberOfLines={1}
                   style={[
@@ -717,17 +730,20 @@ export default function MapScreen(props) {
               style={styles.searchClickStyle}
             >
               <View style={styles.textIconStyle}>
-                <Text
-                  numberOfLines={1}
-                  style={[
-                    styles.textStyle,
-                    tripdata.selected == "drop"
-                      ? { fontSize: 15 }
-                      : { fontSize: 14 },
-                  ]}
-                >
-                  {language.map_screen_drop_input_text}
-                </Text>
+                {tripdata.drop && tripdata.drop.add ? null : (
+                  <Text
+                    numberOfLines={1}
+                    style={[
+                      styles.textStyle,
+                      tripdata.selected == "drop"
+                        ? { fontSize: 15 }
+                        : { fontSize: 14 },
+                    ]}
+                  >
+                    {language.map_screen_drop_input_text}
+                  </Text>
+                )}
+
                 <Text
                   numberOfLines={1}
                   style={[
@@ -761,7 +777,7 @@ export default function MapScreen(props) {
           backgroundColor: "white",
           // borderWidth: 1,
           position: "absolute",
-          zIndex: 99999,
+          zIndex: 999,
           marginTop: 35,
           marginLeft: 20,
           borderRadius: 100,
@@ -872,8 +888,10 @@ export default function MapScreen(props) {
                       backgroundColor:
                         prop.minTime != "" ? colors.BLUE.secondary : "#F29191",
                       flexDirection: "row",
-                      height: "100%",
-                      padding: 20,
+                      // height: "100%",
+                      padding: 15,
+                      paddingVertical: 5,
+                      alignItems: "center",
                     },
                   ]}
                 >
@@ -881,7 +899,7 @@ export default function MapScreen(props) {
                     name="md-location"
                     type="ionicon"
                     color={"white"}
-                    size={35}
+                    size={25}
                     containerStyle={{ margin: 5 }}
                     onPress={() => props.navigation.toggleDrawer()}
                   />
@@ -891,7 +909,7 @@ export default function MapScreen(props) {
                         // styles.text2,
                         {
                           color: "white",
-                          fontSize: Platform.OS == "ios" ? 24 : 20,
+                          fontSize: Platform.OS == "ios" ? 18 : 15,
                           margin: 10,
                         },
                       ]}
@@ -902,12 +920,14 @@ export default function MapScreen(props) {
                         <View
                           style={{
                             padding: 10,
+                            paddingVertical: 0,
                             height: "auto",
                             borderRadius: 5,
                           }}
                         >
                           <Text
                             style={{
+                              flex: 1,
                               color: "white",
                               fontSize: Platform.OS == "ios" ? 18 : 15,
                             }}
@@ -991,7 +1011,7 @@ export default function MapScreen(props) {
 
       <View style={styles.compViewStyle2}>
         {/* <Text style={styles.sampleTextStyle}>{language.cab_selection_subtitle}</Text> */}
-        <TouchableOpacity
+        {/* <TouchableOpacity
           style={{
             width: 100,
             height: 10,
@@ -999,7 +1019,7 @@ export default function MapScreen(props) {
             borderRadius: 50,
             marginTop: 10,
           }}
-        />
+        /> */}
         <ScrollView
           horizontal={false}
           style={styles.adjustViewStyle}
@@ -1022,7 +1042,7 @@ export default function MapScreen(props) {
                       backgroundColor: colors.BLUE.secondary,
                       flexDirection: "row",
                       height: 60,
-                      marginTop: 50,
+                      marginTop: 20,
                     },
                   ]}
                 >
@@ -1217,7 +1237,7 @@ const styles = StyleSheet.create({
     // position:'absolute',
   },
   map: {
-    flex: 1,
+    // flex: 1,
     // ...StyleSheet.absoluteFillObject,
     height: "75%",
     width: width,

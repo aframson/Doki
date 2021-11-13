@@ -36,7 +36,7 @@ export default function FareScreen(props) {
     dispatch(clearEstimate());
     dispatch(clearTripPoints());
     setButtonDisabled(false);
-    props.navigation.navigate('Map');
+    props.navigation.navigate("Map");
   };
 
   useEffect(() => {
@@ -95,6 +95,7 @@ export default function FareScreen(props) {
           bookLater: estimate.bookLater,
           settings: settings,
           booking_type_web: false,
+          deleted: 0,
         })
       );
     }
