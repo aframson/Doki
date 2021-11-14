@@ -39,23 +39,9 @@ export default function FareScreen(props) {
     props.navigation.navigate('Map');
   };
 
-  const getContact = async () => {
-    try {
-      const value = await AsyncStorage.getItem('@contact_key')
-      if(value !== null) {
-        console.log('contacts phone number ===>',value);
-      }
-    } catch(e) {
-      // error reading value
-      console.log('error reading value',e)
-    }
-  }     
-
   
-  useEffect(() => {
-    getContact();
-  })
-
+  
+ 
   useEffect(() => {
 
 

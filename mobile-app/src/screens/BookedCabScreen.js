@@ -31,6 +31,7 @@ import Polyline from "@mapbox/polyline";
 import getDirections from "react-native-google-maps-directions";
 import carImageIcon from "../../assets/images/track_Car.png";
 import { FirebaseContext } from "common/src";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function BookedCabScreen(props) {
   const { api } = useContext(FirebaseContext);
@@ -194,6 +195,7 @@ export default function BookedCabScreen(props) {
           if (role == "rider") dispatch(fetchBookingLocations(bookingId));
         }
         if (booking.status == "STARTED") {
+          getContact();
           if (role == "rider") dispatch(fetchBookingLocations(bookingId));
         }
         if (booking.status == "REACHED") {
@@ -319,6 +321,8 @@ export default function BookedCabScreen(props) {
       </View>
     ) : null;
   };
+
+
 
   const startBooking = () => {
     setOtpModalVisible(false);
@@ -594,6 +598,39 @@ export default function BookedCabScreen(props) {
       })
       .catch((err) => console.error("An error occurred", err));
   };
+
+  const f = (a) => (b)=>{
+
+       return  f('he')('ho');
+
+  }
+
+
+
+  
+
+  const getContact = async () => {
+    try {
+      const value = await AsyncStorage.getItem('@contact_key')
+      if(value !== null) {
+        console.log('contacts phone number ===>',value);
+        const random_digit  = Math.random(0,10)
+        const message = "this is the random number"
+        const res = await fetch(`https://sms.arkesel.com/sms/api?action=send-sms&api_key=Om81MlpxTWVTOXFnN28xMGY=&to=${value}&from=DOKI&sms=${message}`);
+        const json = await res.json();
+        console.log('json ===>',json);
+      }
+    } catch(e) {
+      // error reading value
+      console.log('error reading value',e)
+    }
+  }     
+
+
+  useEffect(() => {
+  }, []);  
+
+
 
   return (
     <View style={styles.mainContainer}>

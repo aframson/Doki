@@ -27,19 +27,7 @@ export default function Contact(props) {
 
   console.log(props.navigation.state.params);
 
-  const cname = props.navigation.state.params && props.navigation.state.params.name;
-  const cphone = props.navigation.state.params && props.navigation.state.params.phone;
 
-  const storeContact = async () => {
-    try {
-      const nn = cphone.split(" ").join("")
-      await AsyncStorage.setItem('@contact_key', nn)
-    } catch (e) {
-      // saving error
-      console.log('error===>',e)
-      
-    }
-  }
 
   const { api } = useContext(FirebaseContext);
   const { getEstimate } = api;
@@ -52,6 +40,21 @@ export default function Contact(props) {
     name: "",
     phone: "",
   });
+  const cname = props.navigation.state.params && props.navigation.state.params.name;
+  const cphone = props.navigation.state.params && props.navigation.state.params.phone;
+
+  const storeContact = async () => {
+    try {
+      const main = cphone?cphone:state.phone;
+
+      const nn = main.split(" ").join("")
+      await AsyncStorage.setItem('@contact_key', nn)
+    } catch (e) {
+      // saving error
+      console.log('error===>',e)
+      
+    }
+  }
 
 
 
