@@ -9,15 +9,14 @@ import {
   Alert,
   Modal,
   ScrollView,
-  Animated,
 } from "react-native";
 import {
   TouchableOpacity,
   BaseButton,
   TouchableWithoutFeedback,
-} from "react-native-gesture-handler";
-import { MapComponent } from "../components";
-import { Icon } from "react-native-elements";
+} from "react-nativeMapCom-gesture-handler";
+import { ponent } from "../components";
+import { Icon, Header, Tooltip } from "react-native-elements";
 import { colors } from "../common/theme";
 import * as Location from "expo-location";
 var { height, width } = Dimensions.get("window");
@@ -68,29 +67,6 @@ export default function MapScreen(props) {
   const [region, setRegion] = useState(null);
   const pageActive = useRef(false);
   const [locationRejected, setLocationRejected] = useState(false);
-  const locatebox = useRef(new Animated.Value(-height / 1.5)).current;
-  const userWho = useRef(new Animated.Value(width + 100)).current;
-
-  const [margin, setMargin] = useState(0);
-  const [isnull, setnull] = useState(false);
-
-  const DropLocateBox = () => {
-    setMargin(0);
-    Animated.timing(locatebox, {
-      toValue: 0,
-      duration: 400,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const PutLocateBox = () => {
-    setMargin(0);
-    Animated.timing(locatebox, {
-      toValue: -height / 1.5,
-      duration: 400,
-      useNativeDriver: false,
-    }).start();
-  };
 
   useEffect(() => {
     if (cars) {
@@ -175,7 +151,7 @@ export default function MapScreen(props) {
           tripdata.pickup ? "geolocation" : "init"
         );
       } else {
-        // setLocationRejected(true);
+        setLocationRejected(true);
         setLoadingModal(false);
         dispatch(
           updateTripPickup({
@@ -196,12 +172,6 @@ export default function MapScreen(props) {
       }
     }
   }, [gps.location]);
-
-  useEffect(() => {
-    if (tripdata.pickup && tripdata.drop && tripdata.drop.add) {
-      PutLocateBox();
-    }
-  });
 
   const resetCars = () => {
     let carWiseArr = [];
@@ -400,6 +370,17 @@ export default function MapScreen(props) {
         tripdata.pickup.source == "region-change") &&
       tripdata.selected == "pickup"
     ) {
+      Alert.alert(
+        language.no_driver_found_alert_title,
+        language.no_driver_found_alert_messege,
+        [
+          {
+            text: language.no_driver_found_alert_OK_button,
+            onPress: () => setLoadingModal(false),
+          },
+        ],
+        { cancelable: true }
+      );
     }
   };
 
@@ -480,7 +461,6 @@ export default function MapScreen(props) {
       Alert.alert(language.alert, language.drop_location_blank_error);
     }
   };
-  // ========
 
   const onPressBookLater = () => {
     if (tripdata.pickup && tripdata.drop && tripdata.drop.add) {
@@ -624,60 +604,29 @@ export default function MapScreen(props) {
         }}
         onDidBlur={(payload) => {}}
       />
-      {/* <Header
-                backgroundColor={colors.GREY.default}
-                leftComponent={{ icon: 'md-menu', type: 'ionicon', color: colors.WHITE, size: 30, component: TouchableWithoutFeedback, onPress: () => { props.navigation.toggleDrawer(); } }}
-                centerComponent={<Text style={styles.headerTitleStyle}>{language.map_screen_title}</Text>}
-                containerStyle={styles.headerStyle}
-                innerContainerStyles={styles.headerInnerStyle}
-            /> */}
-
-      <Animated.View
-        style={{
-          // flex:locatebox,
-          flex: 4.2,
-          flexDirection: "row",
-          borderTopWidth: 0,
-          borderRadius: 15,
-          alignItems: "center",
-          backgroundColor: "white",
-          paddingEnd: 20,
-          marginTop: locatebox,
-          elevation: 2,
-          // shadowColor: "#f1f1f1",
-          shadowOpacity: 0.3,
-          shadowRadius: 3,
-          shadowOffset: {
-            height: 0,
-            width: 0,
+      <Header
+        backgroundColor={colors.GREY.default}
+        leftComponent={{
+          icon: "md-menu",
+          type: "ionicon",
+          color: "black",
+          size: 30,
+          component: TouchableWithoutFeedback,
+          onPress: () => {
+            props.navigation.toggleDrawer();
           },
-          // transform: [{ translateX: 250 }]
         }}
-      >
-        <Icon
-          onPress={() => PutLocateBox()}
-          name="close"
-          type="antdesign"
-          color={"black"}
-          size={25}
-          containerStyle={{
-            flex: 1,
-            marginLeft: width - 60,
-            position: "absolute",
-            top: 50,
-            right: 20,
-          }}
-        />
-        {/* <Text style={{ position: 'absolute', fontSize: Platform.OS === 'ios' ? 40 : 35, fontWeight: 'bold', color: colors.BLUE.secondary, top: 40, left: width / 2.5 }}>Doki</Text> */}
-        <View
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            marginTop: 80,
-          }}
-        >
+        centerComponent={
+          <Text style={styles.headerTitleStyle}>
+            {language.map_screen_title}
+          </Text>
+        }
+        containerStyle={styles.headerStyle}
+        innerContainerStyles={styles.headerInnerStyle}
+      />
+
+      <View style={styles.mapcontainer}>
+        <View style={styles.myViewStyle}>
           <View style={styles.coverViewStyle}>
             <View style={styles.viewStyle1} />
             <View style={styles.viewStyle2} />
@@ -689,40 +638,25 @@ export default function MapScreen(props) {
               style={styles.contentStyle}
             >
               <View style={styles.textIconStyle}>
-                {tripdata.pickup && tripdata.pickup.add ? null : (
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.textStyle,
-                      tripdata.selected == "pickup"
-                        ? { fontSize: 15 }
-                        : { fontSize: 14 },
-                    ]}
-                  >
-                    {language.map_screen_where_input_text}
-                  </Text>
-                )}
-
                 <Text
                   numberOfLines={1}
                   style={[
                     styles.textStyle,
                     tripdata.selected == "pickup"
-                      ? { fontSize: 15 }
+                      ? { fontSize: 20 }
                       : { fontSize: 14 },
                   ]}
                 >
                   {tripdata.pickup && tripdata.pickup.add
                     ? tripdata.pickup.add
-                    : null}
+                    : language.map_screen_where_input_text}
                 </Text>
-
-                {/* <Icon
-                                    name='gps-fixed'
-                                    color={colors.BLUE.secondary}
-                                    size={tripdata.selected == 'pickup' ? 24 : 14}
-                                    containerStyle={{ flex: 1, marginLeft: -50 }}
-                                /> */}
+                <Icon
+                  name="gps-fixed"
+                  color={"black"}
+                  size={tripdata.selected == "pickup" ? 24 : 14}
+                  containerStyle={{ flex: 1 }}
+                />
               </View>
             </TouchableOpacity>
             <TouchableOpacity
@@ -730,80 +664,30 @@ export default function MapScreen(props) {
               style={styles.searchClickStyle}
             >
               <View style={styles.textIconStyle}>
-                {tripdata.drop && tripdata.drop.add ? null : (
-                  <Text
-                    numberOfLines={1}
-                    style={[
-                      styles.textStyle,
-                      tripdata.selected == "drop"
-                        ? { fontSize: 15 }
-                        : { fontSize: 14 },
-                    ]}
-                  >
-                    {language.map_screen_drop_input_text}
-                  </Text>
-                )}
-
                 <Text
                   numberOfLines={1}
                   style={[
                     styles.textStyle,
                     tripdata.selected == "drop"
-                      ? { fontSize: 15 }
+                      ? { fontSize: 20 }
                       : { fontSize: 14 },
                   ]}
                 >
                   {tripdata.drop && tripdata.drop.add
                     ? tripdata.drop.add
-                    : null}
+                    : language.map_screen_drop_input_text}
                 </Text>
-
-                {/* <Icon
-                                    name='search'
-                                    type='feather'
-                                    color={colors.BLUE.secondary}
-                                    size={tripdata.selected == 'drop' ? 24 : 14}
-                                    containerStyle={{ flex: 1, marginLeft: -50 }}
-                                /> */}
+                <Icon
+                  name="search"
+                  type="feather"
+                  color={colors.WHITE}
+                  size={tripdata.selected == "drop" ? 24 : 14}
+                  containerStyle={{ flex: 1 }}
+                />
               </View>
             </TouchableOpacity>
           </View>
         </View>
-      </Animated.View>
-      <View
-        style={{
-          height: 50,
-          width: 50,
-          backgroundColor: "white",
-          // borderWidth: 1,
-          position: "absolute",
-          zIndex: 999,
-          marginTop: 35,
-          marginLeft: 20,
-          borderRadius: 100,
-          alignItems: "center",
-          justifyContent: "center",
-          shadowColor: "#000",
-          shadowOffset: {
-            width: 0,
-            height: 6,
-          },
-          shadowOpacity: 0.37,
-          shadowRadius: 7.49,
-
-          elevation: 12,
-        }}
-      >
-        <Icon
-          name="md-menu"
-          type="ionicon"
-          color={"black"}
-          size={30}
-          containerStyle={{}}
-          onPress={() => props.navigation.toggleDrawer()}
-        />
-      </View>
-      <View style={styles.mapcontainer}>
         {region && tripdata && tripdata.pickup && !locationRejected ? (
           <MapComponent
             markerRef={(marker) => {
@@ -859,91 +743,39 @@ export default function MapScreen(props) {
             </View>
           )
         ) : null}
-        {/* come */}
-        <View
-          style={{
-            position: "absolute",
-            height: 100,
-            width: "100%",
-            bottom: -10,
-            // right: 11,
-            flex: 1,
-            // borderRadius: Platform.OS == "ios" ? 30 : 3,
-            elevation: 2,
-            shadowOpacity: 0.3,
-            shadowRadius: 3,
-            shadowOffset: {
-              height: 0,
-              width: 0,
-            },
-          }}
-        >
-          {allCarTypes.map((prop, key) => {
-            return (
-              <View key={key} style={styles.cabDivStyle}>
-                <TouchableOpacity
-                  style={[
-                    // styles.imageStyle,
-                    {
-                      backgroundColor:
-                        prop.minTime != "" ? colors.BLUE.secondary : "#F29191",
-                      flexDirection: "row",
-                      // height: "100%",
-                      padding: 15,
-                      paddingVertical: 5,
-                      alignItems: "center",
-                    },
-                  ]}
-                >
-                  <Icon
-                    name="md-location"
-                    type="ionicon"
-                    color={"white"}
-                    size={25}
-                    containerStyle={{ margin: 5 }}
-                    onPress={() => props.navigation.toggleDrawer()}
-                  />
-                  <View style={{ marginLeft: -10, width: 300 }}>
-                    <Text
-                      style={[
-                        // styles.text2,
-                        {
-                          color: "white",
-                          fontSize: Platform.OS == "ios" ? 18 : 15,
-                          margin: 10,
-                        },
-                      ]}
-                    >
-                      {prop.minTime != "" ? (
-                        "Your rider is " + prop.minTime + " closer"
-                      ) : (
-                        <View
-                          style={{
-                            padding: 10,
-                            paddingVertical: 0,
-                            height: "auto",
-                            borderRadius: 5,
-                          }}
-                        >
-                          <Text
-                            style={{
-                              flex: 1,
-                              color: "white",
-                              fontSize: Platform.OS == "ios" ? 18 : 15,
-                            }}
-                          >
-                            {language.not_available}
-                          </Text>
-                        </View>
-                      )}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            );
-          })}
-        </View>
+        {region && !locationRejected ? (
+          <View
+            style={{
+              position: "absolute",
+              height: Platform.OS == "ios" ? 55 : 42,
+              width: Platform.OS == "ios" ? 55 : 42,
+              bottom: 11,
+              right: 11,
 
+              backgroundColor: "#fff",
+              borderRadius: Platform.OS == "ios" ? 30 : 3,
+              elevation: 2,
+              shadowOpacity: 0.3,
+              shadowRadius: 3,
+              shadowOffset: {
+                height: 0,
+                width: 0,
+              },
+            }}
+          >
+            <TouchableOpacity
+              onPress={locateUser}
+              style={{
+                height: Platform.OS == "ios" ? 55 : 42,
+                width: Platform.OS == "ios" ? 55 : 42,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <Icon name="gps-fixed" color={"#666699"} size={26} />
+            </TouchableOpacity>
+          </View>
+        ) : null}
         {locationRejected ? (
           <View
             style={{
@@ -955,6 +787,150 @@ export default function MapScreen(props) {
             <Text>{language.locationRejected}</Text>
           </View>
         ) : null}
+        {tripdata.pickup && tripdata.drop && tripdata.drop.add && (
+          <View style={styles.compViewStyle2}>
+            <Text style={styles.sampleTextStyle}>
+              {language.cab_selection_subtitle}
+            </Text>
+            <ScrollView
+              horizontal={true}
+              style={styles.adjustViewStyle}
+              showsHorizontalScrollIndicator={true}
+            >
+              {allCarTypes.map((prop, key) => {
+                return (
+                  <View key={key} style={styles.cabDivStyle}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        selectCarType(prop, key);
+                      }}
+                      style={[
+                        styles.imageStyle,
+                        {
+                          borderColor:
+                            prop.active == true ? "black" : colors.WHITE,
+                        },
+                      ]}
+                    >
+                      <Image
+                        style={{ height: "100%", width: "100%", flex: 1 }}
+                        source={
+                          prop.image
+                            ? { uri: prop.image }
+                            : require("../../assets/images/microBlackCar.png")
+                        }
+                        style={styles.imageStyle1}
+                      />
+                    </TouchableOpacity>
+                    <View style={styles.textViewStyle}>
+                      <View
+                        style={{ flexDirection: "row", alignItems: "center" }}
+                      >
+                        <Text style={styles.text1}>
+                          {prop.name.toUpperCase()}
+                        </Text>
+                        {/* {
+                                                prop.extra_info && prop.extra_info != '' ?
+                                                    <Tooltip style={{ marginLeft: 3, marginRight: 3 }}
+                                                        backgroundColor={"#fff"}
+                                                        overlayColor={'rgba(50, 50, 50, 0.70)'}
+                                                        height={10 + 30 * (prop.extra_info.split(',').length)}
+                                                        width={180}
+                                                        popover={
+                                                            <View style={{ justifyContent: 'space-around', flexDirection: 'column' }}>
+                                                                {
+                                                                    prop.extra_info.split(',').map((ln) => <Text key={ln} style={{ margin: 5 }}>{ln}</Text>)
+                                                                }
+                                                            </View>
+                                                        }>
+                                                        <Icon
+                                                            name='information-circle-outline'
+                                                            type='ionicon'
+                                                            color='#517fa4'
+                                                            size={28}
+                                                        />
+                                                    </Tooltip>
+                                                    : null} */}
+                      </View>
+                      <View style={{ flexDirection: "row" }}>
+                        <Text
+                          style={[
+                            styles.text2,
+                            {
+                              fontWeight: "bold",
+                              color: colors.GREY.btnPrimary,
+                            },
+                          ]}
+                        >
+                          {settings.symbol}
+                          {prop.rate_per_unit_distance} /{" "}
+                          {settings.convert_to_mile
+                            ? language.mile
+                            : language.km}{" "}
+                        </Text>
+                        <Text style={styles.text2}>
+                          (
+                          {prop.minTime != ""
+                            ? prop.minTime
+                            : language.not_available}
+                          )
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                );
+              })}
+            </ScrollView>
+            <View style={{ flex: 0.5, flexDirection: "row", height: 45 }}>
+              <BaseButton
+                title={language.book_now_button}
+                loading={false}
+                onPress={onPressBookLater}
+                style={{
+                  flex: 0.5,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "black",
+                  width: width / 2,
+                  elevation: 0,
+                }}
+              >
+                <Text
+                  style={{
+                    color: colors.WHITE,
+                    fontFamily: "Roboto-Bold",
+                    fontSize: 18,
+                  }}
+                >
+                  {language.book_later_button}
+                </Text>
+              </BaseButton>
+              <BaseButton
+                title={language.book_now_button}
+                loading={false}
+                onPress={onPressBook}
+                style={{
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: "#2FDD92",
+                  width: width / 2,
+                  elevation: 0,
+                }}
+              >
+                <Text
+                  style={{
+                    color: "black",
+                    fontFamily: "Roboto-Bold",
+                    fontSize: 18,
+                  }}
+                >
+                  {language.book_now_button}
+                </Text>
+              </BaseButton>
+            </View>
+          </View>
+        )}
       </View>
       {activeBookings && activeBookings.length >= 1 ? (
         <View style={styles.compViewStyle}>
@@ -984,8 +960,8 @@ export default function MapScreen(props) {
                       marginLeft: 10,
                       width: 118,
                       color: "red",
-                      fontFamily: "Roboto",
-                      fontSize: 12,
+                      fontFamily: "Roboto-Bold",
+                      fontSize: 14,
                     }}
                   >
                     {language.active_booking}
@@ -1009,197 +985,6 @@ export default function MapScreen(props) {
         </View>
       ) : null}
 
-      <View style={styles.compViewStyle2}>
-        {/* <Text style={styles.sampleTextStyle}>{language.cab_selection_subtitle}</Text> */}
-        {/* <TouchableOpacity
-          style={{
-            width: 100,
-            height: 10,
-            backgroundColor: "#ccc",
-            borderRadius: 50,
-            marginTop: 10,
-          }}
-        /> */}
-        <ScrollView
-          horizontal={false}
-          style={styles.adjustViewStyle}
-          showsHorizontalScrollIndicator={true}
-        >
-          {allCarTypes.map((prop, key) => {
-            return (
-              <View key={key} style={styles.cabDivStyle}>
-                <TouchableOpacity
-                  onPress={() => {
-                    DropLocateBox();
-                    selectCarType(prop, key);
-                    // prop.name.toUpperCase() === "PACKAGE DELIVERY"
-                    //   ? props.navigation.navigate("Contact")
-                    //   : null;
-                  }}
-                  style={[
-                    styles.imageStyle,
-                    {
-                      backgroundColor: colors.BLUE.secondary,
-                      flexDirection: "row",
-                      height: 60,
-                      marginTop: 20,
-                    },
-                  ]}
-                >
-                  <View style={styles.textViewStyle}>
-                    <View
-                      style={{ flexDirection: "row", alignItems: "center" }}
-                    >
-                      <Image
-                        resizeMode="contain"
-                        source={
-                          prop.image
-                            ? { uri: prop.image }
-                            : require("../../assets/images/microBlackCar.png")
-                        }
-                        style={styles.imageStyle1}
-                      />
-                      <Text
-                        style={[
-                          styles.text1,
-                          {
-                            color: "white",
-                          },
-                        ]}
-                      >
-                        {prop.name.toUpperCase()}
-                      </Text>
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              </View>
-            );
-          })}
-        </ScrollView>
-
-        {/* return */}
-        {tripdata.pickup && tripdata.drop && tripdata.drop.add ? (
-          <TouchableOpacity
-            onPress={() => DropLocateBox()}
-            style={{
-              height: 55,
-              width: width / 1.15,
-              backgroundColor: "#eee",
-              borderRadius: 10,
-              padding: 12,
-              // top:-50,
-              flexDirection: "row",
-              margin: 20,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Icon
-              name="search"
-              type="feather"
-              color={colors.WHITE}
-              size={18}
-              containerStyle={{
-                backgroundColor: "gray",
-                padding: 5,
-                height: 30,
-                width: 30,
-                borderRadius: 50,
-              }}
-            />
-            <Text
-              style={{
-                height: 30,
-                marginTop: Platform.OS === "ios" ? 5 : 0,
-                marginLeft: 10,
-                fontSize: 20,
-                fontWeight: "bold",
-                color: "black",
-              }}
-            >
-              Change Location
-            </Text>
-          </TouchableOpacity>
-        ) : null}
-
-        {tripdata.pickup && tripdata.drop && tripdata.drop.add ? (
-          <View
-            style={{
-              // flex:1,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              borderWidth: 1,
-              width: "100%",
-              borderColor: "#eee",
-              bottom: 30,
-              padding: 25,
-            }}
-          >
-            <TouchableOpacity
-              disabled={allCarTypes[0].minTime != "" ? false : true}
-              title={language.book_now_button}
-              loading={false}
-              onPress={onPressBookLater}
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor:
-                  allCarTypes[0].minTime != "" ? colors.BLUE.dark : "#eee",
-                width: width / 2.5,
-                // marginRight:5,
-                height: 50,
-                padding: 10,
-                borderRadius: 5,
-                // flex:1,
-              }}
-            >
-              <Text
-                style={{
-                  color: colors.WHITE,
-                  // fontFamily: "Roboto-Bold",
-                  fontSize: 14,
-                }}
-              >
-                {language.book_later_button}
-              </Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              disabled={allCarTypes[0].minTime != "" ? false : true}
-              title={language.book_now_button}
-              loading={false}
-              onPress={() => props.navigation.navigate("Contact")}
-              style={{
-                justifyContent: "center",
-                width: width / 2.5,
-                alignItems: "center",
-                backgroundColor:
-                  allCarTypes[0].minTime != "" ? colors.BLUE.secondary : "#eee",
-                // margin: 20,
-                // height: 50,
-                borderRadius: 5,
-                height: 50,
-                padding: 10,
-                // flex:1,
-              }}
-            >
-              <Text
-                style={{
-                  color: colors.WHITE,
-                  // fontFamily: "Roboto-Bold",
-                  fontSize: 14,
-                }}
-              >
-                {language.book_now_button}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : null}
-      </View>
-      {/* {
-                LoadingModalBody()
-            } */}
-
       <DateTimePickerModal
         date={pickerConfig.selectedDateTime}
         minimumDate={new Date()}
@@ -1214,72 +999,91 @@ export default function MapScreen(props) {
 
 const styles = StyleSheet.create({
   headerStyle: {
-    backgroundColor: colors.BLUE.secondary,
+    backgroundColor: "white",
     borderBottomWidth: 0,
-    padding: 20,
+    shadowColor: "#aaa",
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    },
+    shadowOpacity: 0.48,
+    shadowRadius: 11.95,
+
+    elevation: 18,
   },
   headerInnerStyle: {
     marginLeft: 10,
     marginRight: 10,
   },
   headerTitleStyle: {
-    color: colors.WHITE,
+    color: "black",
     fontFamily: "Roboto-Bold",
     fontSize: 18,
   },
   mapcontainer: {
-    flex: 10,
+    flex: 7,
     width: width,
-    justifyContent: "center",
+    // justifyContent: 'center',
     alignItems: "center",
-    marginTop: -100,
-    // borderWidth: 1,
-    // position:'absolute',
   },
   map: {
-    // flex: 1,
-    // ...StyleSheet.absoluteFillObject,
-    height: "75%",
-    width: width,
-    position: "absolute",
+    flex: 1,
+    ...StyleSheet.absoluteFillObject,
   },
   mainViewStyle: {
     flex: 1,
     backgroundColor: colors.WHITE,
   },
+  myViewStyle: {
+    // flex: 5.5,
+    flexDirection: "row",
+    borderTopWidth: 0,
+    alignItems: "center",
+    backgroundColor: "white",
+    padding: 20,
+    position: "absolute",
+    zIndex: 1,
+    width: "90%",
+    marginTop: 10,
+    borderRadius: 10,
+    shadowColor: "#aaa",
+    shadowOffset: {
+      width: 0,
+      height: 9,
+    },
+    shadowOpacity: 0.48,
+    shadowRadius: 11.95,
 
+    elevation: 18,
+  },
   coverViewStyle: {
     flex: 1.5,
     alignItems: "center",
-    // marginTop:50
   },
   viewStyle1: {
     height: 12,
     width: 12,
     borderRadius: 15 / 2,
-    backgroundColor: colors.BLUE.secondary,
+    backgroundColor: "black",
   },
   viewStyle2: {
     height: height / 25,
     width: 1,
-    backgroundColor: colors.BLUE.secondary,
+    backgroundColor: "black",
   },
   viewStyle3: {
     height: 14,
     width: 14,
-    backgroundColor: colors.BLUE.secondary,
+    backgroundColor: "black",
   },
   iconsViewStyle: {
     flex: 9.5,
     justifyContent: "space-between",
-    // marginTop:50
   },
   contentStyle: {
     justifyContent: "center",
-    borderBottomColor: colors.WHITE,
-    // borderBottomWidth: 1,
-    backgroundColor: "#eee",
-    borderRadius: 5,
+    borderBottomColor: "#ccc",
+    borderBottomWidth: 1,
   },
   textIconStyle: {
     justifyContent: "center",
@@ -1294,14 +1098,10 @@ const styles = StyleSheet.create({
     color: "black",
     marginTop: 10,
     marginBottom: 10,
-    paddingLeft: 10,
   },
   searchClickStyle: {
     //flex: 1,
     justifyContent: "center",
-    backgroundColor: "#eee",
-    borderRadius: 5,
-    marginTop: 5,
   },
   compViewStyle: {
     flex: 0.5,
@@ -1321,22 +1121,23 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   compViewStyle2: {
-    flex: 2.8,
+    // flex: 2.8,
     alignItems: "center",
-    // borderWidth:1
-    shadowColor: "#000",
+    backgroundColor: "white",
+    shadowColor: "black",
+    position: "absolute",
+    width: "90%",
+    bottom: 20,
+    overflow: "hidden",
+    borderRadius: 10,
     shadowOffset: {
       width: 0,
-      height: 6,
+      height: 9,
     },
-    shadowOpacity: 0.37,
-    shadowRadius: 7.49,
+    shadowOpacity: 1.48,
+    shadowRadius: 5.95,
 
-    elevation: 12,
-    backgroundColor: colors.WHITE,
-    // marginTop: -30,
-    borderTopRightRadius: 10,
-    borderTopLeftRadius: 10,
+    elevation: 18,
   },
   pickCabStyle: {
     flex: 0.3,
@@ -1348,30 +1149,21 @@ const styles = StyleSheet.create({
   sampleTextStyle: {
     flex: 0.2,
     fontFamily: "Roboto-Bold",
-    fontSize: 20,
+    fontSize: 13,
     fontWeight: "300",
-    color: "black",
-    marginTop: 11,
-    // textAlign:'left',
-    // width,
-    // paddingLeft:20,
-    // borderWidth:1,
-    borderBottomColor: "gray",
+    color: colors.GREY.secondary,
+    marginTop: 5,
   },
   adjustViewStyle: {
-    flex: 1,
-    // flexDirection: 'row',
-    // justifyContent: 'space-around',
-    // marginTop: 8,
-    // borderWidth:1,
-    width: "100%",
+    flex: 9,
+    flexDirection: "row",
+    //justifyContent: 'space-around',
+    marginTop: 8,
   },
   cabDivStyle: {
     flex: 1,
-    width,
-    // alignItems: 'center',
-    // borderBottomWidth: 1,
-    // borderBottomColor: 'gray',
+    width: width / 3,
+    alignItems: "center",
   },
   imageViewStyle: {
     flex: 2.7,
@@ -1379,34 +1171,24 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
   },
   imageStyle: {
-    height: "auto",
-    width: width / 1.15,
+    height: height / 8,
+    width: height / 10,
     // borderRadius: height / 14 / 2,
-    // borderBottomWidth: 1,
-    // borderTopWidth: 1,
-    // borderColor: '#eee',
-    backgroundColor: "#eee",
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    borderBottomColor: "#ccc",
-    borderTopColor: "#ccc",
-    marginTop: 10,
-    padding: 7,
-    alignSelf: "center",
-    borderRadius: 10,
+    borderWidth: 2,
+    //backgroundColor: colors.WHITE,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 5,
   },
   textViewStyle: {
     flex: 1,
     alignItems: "center",
-    // flexDirection: 'column',
+    flexDirection: "column",
     justifyContent: "center",
-    // borderWidth: 1,
-    padding: 5,
-    width: "auto",
   },
   text1: {
     fontFamily: "Roboto-Bold",
-    fontSize: 17,
+    fontSize: 14,
     fontWeight: "900",
     color: colors.BLACK,
   },
@@ -1438,8 +1220,7 @@ const styles = StyleSheet.create({
   },
   imageStyle1: {
     height: height / 20.5,
-    width: height / 20.5,
-    margin: 10,
+    width: height / 10.5,
   },
   imageStyle2: {
     height: height / 20.5,
