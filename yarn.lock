@@ -14308,6 +14308,11 @@ react-native-button@^2.3.0:
   dependencies:
     prop-types "^15.5.10"
 
+react-native-contacts-wrapper@^0.2.4:
+  version "0.2.4"
+  resolved "https://registry.yarnpkg.com/react-native-contacts-wrapper/-/react-native-contacts-wrapper-0.2.4.tgz#7513eac1e2093239348e44b71ac29d62f81f1da0"
+  integrity sha1-dRPqweIJMjk0jkS3GsKdYvgfHaA=
+
 react-native-dash@0.0.11:
   version "0.0.11"
   resolved "https://registry.yarnpkg.com/react-native-dash/-/react-native-dash-0.0.11.tgz#cf1b0108e4660217cf0300b872231a5cadb9c4a8"
