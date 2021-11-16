@@ -83,7 +83,7 @@ export default function FareScreen(props) {
   const bookNow = () => {
     if (
       auth.info.profile.mobile == "" ||
-      auth.info.profile.mobile == " " ||
+      auth.info.profile.mobile == "" ||
       !auth.info.profile.mobile
     ) {
       Alert.alert(language.alert, language.updatemobile);
@@ -344,7 +344,8 @@ export default function FareScreen(props) {
               loadingProps={{ size: "large", color: colors.BLUE.default }}
               titleStyle={{ color: colors.WHITE, fontWeight: "bold" }}
               disabled={buttonDisabled}
-              onPress={bookNow}
+              // onPress={bookNow}
+              onPress={()=>props.navigation.navigate("Contact")}
               buttonStyle={{ height: "100%", backgroundColor: "#10d885" }}
               containerStyle={{ height: "100%", padding: 5 }}
             />
