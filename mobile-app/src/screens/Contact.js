@@ -50,8 +50,7 @@ export default function Contact(props) {
 
   const storeContact = async () => {
     try {
-      const main = cphone?cphone:state.phone;
-
+      const main = state.phone;
       const nn = main.split(" ").join("")
       await AsyncStorage.setItem('@contact_key', nn)
     } catch (e) {
@@ -71,49 +70,11 @@ export default function Contact(props) {
     }
 }, [cname, cphone]);
 
-  //Go to confirm booking page
-  const onPressBook = () => {
-    storeContact();
-
-    if (state.name == "" || state.phone == "") {
-      Alert.alert("Required", "All fields are required");
-    } else {
-      if (tripdata.pickup && tripdata.drop && tripdata.drop.add) {
-        if (!tripdata.carType) {
-          Alert.alert(language.alert, language.car_type_blank_error);
-        } else {
-          dispatch(
-            getEstimate({
-              bookLater: false,
-              bookingDate: null,
-              pickup: {
-                coords: { lat: tripdata.pickup.lat, lng: tripdata.pickup.lng },
-                description: tripdata.pickup.add,
-              },
-              drop: {
-                coords: { lat: tripdata.drop.lat, lng: tripdata.drop.lng },
-                description: tripdata.drop.add,
-              },
-              carDetails: tripdata.carType,
-              platform: Platform.OS,
-            })
-          );
-        }
-      } else {
-        Alert.alert(language.alert, language.drop_location_blank_error);
-      }
-    }
-  };
-
-
-
-
-
-
 
 
 
   const bookNow = () => {
+    storeContact();
     if (
       auth.info.profile.mobile == "" ||
       auth.info.profile.mobile == "" ||

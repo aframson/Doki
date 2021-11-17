@@ -599,23 +599,15 @@ export default function BookedCabScreen(props) {
       .catch((err) => console.error("An error occurred", err));
   };
 
-  const f = (a) => (b)=>{
-
-       return  f('he')('ho');
-
-  }
-
-
-
-  
 
   const getContact = async () => {
     try {
       const value = await AsyncStorage.getItem('@contact_key')
       if(value !== null) {
         console.log('contacts phone number ===>',value);
-        const random_digit  = Math.random(0,10)
-        const message = "this is the random number"
+        // 6 random numbers
+        const randomNumber = Math.floor(Math.random() * (99999 - 10000)) + 10000;
+        const message = "dekivery code :" + randomNumber;
         const res = await fetch(`https://sms.arkesel.com/sms/api?action=send-sms&api_key=Om81MlpxTWVTOXFnN28xMGY=&to=${value}&from=DOKI&sms=${message}`);
         const json = await res.json();
         console.log('json ===>',json);

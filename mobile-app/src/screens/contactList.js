@@ -7,6 +7,7 @@ import {
     TouchableOpacity,
     TextInput,
     ScrollView,
+    ActivityIndicator,
  
 } from "react-native";
 import * as Contacts from "expo-contacts";
@@ -29,43 +30,55 @@ export default function ContactList(props) {
     });
 
     const [contacts, setContacts] = useState(null);
+    const [loading , setLoading] = useState(false);
 
     const bottomSheet = useRef();
 
     // fetch only the first 10 deatls of contacts
     useEffect(() => {
-        (async () => {
+        setLoading(true);
+        (async () => {  
             const { status } = await Contacts.requestPermissionsAsync();
             if (status === "granted") {
                 const { data } = await Contacts.getContactsAsync({
                     fields: [Contacts.Fields.Emails, Contacts.PHONE_NUMBERS],
-                    pageSize: 100,
+                    pageSize: 1000,  
                 });
-                setContacts(data);
+                setContacts(data); 
                 if (data.length > 0) {
                     const contact = data[0];
                     setContacts(data);
                     console.log(data);
+                    setLoading(false);
+
                 }
             }
         })();
     }, []);
 
 
-    const searchContact = (text) => {
+
+  
+
+
+    const searchContact = async(text) => {
+       
         if (text !== "") {
-            const results = contacts.filter((user) => {
-                return user.name.toLowerCase().startsWith(text.toLowerCase());
-                // Use the toLowerCase() method to make it case-insensitive
-            });
-            setContacts(results);
+            const newData = contacts.filter((item) => {
+                const itemData  = `${item.name.toUpperCase()}`;
+                const textData = `${text.toUpperCase()}`;
+                return itemData.indexOf(textData) > -1;
+    
+            })
+            setContacts(newData);
+            setLoading(false);
         } else {
-            (async () => {
+           
                 const { status } = await Contacts.requestPermissionsAsync();
                 if (status === "granted") {
                     const { data } = await Contacts.getContactsAsync({
                         fields: [Contacts.Fields.Emails, Contacts.PHONE_NUMBERS],
-                        pageSize: 100,
+                        pageSize: 1000,
                     });
                     setContacts(data);
                     if (data.length > 0) {
@@ -74,7 +87,6 @@ export default function ContactList(props) {
                         console.log(data);
                     }
                 }
-            })();
         }
     };
 
@@ -103,11 +115,11 @@ export default function ContactList(props) {
                     />
                 </View>
                 <View style={{ flex: 1 }}>
-                    {!!contacts &&
-                        contacts.map((items, key) => (
+                    {loading ?(<ActivityIndicator size="small" color="black"/>):!!contacts &&
+                        contacts.map((items, key) => (      
                             <TouchableOpacity
                                 key={key}
-                                onPress={() => props.navigation.navigate("Contact",{name:items.name,phone:items.phoneNumbers[0].number?items.phoneNumbers[0].number:""})}
+                                onPress={() => props.navigation.navigate("Contact",{name:items.name,phone:items.phoneNumbers?items.phoneNumbers[0].number:""})}
                                 style={{
                                     padding: 10,
                                     borderBottomWidth: 1,
