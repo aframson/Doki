@@ -1,130 +1,288 @@
-import React from 'react';
+import React, { useEffect, useState, useRef, useContext } from "react";
 import {
   StyleSheet,
-  Text,
   View,
+  Text,
+  Dimensions,
+  TouchableOpacity,
   TextInput,
-  SafeAreaView,
-  FlatList,
-  ActivityIndicator
-} from 'react-native';
-import { Contacts } from 'expo';
-export default class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      isLoading: false,
-      contacts: []
-    };
-  }
+  ScrollView,
+  Alert,
+} from "react-native";
+var { width } = Dimensions.get("window");
+import { Icon } from "react-native-elements";
+import { useSelector, useDispatch } from "react-redux";
+import { FirebaseContext } from "common/src";
+import { language } from "config";
+var { height, width } = Dimensions.get("window");
+import { colors } from "../common/theme";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-  loadContacts = async () => {
-    const permission = await Expo.Permissions.askAsync(
-      Expo.Permissions.CONTACTS
-    );
 
-    if (permission.status !== 'granted') {
-      return;
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { SafeAreaView } from "react-native-safe-area-context";
+
+export default function Contact(props) {
+
+
+  console.log(props.navigation.state.params);
+
+
+
+  const { api } = useContext(FirebaseContext);
+  const { getEstimate } = api;
+
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
+  const tripdata = useSelector((state) => state.tripdata);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
+  const { addBooking, clearEstimate, clearBooking, clearTripPoints } = api;
+  const estimate = useSelector((state) => state.estimatedata.estimate);
+  const settings = useSelector((state) => state.settingsdata.settings);
+
+
+  const [state, setState] = useState({
+    name: "",
+    phone: "",
+  });
+  const cname = props.navigation.state.params && props.navigation.state.params.name;
+  const cphone = props.navigation.state.params && props.navigation.state.params.phone;
+
+  const storeContact = async () => {
+    try {
+      const main = cphone?cphone:state.phone;
+
+      const nn = main.split(" ").join("")
+      await AsyncStorage.setItem('@contact_key', nn)
+    } catch (e) {
+      // saving error
+      console.log('error===>',e)
+      
     }
-
-    const { data } = await Contacts.getContactsAsync({
-      fields: [Contacts.Fields.PhoneNumbers, Contacts.Fields.Emails]
-    });
-
-    console.log(data);
-    this.setState({ contacts: data, inMemoryContacts: data, isLoading: false });
-  };
-
-  componentDidMount() {
-    this.setState({ isLoading: true });
-    this.loadContacts();
   }
 
-  renderItem = ({ item }) => (
-    <View style={{ minHeight: 70, padding: 5 }}>
-      <Text style={{ color: '#bada55', fontWeight: 'bold', fontSize: 26 }}>
-        {item.firstName + ' '}
-        {item.lastName}
-      </Text>
-      <Text style={{ color: 'white', fontWeight: 'bold' }}>
-        {item.phoneNumbers[0].digits}
-      </Text>
-    </View>
-  );
 
-  searchContacts = value => {
-    const filteredContacts = this.state.inMemoryContacts.filter(contact => {
-      let contactLowercase = (
-        contact.firstName +
-        ' ' +
-        contact.lastName
-      ).toLowerCase();
 
-      let searchTermLowercase = value.toLowerCase();
 
-      return contactLowercase.indexOf(searchTermLowercase) > -1;
-    });
-    this.setState({ contacts: filteredContacts });
+  useEffect(() => {
+    if(cname || cphone)
+    {
+      setState({ ...state, name:cname, phone:cphone });
+    }
+}, [cname, cphone]);
+
+  //Go to confirm booking page
+  const onPressBook = () => {
+    storeContact();
+
+    if (state.name == "" || state.phone == "") {
+      Alert.alert("Required", "All fields are required");
+    } else {
+      if (tripdata.pickup && tripdata.drop && tripdata.drop.add) {
+        if (!tripdata.carType) {
+          Alert.alert(language.alert, language.car_type_blank_error);
+        } else {
+          dispatch(
+            getEstimate({
+              bookLater: false,
+              bookingDate: null,
+              pickup: {
+                coords: { lat: tripdata.pickup.lat, lng: tripdata.pickup.lng },
+                description: tripdata.pickup.add,
+              },
+              drop: {
+                coords: { lat: tripdata.drop.lat, lng: tripdata.drop.lng },
+                description: tripdata.drop.add,
+              },
+              carDetails: tripdata.carType,
+              platform: Platform.OS,
+            })
+          );
+        }
+      } else {
+        Alert.alert(language.alert, language.drop_location_blank_error);
+      }
+    }
   };
 
-  render() {
-    return (
-      <View style={{ flex: 1 }}>
-        <SafeAreaView style={{ backgroundColor: '#2f363c' }} />
-        <TextInput
-          placeholder="Search"
-          placeholderTextColor="#dddddd"
-          style={{
-            backgroundColor: '#2f363c',
-            height: 50,
-            fontSize: 36,
-            padding: 10,
-            color: 'white',
-            borderBottomWidth: 0.5,
-            borderBottomColor: '#7d90a0'
-          }}
-          onChangeText={value => this.searchContacts(value)}
-        />
-        <View style={{ flex: 1, backgroundColor: '#2f363c' }}>
-          {this.state.isLoading ? (
+
+
+
+
+
+
+
+
+  const bookNow = () => {
+    if (
+      auth.info.profile.mobile == "" ||
+      auth.info.profile.mobile == "" ||
+      !auth.info.profile.mobile
+    ) {
+      Alert.alert(language.alert, language.updatemobile);
+    } else {
+      setButtonDisabled(true);
+      dispatch(
+        addBooking({
+          pickup: estimate.pickup,
+          drop: estimate.drop,
+          carDetails: estimate.carDetails,
+          userDetails: auth.info,
+          estimate: estimate,
+          tripdate: estimate.bookLater
+            ? new Date(estimate.bookingDate).toString()
+            : new Date().toString(),
+          bookLater: estimate.bookLater,
+          settings: settings,
+          booking_type_web: false,
+        })
+      );
+    }
+  };
+
+
+ 
+ 
+
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <KeyboardAwareScrollView
+        // behavior={Platform.OS == "ios" ? "height" : "padding"}
+        style={{ flex: 1, height: height, backgroundColor: "white" }}
+      >
+        <ScrollView
+          style={{ flex: 1, backgroundColor: "#fff", height: height }}
+        >
+          <TouchableOpacity
+            style={{ position: "absolute", marginTop: 20, marginLeft: 20 }}
+            onPress={() => props.navigation.navigate("Map")}
+          >
+            <Icon
+              name="back"
+              type="antdesign"
+              color="black"
+              size={35}
+              style={{ marginTop: 10 }}
+            />
+          </TouchableOpacity>
+
+          <Text
+            style={{
+              fontSize: 40,
+              width: width / 1.2,
+              padding: 20,
+              fontWeight: "bold",
+              marginTop: 80,
+            }}
+          >
+            Who's recieving the package
+          </Text>
+          <Text style={{ marginLeft: 20, fontSize: 20, width: width / 1.1 }}>
+            The Driver may contact the recient to complete the delivery
+          </Text>
+
+          <View>
+           
+
+            <Text style={{ fontSize: 25, marginLeft: 22, marginTop: 10 }}>
+              Name{" "}
+            </Text>
             <View
               style={{
-                ...StyleSheet.absoluteFill,
-                alignItems: 'center',
-                justifyContent: 'center'
+                flex: 1,
+                flexDirection: "row",
+                width: "85%",
+                alignSelf: "center",
               }}
             >
-              <ActivityIndicator size="large" color="#bad555" />
-            </View>
-          ) : null}
-          <FlatList
-            data={this.state.contacts}
-            renderItem={this.renderItem}
-            keyExtractor={(item, index) => index.toString()}
-            ListEmptyComponent={() => (
-              <View
-                style={{
-                  flex: 1,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginTop: 50
+              <TextInput
+                placeholder="Enter Recievers name"
+                value={state.name}
+                onChangeText={(text) => {
+                  setState({ ...state, name: text });
                 }}
+                style={{
+                  height: 50,
+                  borderColor: "gray",
+                  borderWidth: 1,
+                  paddingLeft: 20,
+                  width: width - 50,
+                  alignSelf: "center",
+                  marginTop: 10,
+                  fontSize: 20,
+                  flex: 0.9,
+                  borderRadius: 5,
+                }}
+              />
+              <TouchableOpacity
+                style={{
+                  borderWidth: 1,
+                  flex: 0.2,
+                  height: 50,
+                  marginTop: 10,
+                  borderLeftWidth: 0,
+                  borderColor: "gray",
+                  borderRadius: 5,
+                }}
+                onPress={() => props.navigation.navigate("ContactList")}
               >
-                <Text style={{ color: '#bad555' }}>No Contacts Found</Text>
-              </View>
-            )}
-          />
-        </View>
-      </View>
-    );
-  }
+                <Icon
+                  name="contacts"
+                  type="antdesign"
+                  color="black"
+                  size={28}
+                  style={{ marginTop: 10 }}
+                />
+              </TouchableOpacity>
+            </View>
+
+            <Text style={{ fontSize: 25, marginLeft: 22, marginTop: 10 }}>
+              {" "}
+              Telephone{" "}
+            </Text>
+            <TextInput
+              keyboardType={"number-pad"}
+              value={state.phone}
+              onChangeText={(text) => {
+                setState({ ...state, phone: text });
+              }}
+              placeholder="Enter Recievers name"
+              style={{
+                height: 50,
+                borderColor: "gray",
+                borderRadius: 5,
+                borderWidth: 1,
+                paddingLeft: 20,
+                width: width - 50,
+                alignSelf: "center",
+                marginTop: 10,
+                fontSize: 20,
+              }}
+            />
+          </View>
+          {cphone == ''?<Text style={{
+            margin:30,color:'red'
+          }}>Please make sure phone number is added</Text>:null}
+        </ScrollView>
+        <TouchableOpacity
+          onPress={() => bookNow()}
+          style={{
+            width: "87%",
+            height: 50,
+            backgroundColor: colors.BLUE.secondary,
+            alignSelf: "center",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "absolute",
+            bottom: 50,
+            borderRadius: 6,
+          }}
+        >
+          <Text style={{ color: "white" }}>Continue</Text>
+        </TouchableOpacity>
+      </KeyboardAwareScrollView>
+    </SafeAreaView>
+  );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
+const styles = StyleSheet.create({});
