@@ -74,15 +74,7 @@ export default function FareScreen(props) {
   }, [bookingdata.booking, bookingdata.error, bookingdata.error.flag]);
 
   const bookNow = () => {
-<<<<<<< HEAD
     if (auth.info.profile.mobile.length == 0 || !auth.info.profile.mobile) {
-=======
-    if (
-      auth.info.profile.mobile == "" ||
-      auth.info.profile.mobile == "" ||
-      !auth.info.profile.mobile
-    ) {
->>>>>>> 96b99c76ab1a1df52dc06b86c0c81112df2e3e1f
       Alert.alert(language.alert, language.updatemobile);
     } else {
       setButtonDisabled(true);
