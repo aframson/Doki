@@ -15,7 +15,7 @@ var { width, height } = Dimensions.get("window");
 import { useSelector, useDispatch } from "react-redux";
 import { language } from "config";
 import { FirebaseContext } from "common/src";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function FareScreen(props) {
   const { api } = useContext(FirebaseContext);
@@ -36,17 +36,10 @@ export default function FareScreen(props) {
     dispatch(clearEstimate());
     dispatch(clearTripPoints());
     setButtonDisabled(false);
-    props.navigation.navigate('Map');
+    props.navigation.navigate("Map");
   };
 
-  
-  
- 
   useEffect(() => {
-
-
-
-
     setTimeout(() => {
       mapRef.current.fitToCoordinates(
         [
@@ -81,11 +74,7 @@ export default function FareScreen(props) {
   }, [bookingdata.booking, bookingdata.error, bookingdata.error.flag]);
 
   const bookNow = () => {
-    if (
-      auth.info.profile.mobile == "" ||
-      auth.info.profile.mobile == " " ||
-      !auth.info.profile.mobile
-    ) {
+    if (auth.info.profile.mobile.length == 0 || !auth.info.profile.mobile) {
       Alert.alert(language.alert, language.updatemobile);
     } else {
       setButtonDisabled(true);
