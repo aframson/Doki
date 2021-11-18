@@ -212,7 +212,11 @@
     "car_type_blank_error": "Select Delivery type",
     "congratulation": "Congratulations!",
     "map_screen_title": "Home",
+<<<<<<< HEAD
     "cab_selection_subtitle": "Tap to select Delivery type and book now",
+=======
+    "cab_selection_subtitle": "Tap to select car type and book now",
+>>>>>>> f8b6ef5803aa07da642831781acb584c72ec1cbc
     "not_available": "No Delivery request available at the moment",
     "book_now_button": "Book Now",
     "my_wallet_tile": "My Wallet",

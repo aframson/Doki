@@ -11,8 +11,13 @@ import {
   TouchableWithoutFeedback,
   Linking,
   Alert,
+  AlertIOS,
+  ToastAndroid,
+  Clipboard,
   ImageBackground,
+  Pressable,
 } from "react-native";
+
 import { Icon, Button, Header } from "react-native-elements";
 import MapView, {
   PROVIDER_GOOGLE,
@@ -31,7 +36,11 @@ import Polyline from "@mapbox/polyline";
 import getDirections from "react-native-google-maps-directions";
 import carImageIcon from "../../assets/images/track_Car.png";
 import { FirebaseContext } from "common/src";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+// clipboard module
+// import Clipboard from "@react-native-clipboard/clipboard";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 export default function BookedCabScreen(props) {
   const { api } = useContext(FirebaseContext);
@@ -227,6 +236,17 @@ export default function BookedCabScreen(props) {
     }
   }, [activeBookings]);
 
+  // clipboard function
+  const copyToClipboard = (text) => {
+    let str = text.toString();
+    console.log(str);
+    Clipboard.setString(str);
+    // showing toast or alert message
+    Platform.OS.toLowerCase === "ios"
+      ? AlertIOS.alert("Copied to Clipboard")
+      : ToastAndroid.show("Copied to Clipboard", ToastAndroid.SHORT);
+  };
+
   const renderButtons = () => {
     return (curBooking &&
       role == "rider" &&
@@ -321,8 +341,6 @@ export default function BookedCabScreen(props) {
       </View>
     ) : null;
   };
-
-
 
   const startBooking = () => {
     setOtpModalVisible(false);
@@ -599,30 +617,28 @@ export default function BookedCabScreen(props) {
       .catch((err) => console.error("An error occurred", err));
   };
 
-
   const getContact = async () => {
     try {
-      const value = await AsyncStorage.getItem('@contact_key')
-      if(value !== null) {
-        console.log('contacts phone number ===>',value);
+      const value = await AsyncStorage.getItem("@contact_key");
+      if (value !== null) {
+        console.log("contacts phone number ===>", value);
         // 6 random numbers
-        const randomNumber = Math.floor(Math.random() * (99999 - 10000)) + 10000;
+        const randomNumber =
+          Math.floor(Math.random() * (99999 - 10000)) + 10000;
         const message = "dekivery code :" + randomNumber;
-        const res = await fetch(`https://sms.arkesel.com/sms/api?action=send-sms&api_key=Om81MlpxTWVTOXFnN28xMGY=&to=${value}&from=DOKI&sms=${message}`);
+        const res = await fetch(
+          `https://sms.arkesel.com/sms/api?action=send-sms&api_key=Om81MlpxTWVTOXFnN28xMGY=&to=${value}&from=DOKI&sms=${message}`
+        );
         const json = await res.json();
-        console.log('json ===>',json);
+        console.log("json ===>", json);
       }
-    } catch(e) {
+    } catch (e) {
       // error reading value
-      console.log('error reading value',e)
+      console.log("error reading value", e);
     }
-  }     
+  };
 
-
-  useEffect(() => {
-  }, []);  
-
-
+  useEffect(() => {}, []);
 
   return (
     <View style={styles.mainContainer}>
@@ -801,7 +817,7 @@ export default function BookedCabScreen(props) {
         </TouchableOpacity>
       </View>
       <View style={styles.bottomContainer}>
-        <View style={styles.otpContainer}>
+        <View style={[styles.otpContainer, { paddingVertical: 15 }]}>
           <Text style={styles.cabText}>
             {language.booking_status}:{" "}
             <Text style={styles.cabBoldText}>
@@ -814,9 +830,26 @@ export default function BookedCabScreen(props) {
             </Text>
           </Text>
           {role == "rider" ? (
-            <Text style={styles.otpText}>
-              {curBooking ? language.otp + curBooking.otp : null}
-            </Text>
+            <View
+              style={{
+                flex: 1,
+                flexDirection: "row",
+                justifyContent: "flex-end",
+                alignItems: "center",
+                paddingRight: 10,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 18,
+                  paddingRight: 10,
+                  color: colors.BLACK,
+                  fontFamily: "Roboto-Bold",
+                }}
+              >
+                {curBooking ? language.otp + curBooking.otp : null}
+              </Text>
+            </View>
           ) : null}
         </View>
         <View style={styles.cabDetailsContainer}>
@@ -889,7 +922,7 @@ export default function BookedCabScreen(props) {
                 )}
               </View>
 
-              <View style={styles.ratingContainer}>
+              <View style={[styles.ratingContainer, { paddingHorizontal: 15 }]}>
                 {role == "rider" ? (
                   <StarRating
                     disabled={true}
@@ -910,6 +943,32 @@ export default function BookedCabScreen(props) {
             </View>
           ) : null}
         </View>
+        <TouchableOpacity
+          onPress={() => copyToClipboard(curBooking.otp)}
+          // onPress={() => console.log(curBooking.otp)}
+          style={{
+            flex: 1,
+            flexDirection: "row",
+            borderRadius: 6,
+            backgroundColor: colors.BLUE.secondary,
+            padding: 10,
+            marginVertical: 10,
+            marginHorizontal: 15,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <FontAwesome5 name="clipboard" color={colors.WHITE} size={18} />
+          <Text
+            style={{
+              color: colors.WHITE,
+              marginLeft: 10,
+              fontFamily: "Roboto-Bold",
+            }}
+          >
+            Copy OTP
+          </Text>
+        </TouchableOpacity>
         {renderButtons()}
       </View>
       {cancelModal()}
@@ -999,7 +1058,7 @@ const styles = StyleSheet.create({
     flex: 7,
     width: width,
   },
-  bottomContainer: { flex: 2.5, alignItems: "center" },
+  bottomContainer: { flex: 4 },
   map: {
     flex: 1,
     ...StyleSheet.absoluteFillObject,

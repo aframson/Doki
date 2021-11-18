@@ -239,7 +239,7 @@ export default function ProfileScreen(props) {
         rightComponent={{
           icon: "page-edit",
           type: "foundation",
-          color: colors.WHITE,
+          color: colors.BLACK,
           onPress: () => {
             editProfile();
           },
@@ -247,7 +247,7 @@ export default function ProfileScreen(props) {
         leftComponent={{
           icon: "md-menu",
           type: "ionicon",
-          color: colors.WHITE,
+          color: colors.BLACK,
           size: 30,
           component: TouchableWithoutFeedback,
           onPress: () => {
@@ -580,12 +580,13 @@ export default function ProfileScreen(props) {
 
 const styles = StyleSheet.create({
   headerStyle: {
-    backgroundColor: colors.GREY.default,
+    backgroundColor: colors.WHITE,
     borderBottomWidth: 0,
+    alignItems: "center",
   },
   headerTitleStyle: {
-    color: colors.WHITE,
-    fontFamily: "Roboto-Bold",
+    color: colors.BLACK,
+    fontFamily: "Roboto",
     fontSize: 20,
   },
   logo: {

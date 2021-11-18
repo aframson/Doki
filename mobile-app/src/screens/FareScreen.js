@@ -91,6 +91,7 @@ export default function FareScreen(props) {
           bookLater: estimate.bookLater,
           settings: settings,
           booking_type_web: false,
+          deleted: 0,
         })
       );
     }
@@ -334,7 +335,7 @@ export default function FareScreen(props) {
               titleStyle={{ color: colors.WHITE, fontWeight: "bold" }}
               disabled={buttonDisabled}
               // onPress={bookNow}
-              onPress={()=>props.navigation.navigate("Contact")}
+              onPress={() => props.navigation.navigate("Contact")}
               buttonStyle={{ height: "100%", backgroundColor: "#10d885" }}
               containerStyle={{ height: "100%", padding: 5 }}
             />

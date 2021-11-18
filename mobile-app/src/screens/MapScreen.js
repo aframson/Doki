@@ -1172,7 +1172,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   compViewStyle: {
-    flex: 0.5,
+    height: 50,
     backgroundColor: colors.YELLOW.secondary,
     shadowColor: colors.BLACK,
     shadowOffset: { width: 0, height: 2 },
