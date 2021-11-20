@@ -275,7 +275,7 @@ export default function FareScreen(props) {
             <View style={styles.iconContainer}>
               <Text style={styles.priceText}>
                 {" "}
-                Gh{settings ? settings.symbol : null}{" "}
+                {settings ? settings.symbol : null}{" "}
                 {estimate ? Math.round(estimate.estimateFare) : null}
               </Text>
             </View>

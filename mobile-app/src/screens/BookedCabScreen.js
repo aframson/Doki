@@ -290,9 +290,11 @@ export default function BookedCabScreen(props) {
                     ]);
               }}
               buttonStyle={{
-                height: 40,
+                // height: 40,
                 backgroundColor: colors.BLACK,
                 marginHorizontal: 10,
+                marginBottom: 10,
+                paddingVertical: 10,
               }}
               //   containerStyle={{ height: "100%" }}
             />
@@ -943,32 +945,35 @@ export default function BookedCabScreen(props) {
             </View>
           ) : null}
         </View>
-        <TouchableOpacity
-          onPress={() => copyToClipboard(curBooking.otp)}
-          // onPress={() => console.log(curBooking.otp)}
-          style={{
-            flex: 1,
-            flexDirection: "row",
-            borderRadius: 6,
-            backgroundColor: colors.BLUE.secondary,
-            padding: 10,
-            marginVertical: 10,
-            marginHorizontal: 15,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <FontAwesome5 name="clipboard" color={colors.WHITE} size={18} />
-          <Text
+        {role == "driver" ? null : (
+          <TouchableOpacity
+            onPress={() => copyToClipboard(curBooking.otp)}
+            // onPress={() => console.log(curBooking.otp)}
             style={{
-              color: colors.WHITE,
-              marginLeft: 10,
-              fontFamily: "Roboto-Bold",
+              flex: 1,
+              flexDirection: "row",
+              borderRadius: 4,
+              backgroundColor: colors.BLUE.secondary,
+              padding: 10,
+              paddingVertical: 15,
+              marginVertical: 10,
+              marginHorizontal: 10,
+              alignItems: "center",
+              justifyContent: "center",
             }}
           >
-            Copy OTP
-          </Text>
-        </TouchableOpacity>
+            <FontAwesome5 name="clipboard" color={colors.WHITE} size={18} />
+            <Text
+              style={{
+                color: colors.WHITE,
+                marginLeft: 10,
+                fontFamily: "Roboto-Bold",
+              }}
+            >
+              Copy OTP
+            </Text>
+          </TouchableOpacity>
+        )}
         {renderButtons()}
       </View>
       {cancelModal()}
@@ -1060,7 +1065,7 @@ const styles = StyleSheet.create({
   },
   bottomContainer: { flex: 4 },
   map: {
-    flex: 1,
+    // flex: role === "rider" ? 1.5 : 1,
     ...StyleSheet.absoluteFillObject,
   },
   otpContainer: {
