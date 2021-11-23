@@ -179,7 +179,7 @@ export default function RideDetails(props) {
               <Text style={styles.textStyle}>
                 {settings.symbol}
                 {paramData && paramData.customer_paid
-                  ? parseFloat(paramData.customer_paid).toFixed(2)
+                  ? parseFloat(paramData.customer_paid).toFixed(0)
                   : paramData && paramData.estimate
                   ? paramData.estimate
                   : 0}
@@ -232,9 +232,9 @@ export default function RideDetails(props) {
                 <Text style={styles.billAmount}>
                   {settings.symbol}{" "}
                   {paramData && paramData.trip_cost > 0
-                    ? parseFloat(paramData.trip_cost).toFixed(2)
+                    ? parseFloat(paramData.trip_cost).toFixed(0)
                     : paramData && paramData.estimate
-                    ? parseFloat(paramData.estimate).toFixed(2)
+                    ? parseFloat(paramData.estimate).toFixed(0)
                     : 0}
                 </Text>
               </View>
@@ -249,7 +249,7 @@ export default function RideDetails(props) {
                   {" "}
                   - {settings.symbol}
                   {paramData && paramData.discount_amount
-                    ? parseFloat(paramData.discount_amount).toFixed(2)
+                    ? parseFloat(paramData.discount_amount).toFixed(0)
                     : 0}
                 </Text>
               </View>
@@ -264,7 +264,7 @@ export default function RideDetails(props) {
                       {" "}
                       {settings.symbol}
                       {paramData && paramData.cardPaymentAmount
-                        ? parseFloat(paramData.cardPaymentAmount).toFixed(2)
+                        ? parseFloat(paramData.cardPaymentAmount).toFixed(0)
                         : 0}
                     </Text>
                   </View>
@@ -280,7 +280,7 @@ export default function RideDetails(props) {
                       {" "}
                       {settings.symbol}
                       {paramData && paramData.cashPaymentAmount
-                        ? parseFloat(paramData.cashPaymentAmount).toFixed(2)
+                        ? parseFloat(paramData.cashPaymentAmount).toFixed(0)
                         : 0}
                     </Text>
                   </View>
@@ -296,7 +296,7 @@ export default function RideDetails(props) {
                       {" "}
                       {settings.symbol}
                       {paramData && paramData.usedWalletMoney
-                        ? parseFloat(paramData.usedWalletMoney).toFixed(2)
+                        ? parseFloat(paramData.usedWalletMoney).toFixed(0)
                         : 0}
                     </Text>
                   </View>
@@ -308,7 +308,7 @@ export default function RideDetails(props) {
               <Text style={styles.billAmount2}>
                 {settings.symbol}
                 {paramData && paramData.customer_paid
-                  ? parseFloat(paramData.customer_paid).toFixed(2)
+                  ? parseFloat(paramData.customer_paid).toFixed(0)
                   : null}
               </Text>
             </View>
