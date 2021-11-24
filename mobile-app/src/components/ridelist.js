@@ -47,59 +47,58 @@ export default function RideList(props) {
   const renderData = ({ item, index }) => {
     return (
       <>
-        {item.deleted === 0 ? (
-          <TouchableOpacity
-            style={styles.iconClickStyle}
-            onPress={() => onPressButton(item, index)}
-          >
-            <View style={styles.iconViewStyle}>
-              <Icon
-                name="package"
-                type="material-community"
-                color={colors.BLUE.secondary}
-                size={35}
-              />
-            </View>
-            <View style={styles.flexViewStyle}>
-              <View style={styles.textView1}>
-                <View
-                  style={{
-                    flex: 1,
-                    flexDirection: "row",
+        <TouchableOpacity
+          style={styles.iconClickStyle}
+          onPress={() => onPressButton(item, index)}
+        >
+          <View style={styles.iconViewStyle}>
+            <Icon
+              name="package"
+              type="material-community"
+              color={colors.BLUE.secondary}
+              size={35}
+            />
+          </View>
+          <View style={styles.flexViewStyle}>
+            <View style={styles.textView1}>
+              <View
+                style={{
+                  flex: 1,
+                  flexDirection: "row",
 
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                  }}
-                >
-                  {/* <Text style={{ color: "black" }}>{item.customer_name}</Text> */}
-                  <Text style={[styles.textStyle, styles.dateStyle]}>
-                    {item.bookingDate
-                      ? new Date(item.bookingDate).toLocaleString(dateStyle)
-                      : ""}
-                  </Text>
-                </View>
-                <Text style={[styles.textStyle, styles.carNoStyle]}>
-                  {item.carType ? item.carType : null} -{" "}
-                  {item.vehicle_number
-                    ? item.vehicle_number
-                    : language.no_car_assign_text}
+                  justifyContent: "space-between",
+                  alignItems: "center",
+                }}
+              >
+                {/* <Text style={{ color: "black" }}>{item.customer_name}</Text> */}
+                <Text style={[styles.textStyle, styles.dateStyle]}>
+                  {item.bookingDate
+                    ? new Date(item.bookingDate).toLocaleString(dateStyle)
+                    : ""}
                 </Text>
-                <View style={[styles.picupStyle, styles.position]}>
-                  <View style={styles.greenDot} />
-                  <Text style={[styles.picPlaceStyle, styles.placeStyle]}>
-                    {item.pickup ? item.pickup.add : language.not_found_text}
-                  </Text>
-                </View>
-                <View style={[styles.dropStyle, styles.textViewStyle]}>
-                  <View style={[styles.redDot, styles.textPosition]} />
-                  <Text style={[styles.dropPlaceStyle, styles.placeStyle]}>
-                    {item.drop ? item.drop.add : language.not_found_text}
-                  </Text>
-                </View>
               </View>
+              <Text style={[styles.textStyle, styles.carNoStyle]}>
+                {item.carType ? item.carType : null} -{" "}
+                {item.vehicle_number
+                  ? item.vehicle_number
+                  : language.no_car_assign_text}
+              </Text>
+              <View style={[styles.picupStyle, styles.position]}>
+                <View style={styles.greenDot} />
+                <Text style={[styles.picPlaceStyle, styles.placeStyle]}>
+                  {item.pickup ? item.pickup.add : language.not_found_text}
+                </Text>
+              </View>
+              <View style={[styles.dropStyle, styles.textViewStyle]}>
+                <View style={[styles.redDot, styles.textPosition]} />
+                <Text style={[styles.dropPlaceStyle, styles.placeStyle]}>
+                  {item.drop ? item.drop.add : language.not_found_text}
+                </Text>
+              </View>
+            </View>
 
-              <View style={[styles.textView2, { alignItems: "flex-end" }]}>
-                <TouchableOpacity
+            <View style={[styles.textView2, { alignItems: "flex-end" }]}>
+              {/* <TouchableOpacity
                   style={{ marginRight: 15 }}
                   onPress={() => deleteBooking(item.id, item.customer_name)}
                 >
@@ -108,41 +107,40 @@ export default function RideList(props) {
                     size={22}
                     color={colors.GREY.btnPrimary}
                   />
-                </TouchableOpacity>
-                <Text
-                  style={[
-                    styles.fareStyle,
-                    styles.dateStyle,
-                    { marginRight: 15 },
-                  ]}
-                >
-                  {item.status == "NEW" || item.status == "PAYMENT_PENDING"
-                    ? language[item.status]
-                    : null}
-                </Text>
-                <Text
-                  style={[
-                    styles.fareStyle,
-                    styles.dateStyle,
-                    { marginRight: 15 },
-                  ]}
-                >
-                  {item.status == "PAID" || item.status == "COMPLETE"
-                    ? item.customer_paid
-                      ? settings.symbol + Math.round(item.customer_paid)
-                      : settings.symbol + Math.round(item.estimate)
-                    : null}
-                </Text>
-                {item.status == "CANCELLED" ? (
-                  <Image
-                    style={styles.cancelImageStyle}
-                    source={require("../../assets/images/cancel.png")}
-                  />
-                ) : null}
-              </View>
+                </TouchableOpacity> */}
+              <Text
+                style={[
+                  styles.fareStyle,
+                  styles.dateStyle,
+                  { marginRight: 15 },
+                ]}
+              >
+                {item.status == "NEW" || item.status == "PAYMENT_PENDING"
+                  ? language[item.status]
+                  : null}
+              </Text>
+              <Text
+                style={[
+                  styles.fareStyle,
+                  styles.dateStyle,
+                  { marginRight: 15, marginTop: 10 },
+                ]}
+              >
+                {item.status == "PAID" || item.status == "COMPLETE"
+                  ? item.customer_paid
+                    ? settings.symbol + Math.round(item.customer_paid)
+                    : settings.symbol + Math.round(item.estimate)
+                  : null}
+              </Text>
+              {item.status == "CANCELLED" ? (
+                <Image
+                  style={styles.cancelImageStyle}
+                  source={require("../../assets/images/cancel.png")}
+                />
+              ) : null}
             </View>
-          </TouchableOpacity>
-        ) : null}
+          </View>
+        </TouchableOpacity>
       </>
     );
   };
