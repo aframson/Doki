@@ -71,11 +71,11 @@ export default function Footer(props) {
         <div className={classes.right}>
           &copy; {1900 + new Date().getYear() + " "} 
           <a
-            href={settings.CompanyWebsite}
+            href={'#'}
             className={aClasses}
             target="_blank"
           >
-            {settings.CompanyName}
+            Quaker Technologies App Solutions
           </a>
         </div>
         :null}

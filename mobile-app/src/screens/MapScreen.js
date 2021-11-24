@@ -386,41 +386,41 @@ export default function MapScreen(props) {
   };
 
   const tapAddress = (selection) => {
-    if (selection === tripdata.selected) {
-      let savedAddresses = [];
-      let allAddresses = auth.info.profile.savedAddresses;
-      for (let key in allAddresses) {
-        savedAddresses.push(allAddresses[key]);
-      }
-      if (selection == "drop") {
-        props.navigation.navigate("Search", {
-          locationType: "drop",
-          savedAddresses: savedAddresses,
-        });
-      } else {
-        props.navigation.navigate("Search", {
-          locationType: "pickup",
-          savedAddresses: savedAddresses,
-        });
-      }
-    } else {
-      dispatch(updatSelPointType(selection));
-      if (selection == "drop") {
-        setRegion({
-          latitude: tripdata.drop.lat,
-          longitude: tripdata.drop.lng,
-          latitudeDelta: latitudeDelta,
-          longitudeDelta: longitudeDelta,
-        });
-      } else {
-        setRegion({
-          latitude: tripdata.pickup.lat,
-          longitude: tripdata.pickup.lng,
-          latitudeDelta: latitudeDelta,
-          longitudeDelta: longitudeDelta,
-        });
-      }
+    // if (selection === tripdata.selected) {
+    let savedAddresses = [];
+    let allAddresses = auth.info.profile.savedAddresses;
+    for (let key in allAddresses) {
+      savedAddresses.push(allAddresses[key]);
     }
+    if (selection == "drop") {
+      props.navigation.navigate("Search", {
+        locationType: "drop",
+        savedAddresses: savedAddresses,
+      });
+    } else {
+      props.navigation.navigate("Search", {
+        locationType: "pickup",
+        savedAddresses: savedAddresses,
+      });
+    }
+    // } else {
+    dispatch(updatSelPointType(selection));
+    if (selection == "drop") {
+      setRegion({
+        latitude: tripdata.drop.lat,
+        longitude: tripdata.drop.lng,
+        latitudeDelta: latitudeDelta,
+        longitudeDelta: longitudeDelta,
+      });
+    } else {
+      setRegion({
+        latitude: tripdata.pickup.lat,
+        longitude: tripdata.pickup.lng,
+        latitudeDelta: latitudeDelta,
+        longitudeDelta: longitudeDelta,
+      });
+    }
+    // }
   };
 
   //Go to confirm booking page
@@ -513,7 +513,7 @@ export default function MapScreen(props) {
           Alert.alert(
             language.alert,
             language.past_booking_error,
-            [{ text: "OK", onPress: () => {} }],
+            [{ text: "OK", onPress: () => { } }],
             { cancelable: true }
           );
         } else {
@@ -596,14 +596,14 @@ export default function MapScreen(props) {
   return (
     <View style={styles.mainViewStyle}>
       <NavigationEvents
-        onWillFocus={(payload) => {}}
+        onWillFocus={(payload) => { }}
         onDidFocus={(payload) => {
           pageActive.current = true;
         }}
         onWillBlur={(payload) => {
           pageActive.current = false;
         }}
-        onDidBlur={(payload) => {}}
+        onDidBlur={(payload) => { }}
       />
       <Header
         backgroundColor={colors.WHITE}
@@ -891,8 +891,7 @@ export default function MapScreen(props) {
                             ? colors.YELLOW.secondary
                             : colors.WHITE,
                         marginTop: 10,
-                      },
-                    ]}
+                      },]}
                   >
                     <Image
                       resizeMode="contain"
@@ -905,39 +904,7 @@ export default function MapScreen(props) {
                     />
                   </TouchableOpacity>
                   <View style={styles.textViewStyle}>
-                    {/* <View style={{ flexDirection: "row", alignItems: "center" }}>
-             <Text style={styles.text1}>{prop.name.toUpperCase()}</Text>
-             {prop.extra_info && prop.extra_info != "" ? (
-               <Tooltip
-                 style={{ marginLeft: 3, marginRight: 3 }}
-                 backgroundColor={"#fff"}
-                 overlayColor={"rgba(50, 50, 50, 0.70)"}
-                 height={10 + 30 * prop.extra_info.split(",").length}
-                 width={180}
-                 popover={
-                   <View
-                     style={{
-                       justifyContent: "space-around",
-                       flexDirection: "column",
-                     }}
-                   >
-                     {prop.extra_info.split(",").map((ln) => (
-                       <Text key={ln} style={{ margin: 5 }}>
-                         {ln}
-                       </Text>
-                     ))}
-                   </View>
-                 }
-               >
-                 <Icon
-                   name="information-circle-outline"
-                   type="ionicon"
-                   color="#517fa4"
-                   size={28}
-                 />
-               </Tooltip>
-             ) : null}
-           </View> */}
+
                     <View style={{ flexDirection: "row" }}>
                       <Text
                         style={[
@@ -994,30 +961,39 @@ export default function MapScreen(props) {
               </Text>
             </BaseButton>
             <View style={{ width: 15 }} />
-            <BaseButton
-              title={language.book_now_button}
-              loading={false}
-              onPress={onPressBook}
-              style={{
-                flex: 1,
-                justifyContent: "center",
-                alignItems: "center",
-                backgroundColor: colors.BLUE.secondary,
-                width: width / 2,
-                elevation: 0,
-                borderRadius: 6,
-              }}
-            >
-              <Text
+
+            {allCarTypes.map((prop, key) => (
+              <BaseButton
+                title={language.book_now_button}
+                loading={false}
+                onPress={()=>{
+                  selectCarType(prop, key);
+                  onPressBook();
+                  onPressBook();
+                  onPressBook();
+                }}
                 style={{
-                  color: colors.WHITE,
-                  fontFamily: "Roboto",
-                  fontSize: 16,
+                  flex: 1,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  backgroundColor: colors.BLUE.secondary,
+                  width: width / 2,
+                  elevation: 0,
+                  borderRadius: 6,
                 }}
               >
-                {language.book_now_button}
-              </Text>
-            </BaseButton>
+                <Text
+                  style={{
+                    color: colors.WHITE,
+                    fontFamily: "Roboto",
+                    fontSize: 16,
+                  }}
+                >
+                  {language.book_now_button}
+                </Text>
+              </BaseButton>
+            ))}
+
           </View>
           {console.log()}
         </View>

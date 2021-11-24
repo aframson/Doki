@@ -4,10 +4,13 @@
   "description": "Web Project",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.6.0",
+    "@emotion/styled": "^11.6.0",
     "@mapbox/polyline": "^1.1.1",
     "@material-ui/core": "^4.11.0",
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.56",
+    "@mui/material": "^5.2.0",
     "assets": "1.0.0",
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.19.2",
