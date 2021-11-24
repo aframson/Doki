@@ -9,6 +9,8 @@ export default function  WTransactionHistory(props) {
 
     const [data,setData] = useState(null);
     const settings = useSelector(state => state.settingsdata.settings);
+    const [credited,setCredits] = useState(0);
+    const [debited,setDebits] = useState(0);
 
     useEffect(()=>{
         let wdata = props.walletHistory;
@@ -63,18 +65,20 @@ export default function  WTransactionHistory(props) {
                                     />
                                 </View>
                             :null}
-                            <View style={styles.statusView}>
+                            <View style={styles.statusView}> 
+                            {item.type  && item.type == 'Credit'?setCredits(item.amount):null}
+                            {item.type  && item.type == 'Debit'?setDebits(item.amount):null}
                             {item.type  && item.type == 'Credit'?
                                 <Text style={styles.historyamounttextStyle}>{language.credited + ' ' + settings.symbol + parseFloat(item.amount).toFixed(1)}</Text>
                             :null}
                             {item.type && item.type == 'Debit'?
-                                <Text style={styles.historyamounttextStyle}>{language.debited + ' ' + settings.symbol + parseFloat(item.amount).toFixed(1)}</Text>
+                                <Text style={styles.historyamounttextStyle}>{language.debited + ' ' + settings.symbol + parseFloat(debited - credited).toFixed(1)}</Text>
                             :null}
                             {item.type && item.type == 'Withdraw'?
                                 <Text style={styles.historyamounttextStyle}>{language.withdrawn + ' ' + settings.symbol + parseFloat(item.amount).toFixed(1)}</Text>
                             :null}   
                             <Text style={styles.textStyle}>{language.Transaction_Id} {item.txRef}</Text>
-                            <Text style={styles.textStyle2}>{item.date}</Text>
+                              <Text style={styles.textStyle2}>{item.date}</Text>
                             </View>
                         </View>
                     </View>
@@ -82,6 +86,7 @@ export default function  WTransactionHistory(props) {
             </View>
         )
     }
+    // {item.type == 'Credit' ?item.amount:0}
     return (
         <FlatList
             keyExtractor={(item, index) => index.toString()}

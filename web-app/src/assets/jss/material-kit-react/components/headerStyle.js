@@ -52,8 +52,9 @@ const headerStyle = {
     flex: 1
   },
   title: {
+
     ...defaultFont,
-    lineHeight: "30px",
+    lineHeight: "10px",
     fontSize: "18px",
     borderRadius: "3px",
     textTransform: "none",
@@ -63,7 +64,7 @@ const headerStyle = {
     "&:hover,&:focus": {
       color: "inherit",
       background: "transparent"
-    }
+    },
   },
   appResponsive: {
     margin: "20px 10px"

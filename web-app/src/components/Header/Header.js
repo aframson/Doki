@@ -62,8 +62,8 @@ export default function Header(props) {
   const brandComponent = <Button 
                               href="/"
                               className={classes.title}>
-                              {secondLogo?<img src={assets.logo138x75black} alt="Logo" />:
-                                  <img src={assets.logo138x75white} alt="Logo" />
+                              {secondLogo?<img style={{height:100,width:210}} src={assets.logo138x75black} alt="Logo" />:
+                                  <img style={{height:100,width:210}} src={assets.logo138x75white} alt="Logo" />
                               }
                          </Button>;
   return (

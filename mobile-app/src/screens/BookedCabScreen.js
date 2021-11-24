@@ -627,7 +627,7 @@ export default function BookedCabScreen(props) {
         // 6 random numbers
         const randomNumber =
           Math.floor(Math.random() * (99999 - 10000)) + 10000;
-        const message = "dekivery code :" + randomNumber;
+        const message = "delivery code :" + randomNumber;
         const res = await fetch(
           `https://sms.arkesel.com/sms/api?action=send-sms&api_key=Om81MlpxTWVTOXFnN28xMGY=&to=${value}&from=DOKI&sms=${message}`
         );
