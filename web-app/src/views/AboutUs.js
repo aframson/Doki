@@ -29,7 +29,7 @@ export default function AboutUs(props) {
         }}
         {...rest}
       />
-      <Parallax small filter image={require("assets/img/header-back.jpg").default} />
+      <Parallax small filter image={require("assets/img/header-back.png").default} />
       <div className={classNames(classes.main, classes.mainRaised)}>
  
         <div className={classes.container}>
