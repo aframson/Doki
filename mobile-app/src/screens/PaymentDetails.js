@@ -489,7 +489,7 @@ export default function PaymentDetails(props) {
                   fontSize: 16,
                 }}
               >
-                {settings.symbol} {parseFloat(payDetails.amount).toFixed(2)}
+                {settings.symbol} {parseFloat(payDetails.amount).toFixed(0)}
               </Text>
             </View>
           ) : (
@@ -503,7 +503,7 @@ export default function PaymentDetails(props) {
                   fontWeight: "bold",
                 }}
               >
-                {settings.symbol} {parseFloat(payDetails.amount).toFixed(2)}
+                {settings.symbol} {parseFloat(payDetails.amount).toFixed(0)}
               </Text>
             </View>
           )}
@@ -538,7 +538,7 @@ export default function PaymentDetails(props) {
                 - {settings.symbol}{" "}
                 {payDetails
                   ? payDetails.discount
-                    ? parseFloat(payDetails.discount).toFixed(2)
+                    ? parseFloat(payDetails.discount).toFixed(0)
                     : "0.00"
                   : "0.00"}
               </Text>
@@ -575,7 +575,7 @@ export default function PaymentDetails(props) {
                 - {settings.symbol}{" "}
                 {payDetails
                   ? payDetails.usedWalletMoney
-                    ? parseFloat(payDetails.usedWalletMoney).toFixed(2)
+                    ? parseFloat(payDetails.usedWalletMoney).toFixed(0)
                     : "0.00"
                   : "0.00"}
               </Text>
@@ -592,7 +592,7 @@ export default function PaymentDetails(props) {
                   settings.symbol +
                   parseFloat(
                     walletBalance - payDetails.usedWalletMoney
-                  ).toFixed(2) +
+                  ).toFixed(0) +
                   ")"
                 }
                 checked={useWalletCash}
