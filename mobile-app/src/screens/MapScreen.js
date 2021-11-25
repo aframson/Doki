@@ -128,6 +128,7 @@ export default function MapScreen(props) {
   }, [tripdata.selected, tripdata.pickup, tripdata.drop]);
 
   useEffect(() => {
+    setCarType();
     setInterval(() => {
       if (pageActive.current) {
         dispatch(fetchDrivers());
@@ -210,6 +211,12 @@ export default function MapScreen(props) {
         setLoadingModal(false);
       }
     }
+  };
+
+  const setCarType = () => {
+    allCarTypes.map((prop, key) => {
+      selectCarType(prop, key);
+    });
   };
 
   const updateMap = async (pos, source) => {
@@ -426,38 +433,42 @@ export default function MapScreen(props) {
   //Go to confirm booking page
   const onPressBook = () => {
     if (tripdata.pickup && tripdata.drop && tripdata.drop.add) {
-      if (!tripdata.carType) {
-        Alert.alert(language.alert, language.car_type_blank_error);
-      } else {
-        let driver_available = false;
-        for (let i = 0; i < allCarTypes.length; i++) {
-          let car = allCarTypes[i];
-          if (car.name == tripdata.carType.name && car.minTime) {
-            driver_available = true;
-            break;
-          }
-        }
-        if (driver_available) {
-          dispatch(
-            getEstimate({
-              bookLater: false,
-              bookingDate: null,
-              pickup: {
-                coords: { lat: tripdata.pickup.lat, lng: tripdata.pickup.lng },
-                description: tripdata.pickup.add,
-              },
-              drop: {
-                coords: { lat: tripdata.drop.lat, lng: tripdata.drop.lng },
-                description: tripdata.drop.add,
-              },
-              carDetails: tripdata.carType,
-              platform: Platform.OS,
-            })
-          );
-        } else {
-          Alert.alert(language.alert, language.no_driver_found_alert_messege);
+      // if (!tripdata.carType) {
+      //   Alert.alert(language.alert, language.car_type_blank_error);
+      // } else {
+      let newCarType = allCarTypes.map((item, i) => {
+        return item;
+      });
+      // dispatch(updateTripCar(newCarTypeName[0]));
+      let driver_available = false;
+      for (let i = 0; i < allCarTypes.length; i++) {
+        let car = allCarTypes[i];
+        if (car.minTime) {
+          driver_available = true;
+          break;
         }
       }
+      if (driver_available) {
+        dispatch(
+          getEstimate({
+            bookLater: false,
+            bookingDate: null,
+            pickup: {
+              coords: { lat: tripdata.pickup.lat, lng: tripdata.pickup.lng },
+              description: tripdata.pickup.add,
+            },
+            drop: {
+              coords: { lat: tripdata.drop.lat, lng: tripdata.drop.lng },
+              description: tripdata.drop.add,
+            },
+            carDetails: newCarType[0],
+            platform: Platform.OS,
+          })
+        );
+      } else {
+        Alert.alert(language.alert, language.no_driver_found_alert_messege);
+      }
+      // }
     } else {
       Alert.alert(language.alert, language.drop_location_blank_error);
     }
@@ -465,15 +476,15 @@ export default function MapScreen(props) {
 
   const onPressBookLater = () => {
     if (tripdata.pickup && tripdata.drop && tripdata.drop.add) {
-      if (tripdata.carType) {
-        setPickerConfig({
-          dateMode: "date",
-          dateModalOpen: true,
-          selectedDateTime: pickerConfig.selectedDateTime,
-        });
-      } else {
-        Alert.alert(language.alert, language.car_type_blank_error);
-      }
+      // if (tripdata.carType) {
+      setPickerConfig({
+        dateMode: "date",
+        dateModalOpen: true,
+        selectedDateTime: pickerConfig.selectedDateTime,
+      });
+      // } else {
+      //   Alert.alert(language.alert, language.car_type_blank_error);
+      // }
     } else {
       Alert.alert(language.alert, language.drop_location_blank_error);
     }
@@ -513,7 +524,7 @@ export default function MapScreen(props) {
           Alert.alert(
             language.alert,
             language.past_booking_error,
-            [{ text: "OK", onPress: () => { } }],
+            [{ text: "OK", onPress: () => {} }],
             { cancelable: true }
           );
         } else {
@@ -537,6 +548,10 @@ export default function MapScreen(props) {
       }, 1000);
     }
   };
+
+  const ll = allCarTypes.map((prop, key) => {
+    return prop;
+  });
 
   const LoadingModalBody = () => {
     return (
@@ -596,14 +611,14 @@ export default function MapScreen(props) {
   return (
     <View style={styles.mainViewStyle}>
       <NavigationEvents
-        onWillFocus={(payload) => { }}
+        onWillFocus={(payload) => {}}
         onDidFocus={(payload) => {
           pageActive.current = true;
         }}
         onWillBlur={(payload) => {
           pageActive.current = false;
         }}
-        onDidBlur={(payload) => { }}
+        onDidBlur={(payload) => {}}
       />
       <Header
         backgroundColor={colors.WHITE}
@@ -863,13 +878,17 @@ export default function MapScreen(props) {
         <View
           style={[styles.compViewStyle2, { backgroundColor: colors.WHITE }]}
         >
-          <Text
+          <Text style={{ paddingVertical: 15, textAlign: "center" }}>
+            Choose delivery type
+          </Text>
+          {/* <Text
             style={[
               styles.sampleTextStyle,
               { fontFamily: "Roboto", color: colors.BLACK, paddingTop: 5 },
             ]}
           >
             {language.cab_selection_subtitle}
+            
           </Text>
           <ScrollView
             horizontal={true}
@@ -902,6 +921,43 @@ export default function MapScreen(props) {
                       }
                       style={styles.imageStyle1}
                     />
+                  </TouchableOpacity> */}
+          {/* <View style={styles.textViewStyle}> */}
+          {/* <View style={{ flexDirection: "row", alignItems: "center" }}>
+             <Text style={styles.text1}>{prop.name.toUpperCase()}</Text>
+             {prop.extra_info && prop.extra_info != "" ? (
+               <Tooltip
+                 style={{ marginLeft: 3, marginRight: 3 }}
+                 backgroundColor={"#fff"}
+                 overlayColor={"rgba(50, 50, 50, 0.70)"}
+                 height={10 + 30 * prop.extra_info.split(",").length}
+                 width={180}
+                 popover={
+                   <View
+                     style={{
+                       justifyContent: "space-around",
+                       flexDirection: "column",
+                     }}
+                   >
+                     {prop.extra_info.split(",").map((ln) => (
+                       <Text key={ln} style={{ margin: 5 }}>
+                         {ln}
+                       </Text>
+                     ))}
+                   </View>
+                 }
+               >
+                 <Icon
+                   name="information-circle-outline"
+                   type="ionicon"
+                   color="#517fa4"
+                   size={28}
+                 />
+               </Tooltip>
+             ) : null}
+           </View> */}
+          {/* <View style={{ flexDirection: "row" }}>
+
                   </TouchableOpacity>
                   <View style={styles.textViewStyle}>
 
@@ -927,7 +983,7 @@ export default function MapScreen(props) {
                 </View>
               );
             })}
-          </ScrollView>
+          </ScrollView> */}
           <View
             style={{
               flexDirection: "row",
@@ -962,38 +1018,30 @@ export default function MapScreen(props) {
             </BaseButton>
             <View style={{ width: 15 }} />
 
-            {allCarTypes.map((prop, key) => (
-              <BaseButton
-                title={language.book_now_button}
-                loading={false}
-                onPress={()=>{
-                  selectCarType(prop, key);
-                  onPressBook();
-                  onPressBook();
-                  onPressBook();
-                }}
+            <BaseButton
+              title={language.book_now_button}
+              loading={false}
+              onPress={onPressBook}
+              style={{
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: colors.BLUE.secondary,
+                width: width / 2,
+                elevation: 0,
+                borderRadius: 6,
+              }}
+            >
+              <Text
                 style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "center",
-                  backgroundColor: colors.BLUE.secondary,
-                  width: width / 2,
-                  elevation: 0,
-                  borderRadius: 6,
+                  color: colors.WHITE,
+                  fontFamily: "Roboto",
+                  fontSize: 16,
                 }}
               >
-                <Text
-                  style={{
-                    color: colors.WHITE,
-                    fontFamily: "Roboto",
-                    fontSize: 16,
-                  }}
-                >
-                  {language.book_now_button}
-                </Text>
-              </BaseButton>
-            ))}
-
+                {language.book_now_button}
+              </Text>
+            </BaseButton>
           </View>
           {console.log()}
         </View>
@@ -1165,7 +1213,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-start",
   },
   compViewStyle2: {
-    flex: 0.5,
+    // flex: 0.5,
     alignItems: "center",
   },
   pickCabStyle: {
