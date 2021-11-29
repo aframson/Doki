@@ -649,7 +649,7 @@ export default function PaymentDetails(props) {
               >
                 {settings.symbol}{" "}
                 {payDetails.payableAmmount
-                  ? parseFloat(Math.round(payDetails.payableAmmount))
+                  ? parseFloat(Math.round(payDetails.payableAmmount).toFixed(0))
                   : 0.0}
               </Text>
             </View>
