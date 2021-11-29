@@ -49,18 +49,18 @@ export default function PaymentDetails(props) {
     if (res) {
       if (walletBalance >= payDetails.payableAmmount) {
         let data = { ...payDetails };
-        data.usedWalletMoney = data.payableAmmount;
+        data.usedWalletMoney = parseFloat(data.payableAmmount).toFixed(0);
         data.payableAmmount = 0;
         setPayDetails(data);
       } else {
         let data = { ...payDetails };
         data.usedWalletMoney = walletBalance;
-        data.payableAmmount = data.payableAmmount - walletBalance;
+        data.payableAmmount = parseFloat(data.payableAmmount).toFixed(0) - parseFloat(walletBalance).toFixed(0);
         setPayDetails(data);
       }
     } else {
       let data = { ...payDetails };
-      data.payableAmmount = data.payableAmmount + data.usedWalletMoney;
+      data.payableAmmount = parseFloat(data.payableAmmount + data.usedWalletMoney).toFixed;
       data.usedWalletMoney = 0;
       setPayDetails(data);
     }
@@ -591,8 +591,8 @@ export default function PaymentDetails(props) {
                   language.use_wallet_balance +
                   settings.symbol +
                   parseFloat(
-                    walletBalance - payDetails.usedWalletMoney
-                  ).toFixed(0) +
+                    walletBalance - payDetails.usedWalletMoney.toFixed(0)
+                  ) +
                   ")"
                 }
                 checked={useWalletCash}
