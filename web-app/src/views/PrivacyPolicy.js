@@ -32,7 +32,7 @@ export default function PrivacyPolicy(props) {
       <div className={classNames(classes.main, classes.mainRaised)}>
  
         <div className={classes.container}>
-            <br/>
+           <br/>
             <h2 className={classes.title}>{language.privacy_policy}</h2>
             <p className={classes.description}>{language.privacy_policy_para1}</p>
             <p className={classes.description}>{language.privacy_policy_para2}</p>
@@ -41,7 +41,7 @@ export default function PrivacyPolicy(props) {
             <p className={classes.description}>{language.privacy_policy_para5}</p>
             <p className={classes.description}>{language.privacy_policy_para6}</p>
             <p className={classes.description}>{language.privacy_policy_para7}</p>
-            <br/>
+           <br/>
         </div>
         </div>
 
