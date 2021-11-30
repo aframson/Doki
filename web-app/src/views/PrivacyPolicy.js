@@ -48,7 +48,7 @@ export default function PrivacyPolicy(props) {
       <Parallax
         small
         filter
-        image={require("assets/img/header-back.jpg").default}
+        image={require("assets/img/header-back.png").default}
       />
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.container}>
@@ -157,7 +157,6 @@ export default function PrivacyPolicy(props) {
           <br />
         </div>
       </div>
-
       <Footer />
     </div>
   );
