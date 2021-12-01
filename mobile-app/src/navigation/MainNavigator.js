@@ -28,6 +28,7 @@ import SideMenu from '../components/SideMenu';
 import ConvertDriver from '../screens/ConvertDriver';
 import Contact from '../screens/Contact'
 import ContactList from '../screens/contactList';
+import Verify from '../screens/Verify';
 
 //app stack for user end
 export const AppStack = {
@@ -39,6 +40,12 @@ export const AppStack = {
     },
     Contact:{
         screen:Contact,
+        navigationOptions: {
+            headerShown: false
+        }
+    },
+    Verify:{
+        screen:Verify,
         navigationOptions: {
             headerShown: false
         }
