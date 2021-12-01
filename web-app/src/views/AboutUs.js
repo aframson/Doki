@@ -29,14 +29,23 @@ export default function AboutUs(props) {
         }}
         {...rest}
       />
-      <Parallax small filter image={require("assets/img/header-back.png").default} />
+      <Parallax small filter image={require("assets/img/header-back.jpg").default} />
       <div className={classNames(classes.main, classes.mainRaised)}>
  
         <div className={classes.container}>
             <br/>
             <h2 className={classes.title}>{language.about_us}</h2>
-            <p className={classes.description}>{language.about_us_content1}</p>
-            <p className={classes.description}>{language.about_us_content2}</p>
+            <p className={classes.description}>Doki mobile and Web Apps are Platform developed by Quaker
+              Technology Ltd an indigenous Ghanaian Technology Company. The App
+              is aimed at transforming the Courier and delivery industry in
+              Ghana. Quaker Technologies is a technology company and does not
+              own a single motor bike or delivery vehicle on the Doki Platform.
+              </p>
+            <p className={classes.description}>The Doki App allows individual dispatch riders and
+              dispatch/delivery companies to register on the platform, accept
+              and fulfill orders from customers. To the users of the App, Doki
+              provides an enhanced convenience and security to sending and
+              receiving packages.</p>
             <br/>
         </div>
         </div>
