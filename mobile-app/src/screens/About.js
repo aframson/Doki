@@ -52,19 +52,6 @@ export default function AboutPage(props) {
           </View>
           <View style={{ width: width, paddingLeft: 40, paddingRight: 40 }}>
             <Text
-              style={{ marginBottom: 20, fontSize: 18, fontWeight: "bold" }}
-            >
-              Quaker Technology Ltd
-            </Text>
-            <Text style={{ textAlign: "left", fontSize: 14, lineHeight: 28 }}>
-              Quaker Technologies Ltd is an indigenous Ghanaian technology
-              company with the aim of using technological advancement to provide
-              services to Ghanaians across all industries in very convenient and
-              cost effective ways. At Quaker Technologies, we believe that
-              technology is an enabler, a catalyst needed to spur economic
-              growth across every industry.
-            </Text>
-            <Text
               style={{ marginBottom: 20, fontSize: 15, fontWeight: "bold" }}
             >
               About DOKI
