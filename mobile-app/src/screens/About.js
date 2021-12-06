@@ -52,9 +52,21 @@ export default function AboutPage(props) {
           </View>
           <View style={{ width: width, paddingLeft: 40, paddingRight: 40 }}>
             <Text
-              style={{ textAlign: "justify", fontSize: 20, lineHeight: 28 }}
+              style={{ marginBottom: 20, fontSize: 15, fontWeight: "bold" }}
             >
-              {language.about_us_content1 + " " + language.about_us_content2}
+              About DOKI
+            </Text>
+            <Text style={{ textAlign: "left", fontSize: 14, lineHeight: 28 }}>
+              Doki mobile and Web Apps are Platform developed by Quaker
+              Technology Ltd an indigenous Ghanaian Technology Company. The App
+              is aimed at transforming the Courier and delivery industry in
+              Ghana. Quaker Technologies is a technology company and does not
+              own a single motor bike or delivery vehicle on the Doki Platform.
+              The Doki App allows individual dispatch riders and
+              dispatch/delivery companies to register on the platform, accept
+              and fulfill orders from customers. To the users of the App, Doki
+              provides an enhanced convenience and security to sending and
+              receiving packages.
             </Text>
           </View>
         </View>
