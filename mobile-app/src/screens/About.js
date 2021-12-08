@@ -56,6 +56,7 @@ export default function AboutPage(props) {
             >
               About DOKI
             </Text>
+            {/* make some changes soon */}
             <Text style={{ textAlign: "left", fontSize: 14, lineHeight: 28 }}>
               Doki mobile and Web Apps are Platform developed by Quaker
               Technology Ltd an indigenous Ghanaian Technology Company. The App
