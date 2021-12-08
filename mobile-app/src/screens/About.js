@@ -69,6 +69,7 @@ export default function AboutPage(props) {
               provides an enhanced convenience and security to sending and
               receiving packages.
             </Text>
+            {/* add new lines here */}
           </View>
         </View>
       </View>
