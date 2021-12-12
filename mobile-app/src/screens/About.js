@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   Image,
+  ScrollView
 } from "react-native";
 var { width } = Dimensions.get("window");
 import { language } from "config";
@@ -50,7 +51,7 @@ export default function AboutPage(props) {
               resizeMode="contain"
             />
           </View>
-          <View style={{ width: width, paddingLeft: 40, paddingRight: 40 }}>
+          <ScrollView style={{ width: width, paddingLeft: 40, paddingRight: 40 }}>
             <Text
               style={{ marginBottom: 20, fontSize: 15, fontWeight: "bold" }}
             >
@@ -70,7 +71,7 @@ export default function AboutPage(props) {
               receiving packages.
             </Text>
             {/* add new lines here */}
-          </View>
+          </ScrollView>
         </View>
       </View>
     </View>
