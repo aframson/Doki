@@ -591,7 +591,7 @@ export default function PaymentDetails(props) {
                   language.use_wallet_balance +
                   settings.symbol +
                   parseFloat(
-                    walletBalance - parseInt(payDetails.usedWalletMoney)
+                    walletBalance - payDetails.usedWalletMoney.toFixed(0)
                   ) +
                   ")"
                 }

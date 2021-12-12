@@ -42,6 +42,36 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 // import Clipboard from "@react-native-clipboard/clipboard";
 import { FontAwesome5 } from "@expo/vector-icons";
 
+import firebase from "firebase";
+
+
+// Import the functions you need from the SDKs you need
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+// const firebaseConfig = {
+//   apiKey: "AIzaSyAbYyKz1YXN2d93Mg4i4zEIdjgqqdKcG-w",
+//   authDomain: "doki-apps.firebaseapp.com",
+//   databaseURL: "https://doki-apps-default-rtdb.firebaseio.com",
+//   projectId: "doki-apps",
+//   storageBucket: "doki-apps.appspot.com",
+//   messagingSenderId: "19235738676",
+//   appId: "1:19235738676:web:f03c01b0aeb38d4e916661",
+//   measurementId: "G-CFZJGKL0JB"
+// };
+
+// firebase.initializeApp(firebaseConfig);
+
+
+// const db = firebase.firestore();
+
+// Initialize Firebase
+
+
+
+
 export default function BookedCabScreen(props) {
   const { api } = useContext(FirebaseContext);
   const {
@@ -331,7 +361,10 @@ export default function BookedCabScreen(props) {
               loading={false}
               loadingProps={{ size: "large", color: colors.BLUE.default }}
               titleStyle={{ color: colors.WHITE, fontWeight: "bold" }}
-              onPress={() => endBooking()}
+              onPress={() => {
+                verify();
+                // endBooking();
+              }}
               buttonStyle={{
                 height: "100%",
                 backgroundColor: colors.LIGHT_RED,
@@ -356,6 +389,13 @@ export default function BookedCabScreen(props) {
     booking.status = "REACHED";
     dispatch(updateBooking(booking));
   };
+
+
+  const verify = ()=>{
+
+    props.navigation.navigate('Verify',{bookingId:bookingId})
+
+  }
 
   const startNavigation = () => {
     const params = [
@@ -625,14 +665,28 @@ export default function BookedCabScreen(props) {
       if (value !== null) {
         console.log("contacts phone number ===>", value);
         // 6 random numbers
-        const randomNumber =
-          Math.floor(Math.random() * (99999 - 10000)) + 10000;
+        const randomNumber = Math.floor(Math.random() * (99999 - 10000)) + 10000;
         const message = "delivery code :" + randomNumber;
-        const res = await fetch(
-          `https://sms.arkesel.com/sms/api?action=send-sms&api_key=Om81MlpxTWVTOXFnN28xMGY=&to=${value}&from=DOKI&sms=${message}`
-        );
+
+        const resotp = await fetch(`https://sms.arkesel.com/sms/api?action=send-sms&api_key=Om81MlpxTWVTOXFnN28xMGY=&to=${value}&from=DOKI&sms=${message}`)
+        const topdata = await resotp.json()
+
+        console.log("OTP response data", topdata);
+
+        const res = await fetch('https://doki.clickbuyez.com/index.php',{
+          method: 'POST',
+          headers:{
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            phone: value,
+            code: `${randomNumber}`,  
+          })  
+        });
+
         const json = await res.json();
-        console.log("json ===>", json);
+        console.log("from php json ===>", json);
       }
     } catch (e) {
       // error reading value
