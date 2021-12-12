@@ -8,6 +8,7 @@ import {
   TouchableWithoutFeedback,
   Dimensions,
   Image,
+  ScrollView
 } from "react-native";
 var { width } = Dimensions.get("window");
 import { language } from "config";
@@ -50,12 +51,13 @@ export default function AboutPage(props) {
               resizeMode="contain"
             />
           </View>
-          <View style={{ width: width, paddingLeft: 40, paddingRight: 40 }}>
+          <ScrollView style={{ width: width, paddingLeft: 40, paddingRight: 40 }}>
             <Text
               style={{ marginBottom: 20, fontSize: 15, fontWeight: "bold" }}
             >
               About DOKI
             </Text>
+            {/* make some changes soon */}
             <Text style={{ textAlign: "left", fontSize: 14, lineHeight: 28 }}>
               Doki mobile and Web Apps are Platform developed by Quaker
               Technology Ltd an indigenous Ghanaian Technology Company. The App
@@ -68,7 +70,8 @@ export default function AboutPage(props) {
               provides an enhanced convenience and security to sending and
               receiving packages.
             </Text>
-          </View>
+            {/* add new lines here */}
+          </ScrollView>
         </View>
       </View>
     </View>

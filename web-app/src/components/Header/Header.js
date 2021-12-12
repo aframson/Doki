@@ -10,14 +10,14 @@ import Hidden from "@material-ui/core/Hidden";
 import Drawer from "@material-ui/core/Drawer";
 import Menu from "@material-ui/icons/Menu";
 import styles from "assets/jss/material-kit-react/components/headerStyle.js";
-import assets from 'assets';
+import assets from "assets";
 
 const useStyles = makeStyles(styles);
 
 export default function Header(props) {
   const classes = useStyles();
   const [mobileOpen, setMobileOpen] = React.useState(false);
-  const [secondLogo,setSecondLogo] = React.useState(false);
+  const [secondLogo, setSecondLogo] = React.useState(false);
   React.useEffect(() => {
     if (props.changeColorOnScroll) {
       window.addEventListener("scroll", headerColorChange);
@@ -57,15 +57,25 @@ export default function Header(props) {
     [classes.appBar]: true,
     [classes[color]]: color,
     [classes.absolute]: absolute,
-    [classes.fixed]: fixed
+    [classes.fixed]: fixed,
   });
-  const brandComponent = <Button 
-                              href="/"
-                              className={classes.title}>
-                              {secondLogo?<img style={{height:100,width:210}} src={assets.logo138x75black} alt="Logo" />:
-                                  <img style={{height:100,width:210}} src={assets.logo138x75white} alt="Logo" />
-                              }
-                         </Button>;
+  const brandComponent = (
+    <Button href="/" className={classes.title}>
+      {secondLogo ? (
+        <img
+          style={{ height: 40, width: 130 }}
+          src={assets.logo138x75black}
+          alt="Logo"
+        />
+      ) : (
+        <img
+          style={{ height: 70, width: 180 }}
+          src={assets.logo138x75white}
+          alt="Logo"
+        />
+      )}
+    </Button>
+  );
   return (
     <AppBar className={appBarClasses}>
       <Toolbar className={classes.container}>
@@ -98,7 +108,7 @@ export default function Header(props) {
           anchor={"right"}
           open={mobileOpen}
           classes={{
-            paper: classes.drawerPaper
+            paper: classes.drawerPaper,
           }}
           onClose={handleDrawerToggle}
         >
@@ -113,7 +123,7 @@ export default function Header(props) {
 }
 
 Header.defaultProp = {
-  color: "white"
+  color: "white",
 };
 
 Header.propTypes = {
@@ -126,7 +136,7 @@ Header.propTypes = {
     "transparent",
     "white",
     "rose",
-    "dark"
+    "dark",
   ]),
   rightLinks: PropTypes.node,
   leftLinks: PropTypes.node,
@@ -144,7 +154,7 @@ Header.propTypes = {
       "transparent",
       "white",
       "rose",
-      "dark"
-    ]).isRequired
-  })
+      "dark",
+    ]).isRequired,
+  }),
 };
